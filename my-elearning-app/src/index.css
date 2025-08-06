@@ -1,0 +1,84 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(10px); }
+  75% { transform: translateX(-10px); }
+}
+
+.animate-shake {
+  animation: shake 0.5s ease-in-out infinite;
+}
+
+@keyframes border-beam {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.toast-success {
+  position: relative;
+  background: white;
+  border-radius: 10px;
+  z-index: 1;
+}
+
+.toast-success::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(
+    90deg,
+    #10B981,
+    #34D399,
+    #6EE7B7,
+    #34D399,
+    #10B981
+  );
+  border-radius: 12px;
+  z-index: -1;
+  animation: border-beam 3s ease infinite;
+  background-size: 300% 300%;
+}
+
+.toast-error {
+  position: relative;
+  background: white;
+  border-radius: 10px;
+  z-index: 1;
+}
+
+.toast-error::before {
+  content: '';
+  position: absolute;
+  width: 300px;
+  height: 60px;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(
+    90deg,
+    #EF4444,
+    #F87171,
+    #FCA5A5,
+    #F87171,
+    #EF4444
+  );
+  border-radius: 0px;
+  z-index: -1;
+  animation: border-beam 3s ease infinite;
+  background-size: 300% 300%;
+}
