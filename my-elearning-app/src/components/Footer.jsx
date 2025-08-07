@@ -1,13 +1,277 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import { 
+  Mail, 
+  Phone, 
+  MapPin, 
+  Facebook, 
+  Twitter, 
+  Instagram, 
+  Linkedin, 
+  Youtube,
+  BookOpen,
+  Users,
+  Award,
+  ArrowRight,
+  Send
+} from "lucide-react";
+import toast from "react-hot-toast";
+
 export default function Footer() {
+  const [email, setEmail] = useState("");
+  const [isSubscribed, setIsSubscribed] = useState(false);
+
+  const handleNewsletterSubmit = (e) => {
+    e.preventDefault();
+    if (email.trim()) {
+      setIsSubscribed(true);
+      toast.success("Thank you for subscribing to our newsletter!");
+      setEmail("");
+      setTimeout(() => setIsSubscribed(false), 3000);
+    }
+  };
+
+  const currentYear = new Date().getFullYear();
+
   return (
-    <footer className="mt-12 py-6">
-      <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between">
-        <div className="text-gray-600 text-sm mb-2 md:mb-0">&copy; {new Date().getFullYear()} YR-Learning. All rights reserved.</div>
-        <div className="space-x-4">
-          <a href="/" className="text-gray-700 hover:text-blue-600 text-sm">Home</a>
-          <a href="/#courses" className="text-gray-700 hover:text-blue-600 text-sm">Courses</a>
-          <a href="/about" className="text-gray-700 hover:text-blue-600 text-sm">About</a>
+    <footer className="bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white relative overflow-hidden">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-0 left-0 w-32 h-32 bg-white rounded-full -translate-x-16 -translate-y-16"></div>
+        <div className="absolute bottom-0 right-0 w-24 h-24 bg-white rounded-full translate-x-12 translate-y-12"></div>
+        <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-white rounded-full"></div>
+      </div>
+
+      <div className="relative container mx-auto px-4 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          
+          {/* Company Info */}
+          <motion.div 
+            className="lg:col-span-1"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="flex items-center space-x-2 mb-6">
+              <div className="w-10 h-10 bg-gradient-to-r from-blue-400 to-purple-400 rounded-xl flex items-center justify-center">
+                <BookOpen size={24} className="text-white" />
+              </div>
+              <span className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                Yr-learning
+              </span>
+            </div>
+            <p className="text-gray-300 mb-6 leading-relaxed">
+              Empowering learners worldwide with cutting-edge courses and expert instructors. 
+              Transform your career with our comprehensive learning platform.
+            </p>
+            
+            {/* Contact Info */}
+            <div className="space-y-3">
+              <div className="flex items-center space-x-3 text-gray-300">
+                <Mail size={16} className="text-blue-400" />
+                <span>contact@yr-learning.com</span>
+              </div>
+              <div className="flex items-center space-x-3 text-gray-300">
+                <Phone size={16} className="text-blue-400" />
+                <span>+1 (555) 123-4567</span>
+              </div>
+              <div className="flex items-center space-x-3 text-gray-300">
+                <MapPin size={16} className="text-blue-400" />
+                <span>123 Learning St, Education City</span>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Quick Links */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
+            <h3 className="text-xl font-bold mb-6 text-white">Quick Links</h3>
+            <div className="space-y-3">
+              {[
+                { name: "Home", path: "/" },
+                { name: "Courses", path: "/courses" },
+                { name: "About Us", path: "/about" },
+                { name: "Dashboard", path: "/dashboard" },
+                { name: "Login", path: "/login" },
+                { name: "Sign Up", path: "/signup" },
+              ].map((link) => (
+                <motion.div
+                  key={link.name}
+                  whileHover={{ x: 5 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <Link
+                    to={link.path}
+                    className="text-gray-300 hover:text-blue-400 transition-colors duration-300 flex items-center space-x-2"
+                  >
+                    <ArrowRight size={14} />
+                    <span>{link.name}</span>
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Categories */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <h3 className="text-xl font-bold mb-6 text-white">Course Categories</h3>
+            <div className="space-y-3">
+              {[
+                "Web Development",
+                "React Development", 
+                "AI & Machine Learning",
+                "Programming Languages",
+                "Data Science",
+                "Mobile Development"
+              ].map((category) => (
+                <motion.div
+                  key={category}
+                  whileHover={{ x: 5 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <Link
+                    to={`/courses#${category.replace(/\s+/g, '%20')}`}
+                    className="text-gray-300 hover:text-blue-400 transition-colors duration-300 flex items-center space-x-2"
+                  >
+                    <ArrowRight size={14} />
+                    <span>{category}</span>
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Newsletter */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
+            <h3 className="text-xl font-bold mb-6 text-white">Stay Updated</h3>
+            <p className="text-gray-300 mb-4">
+              Subscribe to our newsletter for the latest courses and learning tips.
+            </p>
+            
+            <form onSubmit={handleNewsletterSubmit} className="space-y-3">
+              <div className="relative">
+                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full pl-10 pr-12 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all"
+                  required
+                />
+                <motion.button
+                  type="submit"
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 p-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  <Send size={14} />
+                </motion.button>
+              </div>
+            </form>
+
+            {isSubscribed && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="text-green-400 text-sm mt-2"
+              >
+                ✓ Successfully subscribed!
+              </motion.div>
+            )}
+
+            {/* Social Media */}
+            <div className="mt-6">
+              <h4 className="text-lg font-semibold mb-4 text-white">Follow Us</h4>
+              <div className="flex space-x-4">
+                {[
+                  { icon: Facebook, color: "hover:text-blue-400" },
+                  { icon: Twitter, color: "hover:text-blue-400" },
+                  { icon: Instagram, color: "hover:text-pink-400" },
+                  { icon: Linkedin, color: "hover:text-blue-400" },
+                  { icon: Youtube, color: "hover:text-red-400" },
+                ].map((social, index) => (
+                  <motion.a
+                    key={index}
+                    href="#"
+                    className={`text-gray-300 ${social.color} transition-colors duration-300`}
+                    whileHover={{ scale: 1.2, y: -2 }}
+                    whileTap={{ scale: 0.9 }}
+                  >
+                    <social.icon size={20} />
+                  </motion.a>
+                ))}
+              </div>
+            </div>
+          </motion.div>
         </div>
+
+        {/* Stats Section */}
+        <motion.div 
+          className="mt-12 pt-8 border-t border-white/20"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+        >
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            {[
+              { icon: Users, number: "50K+", label: "Students" },
+              { icon: BookOpen, number: "500+", label: "Courses" },
+              { icon: Award, number: "95%", label: "Success Rate" },
+              { icon: Users, number: "100+", label: "Instructors" },
+            ].map((stat, index) => (
+              <motion.div
+                key={index}
+                className="group cursor-pointer"
+                whileHover={{ y: -5 }}
+                onClick={() => toast.success(`${stat.number} ${stat.label}`)}
+              >
+                <div className="flex flex-col items-center space-y-2">
+                  <div className="p-3 bg-white/10 rounded-full group-hover:bg-white/20 transition-all">
+                    <stat.icon size={24} className="text-blue-400" />
+                  </div>
+                  <div className="text-2xl font-bold text-white">{stat.number}</div>
+                  <div className="text-gray-300 text-sm">{stat.label}</div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Bottom Bar */}
+        <motion.div 
+          className="mt-8 pt-6 border-t border-white/20 flex flex-col md:flex-row items-center justify-between"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
+        >
+          <div className="text-gray-300 text-sm mb-4 md:mb-0">
+            © {currentYear} Yr-learning. All rights reserved.
+          </div>
+          <div className="flex space-x-6 text-sm">
+            <Link to="/privacy" className="text-gray-300 hover:text-blue-400 transition-colors">
+              Privacy Policy
+            </Link>
+            <Link to="/terms" className="text-gray-300 hover:text-blue-400 transition-colors">
+              Terms of Service
+            </Link>
+            <Link to="/cookies" className="text-gray-300 hover:text-blue-400 transition-colors">
+              Cookie Policy
+            </Link>
+          </div>
+        </motion.div>
       </div>
     </footer>
   );
