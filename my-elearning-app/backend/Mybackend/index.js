@@ -4,6 +4,7 @@ const routes = require('./routes');
 const authRoutes = require('./authroutes');
 const cors = require('cors');
 const setupCompilerRoute = require("./server");
+const path = require('path');
 
 const app = express();
 
@@ -17,6 +18,14 @@ app.use('/api', routes);
 app.use('/api/auth', authRoutes);
 
 setupCompilerRoute(app)
+
+// Serve static files from the React build directory
+
+
+// The "catchall" handler: for any request that doesn't
+// match one of the API routes, send back React's index.html file.
+
+
 // 404 Handler
 app.use((req, res) => {
     res.status(404).json({ error: 'Route not found' });
@@ -35,4 +44,3 @@ app.listen(port, () => {
 });
 
 module.exports = app;
-

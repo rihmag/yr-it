@@ -4,10 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+ 
+    "frontend": "vite",
+    "backend": "cd backend/Mybackend && npm run dev",
+    "dev": "concurrently \"npm run frontend\" \"npm run backend\"",
+    "build": "vite build"
   },
   "dependencies": {
     "@codemirror/autocomplete": "^6.18.6",
@@ -22,6 +23,7 @@
     "@xterm/xterm": "^5.5.0",
     "axios": "^1.11.0",
     "body-parser": "^2.2.0",
+     "concurrently": "^8.2.2",
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "install": "^0.13.0",
@@ -41,6 +43,7 @@
     "@types/react-dom": "^19.1.6",
     "@vitejs/plugin-react": "^4.6.0",
     "autoprefixer": "^10.4.21",
+    "concurrently": "^9.2.0",
     "eslint": "^9.30.1",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",

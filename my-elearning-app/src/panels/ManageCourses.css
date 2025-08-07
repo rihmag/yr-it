@@ -1,0 +1,93 @@
+.manage-courses-container {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.manage-courses-container h2 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    color: #333;
+    font-size: 1.8rem;
+}
+
+.courses-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.courses-table th,
+.courses-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e9ecef;
+    vertical-align: middle;
+}
+
+.courses-table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #495057;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+.course-thumbnail-small {
+    width: 80px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.course-actions {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.action-btn {
+    padding: 0.4rem 0.8rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: white;
+    display: inline-block;
+    text-align: center;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.action-btn:hover {
+    transform: translateY(-1px);
+}
+
+.edit-btn {
+    background-color: #17a2b8; /* Info Blue */
+}
+
+.edit-btn:hover {
+    background-color: #138496;
+}
+
+.delete-btn {
+    background-color: #dc3545; /* Danger Red */
+}
+
+.delete-btn:hover {
+    background-color: #c82333;
+}
+
+.manage-courses-container p a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.manage-courses-container p a:hover {
+    text-decoration: underline;
+}

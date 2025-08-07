@@ -1,0 +1,64 @@
+.enrolled-students-container {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.enrolled-students-container h2 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    color: #333;
+    font-size: 1.8rem;
+}
+
+.filter-container {
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.filter-container label {
+    font-weight: 600;
+    color: #555;
+}
+
+.course-filter-select {
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    min-width: 250px;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.course-filter-select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+.students-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.students-table th,
+.students-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e9ecef;
+    vertical-align: middle;
+}
+
+.students-table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #495057;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}

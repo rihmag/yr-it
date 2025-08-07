@@ -1,0 +1,102 @@
+.earnings-container {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.earnings-container h2,
+.earnings-container h3 {
+    margin-top: 0;
+    color: #333;
+}
+
+.earnings-container h2 {
+    font-size: 1.8rem;
+    margin-bottom: 0;
+}
+
+.earnings-container h3 {
+    font-size: 1.4rem;
+    border-bottom: 2px solid #f0f2f5;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+/* Summary Cards */
+.summary-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.card {
+    background-color: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+    text-align: center;
+}
+
+.card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    color: #555;
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.card p {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #007bff;
+    margin: 0;
+}
+
+/* Chart Section */
+.chart-section {
+    margin-top: 1rem;
+}
+
+.chart-placeholder {
+    height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f2f5;
+    border-radius: 8px;
+    color: #6c757d;
+    font-style: italic;
+}
+
+/* Transactions Table */
+.transactions-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.transactions-table th,
+.transactions-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e9ecef;
+    vertical-align: middle;
+}
+
+.transactions-table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #495057;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+.transactions-table td:last-child {
+    font-weight: 500;
+    color: #28a745; /* Success Green */
+}
