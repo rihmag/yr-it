@@ -1,4 +1,5 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { useState } from "react";
 import { Toaster } from "react-hot-toast";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -9,7 +10,6 @@ import Course from "./pages/Course";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
-
 import Refreshhandler from "./handlers/refreshhandler";
 import CodeEditor from "../IDE/codefiles/compiler";
 import CreatorPanel from "./panels/creatorpanel";
@@ -18,64 +18,58 @@ import ManageCourses from "./panels/ManageCourses";
 import EnrolledStudents from "./panels/EnrolledStudents";
 import Earnings from "./panels/Earnings";
 import EditCourse from "./panels/EditCourse";
-import { useState , Navigate} from "react";
 
-
-
+const PrivateRoute = ({ children, isAuthenticated }) => {
+  return isAuthenticated ? children : <Navigate to="/login" />;
+};
 
 function App() {
-   const [isAuthenticated, SetIsAuthenticated] = useState(false);
-    const PrivateRoute = ({ children }) => {
-    return isAuthenticated ? children : <Navigate to="/login" />;
-  };
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  
   return (
-
     <div>
-                
-   
-                
-    <div className="pt-20">
-       
-       </div>
-    <Router>
-        
-      <Refreshhandler  SetIsAuthenticated={SetIsAuthenticated} />
+      <Router>
+        <Refreshhandler SetIsAuthenticated={setIsAuthenticated} />
+        <div className="pt-20">
+          <Navbar SetisAuthenticated={setIsAuthenticated} />
           
-          <Navbar SetisAuthenticated={SetIsAuthenticated} />
-                                    
-              
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/course/:courseId" element={<Course />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/courses" element={<AllCourses />} />
+            <Route 
+              path="/dashboard" 
+              element={
+                <PrivateRoute isAuthenticated={isAuthenticated}>
+                  <Dashboard />
+                </PrivateRoute>
+              } 
+            />
+            <Route path="/login" element={<Login SetIsAuthenticated={setIsAuthenticated} />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route 
+              path="/ide" 
+              element={
+                <PrivateRoute isAuthenticated={isAuthenticated}>
+                  <CodeEditor />
+                </PrivateRoute>
+              } 
+            />
+            <Route path="/panel/:id/*" element={<CreatorPanel />}>
+              <Route index element={<Navigate to="manage-courses" replace />} />
+              <Route path="add-course" element={<AddCourse />} />
+              <Route path="manage-courses" element={<ManageCourses />} />
+              <Route path="edit-course/:courseId" element={<EditCourse />} />
+              <Route path="enrolled-students" element={<EnrolledStudents />} />
+              <Route path="earnings" element={<Earnings />} />
+            </Route>
+          </Routes>
           
-     
-      
-      
-      
-      {/* Add a global state for authentication */}
-      
-      <Routes>
-        
-        <Route path="/"  element={<Home/>}/>
-        <Route path="/course/:courseId" element={<Course />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/courses" element={<AllCourses />} />
-        <Route path="/dashboard" element={ <PrivateRoute children={<Dashboard/>}/>}/>
-        <Route path="/login" element={<Login SetIsAuthenticated={SetIsAuthenticated} />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/ide" element={<PrivateRoute children={<CodeEditor />}/>} />
-        <Route path="/panel/:id" element={<CreatorPanel/>}>
-          <Route index element={<Navigate to="manage-courses" replace />} />
-          <Route path="add-course" element={<AddCourse />} />
-          <Route path="manage-courses" element={<ManageCourses />} />
-          <Route path="edit-course/:courseId" element={<EditCourse />} />
-          <Route path="enrolled-students" element={<EnrolledStudents />} />
-          <Route path="earnings" element={<Earnings />} />
-        </Route>
-        {/* Add more routes here */}
-      </Routes>
-      <Footer />
-      <Toaster />
+          <Footer />
+        </div>
+        <Toaster />
       </Router>
-   
-   
     </div>
   );
 }
