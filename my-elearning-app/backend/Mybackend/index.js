@@ -15,6 +15,7 @@ db();
 // Middleware
 
 app.use(cors());
+app.use(express.json())
 app.use('/api', routes);
 app.use('/api/auth', authRoutes);
 app.use('/api/course', courseroutes)

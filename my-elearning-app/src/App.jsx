@@ -27,14 +27,27 @@ function App() {
   };
 
   return (
-
+    <div>
+                
+   
+                
+    <div className="pt-20">
+       
+       </div>
     <Router>
+        
       <Refreshhandler  SetIsAuthenticated={SetIsAuthenticated} />
+          
+          <Navbar SetisAuthenticated={SetIsAuthenticated} />
+                                    
+              
+          
+     
       
-      <Navbar SetisAuthenticated={SetIsAuthenticated} />
       
       
       {/* Add a global state for authentication */}
+      
       <Routes>
         
         <Route path="/"  element={<Home/>}/>
@@ -44,7 +57,7 @@ function App() {
         <Route path="/dashboard" element={ <PrivateRoute children={<Dashboard/>}/>}/>
         <Route path="/login" element={<Login SetIsAuthenticated={SetIsAuthenticated} />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/ide" element={<CodeEditor />} />
+        <Route path="/ide" element={<PrivateRoute children={<CodeEditor />}/>} />
         <Route path="/panel/:id" element={<CreatorPanel/>}>
           <Route index element={<Navigate to="manage-courses" replace />} />
           <Route path="add-course" element={<AddCourse />} />
@@ -58,6 +71,8 @@ function App() {
       <Footer />
       <Toaster />
     </Router>
+   
+    </div>
   );
 }
 
