@@ -20,6 +20,9 @@ const isAuthenticated = async (req, res, next) => {
         } 
     catch(error)
     {
+// Example of a route to get all courses
+const courses = await Course.find({}).populate('instructor', 'username email'); 
+// This will fetch courses and replace the instructor ID with the user's username and email.
         console.log(error, "isAuthError");
         // If the token is invalid or expired, jwt.verify will throw an error.
         return res.status(401).json({ message: "Authentication failed: Invalid token." });

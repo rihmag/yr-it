@@ -30,12 +30,11 @@ const CreateCourse = async (req, res) => {
             instructor,
             image: imageUrl, // Save the public URL from your storage provider
         });
-        return res.status(201).json(newCourse);
-    }
+        return res.status(201).json(newCourse);}
     catch (error) {
         console.error("Error creating course:", error);
         return res.status(500).json({ message: "Failed to create course.", error: error.message });
     }
-
 }
+
 module.exports = CreateCourse;
