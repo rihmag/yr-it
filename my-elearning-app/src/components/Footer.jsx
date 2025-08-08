@@ -219,7 +219,7 @@ export default function Footer() {
         </div>
 
         {/* Stats Section */}
-        <motion.div 
+        {/* <motion.div 
           className="mt-12 pt-8 border-t border-white/20"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -248,7 +248,7 @@ export default function Footer() {
               </motion.div>
             ))}
           </div>
-        </motion.div>
+        </motion.div> */}
 
         {/* Bottom Bar */}
         <motion.div 
