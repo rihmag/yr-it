@@ -11,7 +11,7 @@ function Refreshhandler  ({SetIsAuthenticated}) {
     if(!token){
         SetIsAuthenticated(false);
         if(location.pathname !== '/login' && location.pathname !== '/signup'){
-            navigate('/login');
+            
         }
     }
     else{

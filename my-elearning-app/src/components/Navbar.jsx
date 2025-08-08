@@ -12,8 +12,11 @@ import {
   Info, 
   LogIn, 
   UserPlus,
-  BarChart3,
+  BarChart,
+  ChevronDown,
+  Code,
   ChevronDown
+
 } from "lucide-react";
 import toast from "react-hot-toast";
 
@@ -37,6 +40,10 @@ export default function Navbar() {
     { path: "/", label: "Home", icon: Home },
     { path: "/courses", label: "Courses", icon: BookOpen },
     { path: "/dashboard", label: "Dashboard", icon: BarChart3 },
+
+    { path: "/ide", label: "IDE", icon: Code },
+
+
     { path: "/about", label: "About", icon: Info },
   ];
 
@@ -64,7 +71,11 @@ export default function Navbar() {
       animate={{ y: 0 }}
       transition={{ duration: 0.6 }}
     >
+
+      <div className="container mx-auto px-4 py-4 ">
+
       <div className="container mx-auto px-4 py-4">
+
         <div className="flex items-center justify-between">
           {/* Logo */}
           <motion.div
@@ -110,6 +121,17 @@ export default function Navbar() {
 
           {/* Right Side Actions */}
           <div className="hidden md:flex items-center space-x-4">
+
+            {/* Search */}
+            <motion.button
+              onClick={() => setIsSearchOpen(!isSearchOpen)}
+              className="p-2 rounded-lg text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-all"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+            >
+              <Search size={20} />
+            </motion.button>
+
             {/* Search Icon/Bar */}
             <AnimatePresence mode="wait">
               {!isSearchOpen ? (
@@ -155,6 +177,7 @@ export default function Navbar() {
                 </motion.form>
               )}
             </AnimatePresence>
+
 
             {/* Notifications */}
             <motion.button
@@ -223,6 +246,33 @@ export default function Navbar() {
           </motion.button>
         </div>
 
+
+        {/* Search Bar */}
+        <AnimatePresence>
+          {isSearchOpen && (
+            <motion.form
+              onSubmit={handleSearch}
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+              className="mt-4"
+            >
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+                <input
+                  type="text"
+                  placeholder="Search courses, instructors..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                />
+              </div>
+            </motion.form>
+          )}
+        </AnimatePresence>
+
+
         {/* Mobile Menu */}
         <AnimatePresence>
           {isMobileMenuOpen && (
@@ -234,6 +284,8 @@ export default function Navbar() {
               className="md:hidden mt-4 bg-gray-50 rounded-xl p-4"
             >
               <div className="space-y-2">
+
+
                 {/* Mobile Search */}
                 <div className="relative mb-4">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
@@ -245,7 +297,7 @@ export default function Navbar() {
                     className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                   />
                 </div>
-                
+
                 {navItems.map((item) => {
                   const Icon = item.icon;
                   const isActive = location.pathname === item.path;
@@ -263,6 +315,7 @@ export default function Navbar() {
                       <Icon size={18} />
                       <span>{item.label}</span>
                     </Link>
+
                   );
                 })}
                 <div className="border-t border-gray-200 pt-2 mt-2">
@@ -282,6 +335,7 @@ export default function Navbar() {
                     <UserPlus size={18} />
                     <span>Sign Up</span>
                   </Link>
+
                 </div>
               </div>
             </motion.div>
@@ -290,4 +344,4 @@ export default function Navbar() {
       </div>
     </motion.nav>
   );
-} 
+}
