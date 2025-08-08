@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "version": 2,
   "builds": [
     {
@@ -19,6 +20,12 @@
     {
       "src": "/(.*)",
       "dest": "/index.html"
+=======
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+>>>>>>> d32d5a613d79cc0bedc8bedb4649617f21a46c6b
     }
   ]
 }
