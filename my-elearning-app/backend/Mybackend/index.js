@@ -2,6 +2,7 @@ const express = require('express');
 const db = require('./connectdb');
 const routes = require('./routes');
 const authRoutes = require('./authroutes');
+const courseroutes = require('./courseroutes');
 const cors = require('cors');
 const setupCompilerRoute = require("./server");
 const path = require('path');
@@ -12,10 +13,11 @@ const app = express();
 db();
 
 // Middleware
-app.use(express.json());
+
 app.use(cors());
 app.use('/api', routes);
 app.use('/api/auth', authRoutes);
+app.use('/api/course', courseroutes)
 
 setupCompilerRoute(app)
 

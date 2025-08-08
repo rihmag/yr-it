@@ -16,7 +16,8 @@ const AddCourse = () => {
         const { name, value } = e.target;
         setCourseData({
             ...courseData,
-            [name]: value,
+            [name]: value,      
+            // title:javscript
         });
     };
 
@@ -25,7 +26,8 @@ const AddCourse = () => {
         if (file) {
             setCourseData({
                 ...courseData,
-                thumbnail: file,
+                image: file,
+                // image:file type aa gya h
             });
             const reader = new FileReader();
             reader.onloadend = () => {
@@ -46,27 +48,34 @@ const AddCourse = () => {
         }
 
         // Example of how you might send it to an API
-        // try {
-        //     // Replace with your actual API endpoint
-        //     const response = await fetch('/api/courses', {
-        //         method: 'POST',
-        //         body: formData,
-        //         // Add headers if needed, e.g., for authentication
-        //         // headers: {
-        //         //   'Authorization': `Bearer ${token}`
-        //         // }
-        //     });
+        try {
+            // Replace with your actual API endpoint
+            const response = await fetch('http://localhost:3000/api/course/create', {
+                method: 'POST',
+                body: formData,           
 
-        //     if (!response.ok) {
-        //         throw new Error('Course creation failed');
-        //     }
+                headers: {
+                
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                 },
+               
+            });
 
-        //     const result = await response.json();
-        //     toast.success('Course created successfully!');
+            if (!response.ok) {
+                throw new Error('Course creation failed');
+            }
+
+            const result = await response.json();
+            toast.success('Course created successfully!');
             
             // For demonstration:
             console.log('Form Data:', Object.fromEntries(formData.entries()));
             toast.success('Course created successfully! (Demo)');
+        }
+        catch (error) {
+            toast.error(error.message || 'Something went wrong.');
+            console.error('Submission error:', error);
+        }
 
 
             // Reset form after successful submission
@@ -75,10 +84,10 @@ const AddCourse = () => {
                 description: '',
                 price: '',
                 category: '',
-                thumbnail: null,
+                thumbnail: "",
             });
             setThumbnailPreview('');
-            e.target.reset(); // Resets the file input
+            // Resets the file input
         // } catch (error) {
         //     toast.error(error.message || 'Something went wrong.');
         //     console.error('Submission error:', error);
@@ -140,7 +149,7 @@ const AddCourse = () => {
                     <input
                         type="file"
                         id="thumbnail"
-                        name="thumbnail"
+                        name="image"
                         onChange={handleFileChange}
                         accept="image/*"
                         required

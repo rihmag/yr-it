@@ -4,7 +4,6 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
- 
     "frontend": "vite",
     "backend": "cd backend/Mybackend && npm run dev",
     "dev": "concurrently \"npm run frontend\" \"npm run backend\"",
@@ -23,11 +22,12 @@
     "@xterm/xterm": "^5.5.0",
     "axios": "^1.11.0",
     "body-parser": "^2.2.0",
-     "concurrently": "^8.2.2",
+    "concurrently": "^8.2.2",
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "install": "^0.13.0",
     "lucide-react": "^0.536.0",
+    "multer": "^2.0.2",
     "npm": "^11.5.2",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
