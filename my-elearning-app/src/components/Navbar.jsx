@@ -122,15 +122,7 @@ export default function Navbar() {
           {/* Right Side Actions */}
           <div className="hidden md:flex items-center space-x-4">
 
-            {/* Search */}
-            <motion.button
-              onClick={() => setIsSearchOpen(!isSearchOpen)}
-              className="p-2 rounded-lg text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-all"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              <Search size={20} />
-            </motion.button>
+         
 
             {/* Search Icon/Bar */}
             <AnimatePresence mode="wait">

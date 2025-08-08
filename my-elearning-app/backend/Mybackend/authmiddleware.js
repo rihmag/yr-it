@@ -20,7 +20,9 @@ const isAuthenticated = async (req, res, next) => {
         } 
     catch(error)
     {
-        console.log(error,"isAuthError")
+        console.log(error, "isAuthError");
+        // If the token is invalid or expired, jwt.verify will throw an error.
+        return res.status(401).json({ message: "Authentication failed: Invalid token." });
     }
 }
   module.exports = isAuthenticated;
