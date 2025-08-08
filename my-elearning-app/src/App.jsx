@@ -24,8 +24,8 @@ import { useState , Navigate} from "react";
 
 
 function App() {
-  const [isAuthenticated, SetIsAuthenticated] = useState(false);
-  const PrivateRoute = ({ children }) => {
+   const [isAuthenticated, SetIsAuthenticated] = useState(false);
+    const PrivateRoute = ({ children }) => {
     return isAuthenticated ? children : <Navigate to="/login" />;
   };
   return (
