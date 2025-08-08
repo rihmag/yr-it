@@ -18,11 +18,16 @@ import ManageCourses from "./panels/ManageCourses";
 import EnrolledStudents from "./panels/EnrolledStudents";
 import Earnings from "./panels/Earnings";
 import EditCourse from "./panels/EditCourse";
+import { useState , Navigate} from "react";
 
 
 
 
 function App() {
+  const [isAuthenticated, SetIsAuthenticated] = useState(false);
+  const PrivateRoute = ({ children }) => {
+    return isAuthenticated ? children : <Navigate to="/login" />;
+  };
   return (
 
     <div>
@@ -68,54 +73,8 @@ function App() {
       </Routes>
       <Footer />
       <Toaster />
-
-    <Router>
-      <div className="min-h-screen bg-gray-50">
-        <Navbar />
-        <main className="pt-16">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/courses" element={<AllCourses />} />
-            <Route path="/course/:id" element={<Course />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<SignUp />} />
-          </Routes>
-        </main>
-        <Footer />
-        
-        {/* Toast Notifications */}
-        <Toaster
-          position="top-right"
-          toastOptions={{
-            duration: 4000,
-            style: {
-              background: '#363636',
-              color: '#fff',
-              borderRadius: '12px',
-              padding: '16px',
-              fontSize: '14px',
-            },
-            success: {
-              duration: 3000,
-              iconTheme: {
-                primary: '#10B981',
-                secondary: '#fff',
-              },
-            },
-            error: {
-              duration: 4000,
-              iconTheme: {
-                primary: '#EF4444',
-                secondary: '#fff',
-              },
-            },
-          }}
-        />
-      </div>
-
-    </Router>
+      </Router>
+   
    
     </div>
   );

@@ -12,10 +12,10 @@ import {
   Info, 
   LogIn, 
   UserPlus,
-  BarChart,
+  BarChart3,
   ChevronDown,
   Code,
-  ChevronDown
+ 
 
 } from "lucide-react";
 import toast from "react-hot-toast";
@@ -72,7 +72,7 @@ export default function Navbar() {
       transition={{ duration: 0.6 }}
     >
 
-      <div className="container mx-auto px-4 py-4 ">
+      
 
       <div className="container mx-auto px-4 py-4">
 
