@@ -6,8 +6,9 @@
   "scripts": {
     "frontend": "vite",
    
-    "dev": "npm run frontend && vite dev",
-    "build": "vite build"
+    "dev": "vite",
+    "build": "vite build",
+    "start": "react-scripts start"
   },
   "dependencies": {
     "@codemirror/autocomplete": "^6.18.6",

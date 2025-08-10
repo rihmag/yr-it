@@ -5,6 +5,7 @@
   "main": "index.js",
   "type": "commonjs",
   "scripts": {
+    "build": "next build",
     "start": "node index.js",
     "dev": "nodemon index.js",
     "debug": "node --inspect index.js",
