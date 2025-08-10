@@ -1,4 +1,6 @@
 const axios = require("axios");
+const env = require("dotenv");
+env.config();
 
 const setupCompilerRoute = (app) => {
   const JUDGE0_URL =
@@ -24,7 +26,7 @@ const setupCompilerRoute = (app) => {
       const response = await axios.post(JUDGE0_URL, body, {
         headers: {
           "Content-Type": "application/json",
-          "X-RapidAPI-Key": "833d96ed85mshb4b9a14ba73cc12p15a666jsn367c253b5ff9", // 🔒 Replace this!
+          "X-RapidAPI-Key": Process.env.RAPID_API_KEY, // 🔒 Replace this!
           "X-RapidAPI-Host": "judge0-ce.p.rapidapi.com",
         },
       });

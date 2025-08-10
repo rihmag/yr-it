@@ -5,6 +5,8 @@ const authRoutes = require('./authroutes');
 const courseroutes = require('./courseroutes');
 const cors = require('cors');
 const setupCompilerRoute = require("./server");
+const env = require("dotenv");
+env.config();
 const path = require('path');
 
 const app = express();

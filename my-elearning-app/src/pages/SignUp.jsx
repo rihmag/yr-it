@@ -65,7 +65,7 @@ export default function SignUp() {
     }
 
     try {
-      const url="http://localhost:3000/api/auth/signup"; 
+      const url="https://localhost:3000/api/auth/signup"; 
       const response=await fetch(url,
         {
           method: 'POST',
