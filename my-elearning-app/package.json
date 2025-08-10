@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "frontend": "vite",
-    "backend": "cd backend/Mybackend && npm run dev",
-    "dev": "concurrently \"npm run frontend\" \"npm run backend\"",
+   
+    "dev": "npm run frontend && vite dev",
     "build": "vite build"
   },
   "dependencies": {
