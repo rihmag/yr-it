@@ -15,11 +15,7 @@ const app = express();
 db();
 
 // Middleware
-
-app.use(cors({
-     origin: ["http://localhost:3000", "https://tamdekenaaltolda.vercel.app/login"],
-  credentials: true}
-));
+app.use(cors());
 app.use(express.json())
 app.use('/api', routes);
 app.use('/api/auth', authRoutes);

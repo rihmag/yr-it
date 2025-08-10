@@ -2,11 +2,11 @@
   "name": "unified-backend",
   "version": "1.0.0",
   "description": "Unified backend with authentication, product management, and IDE functionality",
-  "main": "index.js",
+  "main": "dist/index.js",
   "type": "commonjs",
   "scripts": {
     "build": "next build",
-    "start": "node index.js",
+    "start": "node dist/index.js",
     "dev": "nodemon index.js",
     "debug": "node --inspect index.js",
     "test": "jest",
