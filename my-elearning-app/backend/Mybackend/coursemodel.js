@@ -51,9 +51,10 @@ const courseSchema = new Schema({
         required: true,
         default: 0
     },
-    image: {
+    thumbnail: {
         type: String,
-        required: true
+        required: true,
+        
     },
     published: {
         type: Boolean,

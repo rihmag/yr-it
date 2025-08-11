@@ -1,6 +1,6 @@
 const Course = require("./coursemodel")
 // You would create a helper for your cloud storage service
-// const { uploadToCloudinary } = require("./utils/imageUploader");
+const uploadToCloudinary  = require("./filelelunga");
 
 const CreateCourse = async (req, res) => {
     try {
@@ -20,7 +20,9 @@ const CreateCourse = async (req, res) => {
         // For example: const imageUrl = await uploadToCloudinary(req.file.buffer);
         // For now, we'll just acknowledge that a file was received.
         // IMPORTANT: The line below is NOT a real implementation.
-        const imageUrl = `https://placeholder-image-url.com/${req.file.originalname}`;
+       
+        thumbnail = req.file.path;
+        
 
         const newCourse = await Course.create({
             title,
@@ -28,7 +30,8 @@ const CreateCourse = async (req, res) => {
             category,
             price,
             instructor,
-            image: imageUrl, // Save the public URL from your storage provider
+            thumbnail,
+             // Save the public URL from your storage provider
         });
         return res.status(201).json(newCourse);}
     catch (error) {

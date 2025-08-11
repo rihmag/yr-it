@@ -26,7 +26,7 @@ const AddCourse = () => {
         if (file) {
             setCourseData({
                 ...courseData,
-                image: file,
+                thumbnail: file,
                 // image:file type aa gya h
             });
             const reader = new FileReader();
@@ -46,6 +46,9 @@ const AddCourse = () => {
         for (const key in courseData) {
             formData.append(key, courseData[key]);
         }
+         for (let pair of formData.entries()) {
+                 console.log(`${pair[0]}:`, pair[1]);
+                             }
 
         // Example of how you might send it to an API
         try {
@@ -97,7 +100,7 @@ const AddCourse = () => {
     return (
         <div className="add-course-container">
             <h2>Create a New Course</h2>
-            <form onSubmit={handleSubmit} className="add-course-form">
+             <form onSubmit={handleSubmit} className="add-course-form" encType="multipart/form-data" >
                 <div className="form-group">
                     <label htmlFor="title">Course Title</label>
                     <input
@@ -149,9 +152,10 @@ const AddCourse = () => {
                     <input
                         type="file"
                         id="thumbnail"
-                        name="image"
+                        name="thumbnail"
                         onChange={handleFileChange}
                         accept="image/*"
+                        
                         required
                     />
                 </div>
