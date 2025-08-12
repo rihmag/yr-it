@@ -239,31 +239,6 @@ export default function Navbar() {
         </div>
 
 
-        {/* Search Bar
-        <AnimatePresence>
-          {isSearchOpen && (
-            <motion.form
-              onSubmit={handleSearch}
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
-              className="mt-4"
-            >
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-                <input
-                  type="text"
-                  placeholder="Search courses, instructors..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                />
-              </div>
-            </motion.form>
-          )}
-        </AnimatePresence> */}
-
 
         {/* Mobile Menu */}
         <AnimatePresence>
