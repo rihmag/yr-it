@@ -239,7 +239,7 @@ export default function Navbar() {
         </div>
 
 
-        {/* Search Bar */}
+        {/* Search Bar
         <AnimatePresence>
           {isSearchOpen && (
             <motion.form
@@ -262,7 +262,7 @@ export default function Navbar() {
               </div>
             </motion.form>
           )}
-        </AnimatePresence>
+        </AnimatePresence> */}
 
 
         {/* Mobile Menu */}
