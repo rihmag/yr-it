@@ -66,12 +66,110 @@ const Allcourses = async (req,res)=>{
 
     }
 }
-const editcourse = async (req,res)=>{
+
+const getCourse = async (req, res) => {
+  try {
+    // Extract course ID from request body
+    const  courseId = req.params.id;
+
+    // Validate course ID
+    if (!courseId) {
+      return res.status(400).json({
+        success: false,
+        message: 'Course ID is required'
+      });
+    }
+    const course = await Course.findById(courseId);
+
+    // Check if course exists
+    if (!course) {
+      return res.status(404).json({
+        success: false,
+        message: 'Course not found'
+      });
+    }
+
+    // Return success response with course data
+    return res.status(200).json({
+      success: true,
+      message: 'Course retrieved successfully',
+      data: course
+    });
+
+  } catch (error) {
+    console.error('Error fetching course:', error);
     
+    // Handle specific error types
+    if (error.name === 'CastError') {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid course ID format'
+      });
+    }
+}
+}
+const addLessons = async (req, res) => {
+    try{
+    const id = req.params.id
+    if(!id)
+    {
+        return res.status(404).json({message:"id nhi h"})
+    }
+    const {title,duration,content,contentType}=req.body
+  
+    const data =
+    {
+        lessons:[
+            {
+                title,
+                duration,
+                content,
+                contentType
+            }
+        ]
+    }
+    const course = await new Course.findByIdAndUpdate(id,data)
+}
+catch(error)
+{
+    res.status(500).json({message:"catch error in sending put"})
+}
+}
+const getLessons = async (req,res)=>
+{
+   try{ 
+    const id=req.params.id
+    const lessons_Details = await Course.findById(id)
+    
+    const details=
+     lessons_Details.lessons[0]
+    
+     
+  
+    if (!details) {
+      return res.status(404).json({
+        success: false,
+        message: 'Course not found'
+      });
+    }
+
+    // Return success response with course data
+    return res.status(200).json({
+      success: true,
+      message: 'Course retrieved successfully',
+      data: details
+    });}
+    catch(error){
+        console.log(error)
+        return res.status(500).json({message:"error in catch"})
+    }
 }
 module.exports = {
     CreateCourse,
     ManageCourses,
     Allcourses,
+    getCourse,
+    getLessons,
+    addLessons
   
 };
