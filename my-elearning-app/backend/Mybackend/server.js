@@ -26,7 +26,7 @@ const setupCompilerRoute = (app) => {
       const response = await axios.post(JUDGE0_URL, body, {
         headers: {
           "Content-Type": "application/json",
-          "X-RapidAPI-Key": Process.env.RAPID_API_KEY, // 🔒 Replace this!
+          "X-RapidAPI-Key": process.env.RAPID_API_KEY, // 🔒 Replace this!
           "X-RapidAPI-Host": "judge0-ce.p.rapidapi.com",
         },
       });

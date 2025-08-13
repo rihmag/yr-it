@@ -19,14 +19,20 @@ import EnrolledStudents from "./panels/EnrolledStudents";
 import Earnings from "./panels/Earnings";
 import EditCourse from "./panels/EditCourse";
 
+
+
+
+
 const PrivateRoute = ({ children, isAuthenticated }) => {
   return isAuthenticated ? children : <Navigate to="/login" />;
 };
 
 function App() {
+
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   
   return (
+
     <div>
       <Router>
         <Refreshhandler SetIsAuthenticated={setIsAuthenticated} />
@@ -37,7 +43,8 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/course/:courseId" element={<Course />} />
             <Route path="/about" element={<About />} />
-            <Route path="/courses" element={<AllCourses />} />
+            <Route path="/courses" element={<AllCourses/>}/>
+                          
             <Route 
               path="/dashboard" 
               element={

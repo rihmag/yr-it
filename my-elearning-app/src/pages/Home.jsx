@@ -1,7 +1,7 @@
 import CourseCard from "../components/CourseCard";
 import AdvertisementBanner from "../components/AdvertisementBanner";
 import InstructorCard from "../components/InstructorCard";
-import courses from "../data/courses";
+import { getCourses } from "../data/courses";
 import { useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useInView } from "react-intersection-observer";
@@ -9,17 +9,9 @@ import CountUp from "react-countup";
 import { Search, Filter, TrendingUp, Users, Award, Clock } from "lucide-react";
 import toast from "react-hot-toast";
 
-// Get unique instructors
-const instructors = Object.values(
-  courses.reduce((acc, course) => {
-    if (!acc[course.instructor.name]) {
-      acc[course.instructor.name] = course.instructor;
-    }
-    return acc;
-  }, {})
-);
-
 export default function Home() {
+  const [courses, setCourses] = useState([]);
+  const [instructors, setInstructors] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [isVisible, setIsVisible] = useState(false);
@@ -31,6 +23,25 @@ export default function Home() {
     triggerOnce: true,
   });
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const found_courses = await getCourses();
+      setCourses(found_courses);
+      
+      const uniqueInstructors = Object.values(
+        found_courses.reduce((acc, course) => {
+          if (!acc[course.instructor]) {
+            acc[course.instructor] = course.instructor;
+          }
+          return acc;
+        }, {})
+      );
+      setInstructors(uniqueInstructors);
+    };
+    fetchData();
+    setIsVisible(true);
+  }, []);
+
   const categories = ["All", ...new Set(courses.map(course => course.category))];
   const featuredCourses = courses.slice(0, 3);
 
@@ -40,10 +51,6 @@ export default function Home() {
     const matchesCategory = selectedCategory === "All" || course.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
-
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
 
   const handleSearch = (value) => {
     setSearchTerm(value);
@@ -270,13 +277,21 @@ export default function Home() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {featuredCourses.map((course, index) => (
               <motion.div
-                key={course.id}
+                key={course._id}
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.2 }}
                 className="flex"
               >
-                <CourseCard course={course} />
+                <CourseCard 
+                          key={course._id} 
+                          course={course.title}
+                          courseImage={course.thumbnail}
+                          price={course.price}
+                          description={course.description}
+                          instructor={course.instructor}
+                          category={course.category}
+                           />
               </motion.div>
             ))}
           </div>
@@ -296,13 +311,19 @@ export default function Home() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8" id="courses">
             {filteredCourses.map((course, index) => (
               <motion.div
-                key={course.id}
+                key={course._id}
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 className="flex"
               >
-                <CourseCard course={course} />
+                <CourseCard  key={course._id} 
+                          course={course.title}
+                          courseImage={course.thumbnail}
+                          price={course.price}
+                          description={course.description}
+                          instructor={course.instructor}
+                          category={course.category} />
               </motion.div>
             ))}
           </div>

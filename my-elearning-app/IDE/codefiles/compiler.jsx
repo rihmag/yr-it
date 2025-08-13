@@ -79,7 +79,7 @@ export default function CodeEditor() {
         >
           <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 mb-4 sm:mb-6   ">
             <div className="flex items-center gap-2 sm:gap-4 absolute">
-              <Coffee className="w-12 h-6 sm:w-8 md:w-12 lg:w-12 lg:h-12 text-amber-400 animate-bounce " />
+              <Coffee className="w-12 h-6 sm:w-8 md:w-12 lg:w-12 lg:h-12  animate-bounce text-blue-700 " />
               <h1
                 className="font-extrabold text-transparent bg-clip-text animate-gradient-text leading-tight tracking-tight text-10xl sm:text-3xl md:text-12xl lg:text-12xl"
                 style={{

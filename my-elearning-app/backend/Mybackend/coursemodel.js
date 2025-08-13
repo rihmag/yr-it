@@ -1,3 +1,4 @@
+const { string, required } = require('joi');
 const mongoose = require('mongoose');
 const { Schema, model } = mongoose;
 
@@ -7,21 +8,22 @@ const lessonSchema = new Schema({
         type: String,
         required: true,
     },
-    contentType: {
-        type: String,
-        enum: ['video', 'text', 'quiz', 'code'],
-        required: true
-    },
-    content: {
-        type: String
-    },
+   
     video: {
-        url: String,
-        key: String
+        type:String,
+        required:true,
     },
     duration: {
         type: Number,
         default: 0
+    },
+    content: {
+        type: String,
+        required: true
+    },
+    contentType:{
+        type:String
+        
     }
 });
 const courseSchema = new Schema({

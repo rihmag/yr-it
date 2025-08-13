@@ -1,10 +1,23 @@
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import courses from "../data/courses";
+import { getCourses } from "../data/courses";
 
 export default function Course() {
   const { courseId } = useParams();
-  const course = courses.find((c) => c.id.toString() === courseId);
+  const [course, setCourse] = useState(null);
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    const fetchCourse = async () => {
+      const courses = await getCourses();
+      const foundCourse = courses.find((c) => c.title === courseId);
+      setCourse(foundCourse);
+      setLoading(false);
+    };
+    fetchCourse();
+  }, [courseId]);
+
+  if (loading) return <div>Loading...</div>;
   if (!course) return <div>Course not found</div>;
 
   const scrollToInstructor = () => {
@@ -29,11 +42,7 @@ export default function Course() {
                 <div>
                   <h3 className="font-semibold">Video Content</h3>
                   <p className="text-sm text-gray-600">
-                    {course.curriculum?.sections?.reduce(
-                      (total, section) => total + section.lessons.length,
-                      0
-                    )}{" "}
-                    video lessons
+                    {course.lessons?.length || 0} video lessons
                   </p>
                 </div>
               </div>
@@ -42,7 +51,7 @@ export default function Course() {
                 <div>
                   <h3 className="font-semibold">Course Chapters</h3>
                   <p className="text-sm text-gray-600">
-                    {course.chapters?.length} comprehensive chapters
+                    {course.lessons?.length || 0} comprehensive chapters
                   </p>
                 </div>
               </div>
@@ -71,7 +80,7 @@ export default function Course() {
             onClick={scrollToInstructor}
             className="text-blue-600 hover:text-blue-800 underline mb-4 font-medium flex items-center gap-2"
           >
-            Created by {course.instructor.name}
+            Created by {course.instructor}
           </button>
         </div>
 
@@ -79,7 +88,7 @@ export default function Course() {
         <div className="md:col-span-1">
           <div className="bg-white rounded-lg shadow-lg overflow-hidden">
             <img
-              src={course.image}
+              src={`data:image/jpeg;base64,${course.thumbnail}`}
               alt={course.title}
               className="w-full h-48 object-cover"
             />
@@ -100,49 +109,12 @@ export default function Course() {
         </div>
       </div>
 
-      {/* Curriculum Section */}
-      <div className="bg-white rounded-lg shadow-lg p-6">
-        <h2 className="text-2xl font-bold mb-6">Course Curriculum</h2>
-        {course.curriculum?.sections?.map((section, index) => (
-          <div key={index} className="mb-8">
-            <h3 className="text-xl font-semibold bg-gray-100 p-4 rounded-md mb-4">
-              {section.title}
-            </h3>
-            <div className="space-y-3">
-              {section.lessons.map((lesson, lessonIndex) => (
-                <div
-                  key={lessonIndex}
-                  className="flex items-center p-3 hover:bg-gray-50 rounded-md border"
-                >
-                  <span className="mr-3">📚</span>
-                  <div className="flex-grow">
-                    <p className="font-medium">{lesson.title}</p>
-                    <p className="text-sm text-gray-500">{lesson.duration}</p>
-                  </div>
-                  <button
-                    className="px-4 py-1 bg-blue-100 text-blue-600 rounded-full text-sm hover:bg-blue-200"
-                    onClick={() => alert(`Starting lesson: ${lesson.title}`)}
-                  >
-                    START
-                  </button>
-                </div>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
-
       {/* Instructor Section */}
       <div
         id="instructor-section"
         className="bg-white rounded-lg shadow-lg p-6 mt-12"
       >
         <div className="flex items-center mb-6">
-          <img
-            src={course.instructor.avatar}
-            alt={course.instructor.name}
-            className="w-16 h-16 rounded-full mr-6"
-          />
           <div>
             <h3
               className="text-2xl font-bold mb-2"
@@ -150,11 +122,8 @@ export default function Course() {
                 fontFamily: '"Vazirmatn", "SF Pro Text", sans-serif',
               }}
             >
-              {course.instructor.name}
+              {course.instructor}
             </h3>
-            <p className="text-gray-600 leading-relaxed max-w-2xl">
-              {course.instructor.bio}
-            </p>
           </div>
         </div>
       </div>

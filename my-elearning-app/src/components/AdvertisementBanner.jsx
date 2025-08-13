@@ -1,86 +1,70 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, Play, Star } from "lucide-react";
-import courses from "../data/courses";
-
-// Map each course to a slide for its category
-const slides = [
-  // React Courses
-  ...courses.filter(c => c.category === "React").map(course => ({
-    title: course.title,
-    description: course.description,
-    button: `View ${course.title}`,
-    link: `/courses#React`,
-    image: course.image,
-    rating: 4.8,
-    students: "2.5k",
-    duration: "12h"
-  })),
-  // Web Development Courses
-  ...courses.filter(c => c.category === "Web Development").map(course => ({
-    title: course.title,
-    description: course.description,
-    button: `View ${course.title}`,
-    link: `/courses#Web%20Development`,
-    image: course.image,
-    rating: 4.9,
-    students: "3.1k",
-    duration: "15h"
-  })),
-  // AI Courses
-  ...courses.filter(c => c.category === "AI").map(course => ({
-    title: course.title,
-    description: course.description,
-    button: `View ${course.title}`,
-    link: `/courses#AI`,
-    image: course.image,
-    rating: 4.7,
-    students: "1.8k",
-    duration: "18h"
-  })),
-  // Programming Languages Courses
-  ...courses.filter(c => c.category === "Programming Languages").map(course => ({
-    title: course.title,
-    description: course.description,
-    button: `View ${course.title}`,
-    link: `/courses#Programming%20Languages`,
-    image: course.image,
-    rating: 4.6,
-    students: "2.2k",
-    duration: "14h"
-  })),
-];
+import { getCourses } from "../data/courses";
 
 export default function AdvertisementBanner() {
   const [current, setCurrent] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [slides, setSlides] = useState([]);
+  const [isActive, setIsActive] = useState(false);
+  const Onclick = () => {
+    
+  };
 
   useEffect(() => {
-    if (!isAutoPlaying) return;
+    const fetchCourses = async () => {
+      const courses = await getCourses();
+      const generatedSlides = courses.slice(0, 4).map(course => ({
+        title: course.title,
+        description: course.description,
+        button: `View ${course.title}` ,
+        link: `/course/${course.title}`,
+        image: `data:image/jpeg;base64,${course.thumbnail}`,
+        price: course.price,
+        category: course.category,
+        rating: 4.8, // aTBD: This should come from the API
+        students: "2.5k", // TBD: This should come from the API
+        duration: "12h" // TBD: This should come from the API
+      }));
+      setSlides(generatedSlides);
+    };
+    fetchCourses();
+  }, []);
+
+  useEffect(() => {
+    if (!isAutoPlaying || slides.length === 0) return;
     
     const interval = setInterval(() => {
       setCurrent((prev) => (prev + 1) % slides.length);
     }, 5000);
     return () => clearInterval(interval);
-  }, [isAutoPlaying]);
+  }, [isAutoPlaying, slides.length]);
 
   const nextSlide = () => {
+    if (slides.length === 0) return;
     setCurrent((prev) => (prev + 1) % slides.length);
     setIsAutoPlaying(false);
     setTimeout(() => setIsAutoPlaying(true), 3000);
   };
 
   const prevSlide = () => {
+    if (slides.length === 0) return;
     setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
     setIsAutoPlaying(false);
     setTimeout(() => setIsAutoPlaying(true), 3000);
   };
 
   const goToSlide = (index) => {
+    if (slides.length === 0) return;
     setCurrent(index);
     setIsAutoPlaying(false);
     setTimeout(() => setIsAutoPlaying(true), 3000);
   };
+
+  if (slides.length === 0) {
+    return <div>Loading...</div>; // Or a loading spinner
+  }
 
   const currentSlide = slides[current];
 

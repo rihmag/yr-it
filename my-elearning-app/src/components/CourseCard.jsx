@@ -4,7 +4,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Clock, Users, Star, BookOpen, ArrowRight, Heart, Share2, ChevronDown, ChevronUp } from "lucide-react";
 import toast from "react-hot-toast";
 
-export default function CourseCard({ course, isActive, onHover }) {
+export default function CourseCard({ 
+  course,
+  courseImage,
+  price,
+  description,
+  instructor,
+  category,
+   isActive, onHover }) {
   const [showOnLeft, setShowOnLeft] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -31,9 +38,9 @@ export default function CourseCard({ course, isActive, onHover }) {
     e.stopPropagation();
     if (navigator.share) {
       navigator.share({
-        title: course.title,
-        text: course.description,
-        url: window.location.origin + `/course/${course.id}`,
+        title: course,
+        text: description,
+        url: window.location.origin + `/course/${key}`,
       });
     } else {
       navigator.clipboard.writeText(window.location.origin + `/course/${course.id}`);
@@ -43,7 +50,7 @@ export default function CourseCard({ course, isActive, onHover }) {
 
   const handleCourseClick = () => {
     setIsLoading(true);
-    toast.success(`Opening ${course.title}...`);
+    toast.success(`Opening ${course}...`);
     setTimeout(() => setIsLoading(false), 1000);
   };
 
@@ -92,11 +99,11 @@ export default function CourseCard({ course, isActive, onHover }) {
           </motion.button>
         </div>
 
-        <Link to={`/course/${course.id}`} onClick={handleCourseClick} className="flex-1 flex flex-col">
+        <Link to={`/course/${course}`} onClick={handleCourseClick} className="flex-1 flex flex-col">
           <div className="relative overflow-hidden">
             <motion.img
-              src={course.image}
-              alt={course.title}
+              src={`data:image/jpeg;base64,${courseImage}`}
+              alt={course}
               className="w-full h-48 object-cover transition-transform duration-500"
               whileHover={{ scale: 1.1 }}
               loading="lazy"
@@ -107,7 +114,7 @@ export default function CourseCard({ course, isActive, onHover }) {
                 className="bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 text-sm font-semibold text-gray-800"
                 whileHover={{ scale: 1.05 }}
               >
-                ${course.price}
+                ${price}
               </motion.div>
             </div>
             <div className="absolute bottom-4 left-4">
@@ -141,11 +148,11 @@ export default function CourseCard({ course, isActive, onHover }) {
               whileHover={{ x: 5 }}
               transition={{ duration: 0.2 }}
             >
-              {course.title}
+              {course}
             </motion.h3>
             
             <p className="text-gray-600 text-sm mb-4 line-clamp-2 flex-shrink-0">
-              By {course.instructor.name}
+              By {instructor}
             </p>
             
             <div className="flex items-center justify-between mb-4 flex-shrink-0">
@@ -170,7 +177,7 @@ export default function CourseCard({ course, isActive, onHover }) {
               whileHover={{ x: 5 }}
               transition={{ duration: 0.2 }}
             >
-              <span className="text-2xl font-bold text-blue-600">${course.price}</span>
+              <span className="text-2xl font-bold text-blue-600">${price}</span>
               <motion.div
                 className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-2 rounded-full group-hover:from-blue-700 group-hover:to-purple-700 transition-all"
                 whileHover={{ scale: 1.1 }}
@@ -182,85 +189,7 @@ export default function CourseCard({ course, isActive, onHover }) {
           </div>
         </Link>
 
-        {/* Learn More Button */}
-        <div className="px-6 pb-6 flex-shrink-0">
-          <motion.button
-            onClick={handleLearnMore}
-            className="w-full bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700 py-3 px-4 rounded-xl font-medium hover:from-gray-200 hover:to-gray-300 transition-all duration-300 flex items-center justify-center gap-2 group/btn"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            <span>Learn More</span>
-            <motion.div
-              animate={{ rotate: isExpanded ? 180 : 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-            </motion.div>
-          </motion.button>
-        </div>
-
-        {/* Expanded Details */}
-        <AnimatePresence>
-          {isExpanded && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="overflow-hidden flex-shrink-0"
-            >
-              <div className="px-6 pb-6 border-t border-gray-100 bg-gradient-to-br from-gray-50 to-blue-50">
-                <div className="pt-4 space-y-4">
-                  <div className="flex items-start gap-4">
-                    <img
-                      src={course.image}
-                      alt={course.title}
-                      className="w-16 h-16 rounded-lg object-cover flex-shrink-0"
-                    />
-                    <div>
-                      <h4 className="font-bold text-lg text-gray-900 mb-1 line-clamp-2">{course.title}</h4>
-                      <p className="text-sm text-gray-600">By {course.instructor.name}</p>
-                    </div>
-                  </div>
-                  
-                  <p className="text-gray-600 text-sm line-clamp-3">{course.description}</p>
-                  
-                  <div className="space-y-3">
-                    <div className="flex items-center text-sm text-gray-600">
-                      <BookOpen size={16} className="mr-3 text-blue-600 flex-shrink-0" />
-                      <span>{course.chapters?.length || 0} chapters</span>
-                    </div>
-                    <div className="flex items-center text-sm text-gray-600">
-                      <Clock size={16} className="mr-3 text-green-600 flex-shrink-0" />
-                      <span>
-                        {course.curriculum?.sections?.reduce(
-                          (total, section) => total + section.lessons.length,
-                          0
-                        ) || 0}{" "}
-                        lessons
-                      </span>
-                    </div>
-                    <div className="flex items-center text-sm text-gray-600">
-                      <Users size={16} className="mr-3 text-purple-600 flex-shrink-0" />
-                      <span>{course.instructor.name}</span>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-center justify-between pt-2">
-                    <span className="text-2xl font-bold text-blue-600">${course.price}</span>
-                    <Link
-                      to={`/course/${course.id}`}
-                      className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-2 px-4 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all font-medium"
-                    >
-                      Enroll Now
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+       
       </motion.div>
     </motion.div>
   );
