@@ -53,7 +53,7 @@ const AddCourse = () => {
         // Example of how you might send it to an API
         try {
             // Replace with your actual API endpoint
-            const response = await fetch('http://localhost:3000/api/course/create', {
+            const response = await fetch('https://backend-1-bn9o.onrender.com/api/course/create', {
                 method: 'POST',
                 body: formData,           
 

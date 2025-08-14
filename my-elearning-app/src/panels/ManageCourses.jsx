@@ -18,7 +18,7 @@ const ManageCourses = () => {
                     return;
                 }
 
-                const response = await fetch('http://localhost:3000/api/course/managecourses', {
+                const response = await fetch('https://backend-1-bn9o.onrender.com/api/course/managecourses', {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                     },
