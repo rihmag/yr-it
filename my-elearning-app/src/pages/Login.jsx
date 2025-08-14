@@ -30,7 +30,7 @@ export default function Login({SetIsAuthenticated}) {
 
     try {
       // TODO: Replace with real API call
-      const response = await fetch('http://localhost:3000/api/auth/login', {
+      const response = await fetch('https://backend-1-bn9o.onrender.com/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

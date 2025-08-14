@@ -65,7 +65,7 @@ export default function SignUp() {
     }
 
     try {
-      const url="https://localhost:3000/api/auth/signup"; 
+      const url="https://backend-1-bn9o.onrender.com/api/auth/signup"; 
       const response=await fetch(url,
         {
           method: 'POST',

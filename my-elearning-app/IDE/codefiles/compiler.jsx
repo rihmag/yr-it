@@ -23,7 +23,7 @@ export default function CodeEditor() {
     setOutput("");
 
     try {
-      const response = await fetch("http://localhost:3000/compile", {
+      const response = await fetch("http://localhost:3000https://backend-1-bn9o.onrender.com/compile", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
