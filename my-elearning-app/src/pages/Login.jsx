@@ -26,11 +26,10 @@ export default function Login({SetIsAuthenticated}) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError("");
-
-    try {
-      // TODO: Replace with real API call
+    try{
+       // TODO: Replace with real API call
       const response = await fetch('https://backend-1-bn9o.onrender.com/api/auth/login', {
+
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
