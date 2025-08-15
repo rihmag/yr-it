@@ -1,6 +1,8 @@
 import CourseCard from "../components/CourseCard";
 import AdvertisementBanner from "../components/AdvertisementBanner";
 import InstructorCard from "../components/InstructorCard";
+import WhyChooseUs from "../components/WhyChooseUs";
+import CompetitiveAdvantages from "../components/CompetitiveAdvantages";
 import { getCourses } from "../data/courses";
 import { useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
@@ -160,6 +162,12 @@ export default function Home() {
             Learn from industry experts and transform your career with our comprehensive course catalog
           </motion.p>
         </motion.div>
+
+        {/* Why Choose Us Section */}
+        <WhyChooseUs />
+
+        {/* Competitive Advantages Section */}
+        <CompetitiveAdvantages />
 
         {/* Interactive Search and Filter */}
         <motion.div 

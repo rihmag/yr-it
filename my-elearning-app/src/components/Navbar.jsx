@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   Menu, 
@@ -15,10 +15,13 @@ import {
   BarChart3,
   ChevronDown,
   Code,
- 
-
+  Clock,
+  Users,
+  Star,
+  ArrowRight
 } from "lucide-react";
 import toast from "react-hot-toast";
+import { getCourses } from "../data/courses";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -26,7 +29,24 @@ export default function Navbar() {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [courses, setCourses] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+
+  // Fetch courses on component mount
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const data = await getCourses();
+        setCourses(data);
+      } catch (error) {
+        console.error('Error fetching courses:', error);
+      }
+    };
+    fetchCourses();
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -36,24 +56,54 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Search functionality
+  useEffect(() => {
+    if (searchTerm.trim().length > 0) {
+      setIsSearching(true);
+      const filtered = courses.filter(course => 
+        course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        course.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        course.instructor.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        course.category.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setSearchResults(filtered.slice(0, 5)); // Show only first 5 results
+      setIsSearching(false);
+    } else {
+      setSearchResults([]);
+    }
+  }, [searchTerm, courses]);
+
   const navItems = [
     { path: "/", label: "Home", icon: Home },
     { path: "/courses", label: "Courses", icon: BookOpen },
     { path: "/dashboard", label: "Dashboard", icon: BarChart3 },
-
     { path: "/ide", label: "IDE", icon: Code },
-
-
     { path: "/about", label: "About", icon: Info },
   ];
 
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchTerm.trim()) {
-      toast.success(`Searching for: ${searchTerm}`);
+      // Navigate to courses page with search term
+      navigate(`/courses?search=${encodeURIComponent(searchTerm)}`);
       setSearchTerm("");
       setIsSearchOpen(false);
+      setSearchResults([]);
     }
+  };
+
+  const handleCourseClick = (course) => {
+    navigate(`/course/${course._id}`);
+    setSearchTerm("");
+    setIsSearchOpen(false);
+    setSearchResults([]);
+  };
+
+  const handleViewAllResults = () => {
+    navigate(`/courses?search=${encodeURIComponent(searchTerm)}`);
+    setSearchTerm("");
+    setIsSearchOpen(false);
+    setSearchResults([]);
   };
 
   const handleNotification = () => {
@@ -71,11 +121,7 @@ export default function Navbar() {
       animate={{ y: 0 }}
       transition={{ duration: 0.6 }}
     >
-
-      
-
       <div className="container mx-auto px-4 py-4">
-
         <div className="flex items-center justify-between">
           {/* Logo */}
           <motion.div
@@ -83,11 +129,15 @@ export default function Navbar() {
             whileTap={{ scale: 0.95 }}
           >
             <Link to="/" className="flex items-center space-x-2">
-              <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center">
-                <BookOpen size={24} className="text-white" />
-              </div>
+              <img src="/images/Yr-It-Solution.png" 
+              alt="YR IT Solutions"
+              className="w-auto h-10 object-contain"
+              loading="eager"
+              decoding="async"
+              draggable="false"
+              />
               <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                Yr-learning
+                
               </span>
             </Link>
           </motion.div>
@@ -121,55 +171,140 @@ export default function Navbar() {
 
           {/* Right Side Actions */}
           <div className="hidden md:flex items-center space-x-4">
-
-         
-
             {/* Search Icon/Bar */}
-            <AnimatePresence mode="wait">
-              {!isSearchOpen ? (
-                <motion.button
-                  key="search-icon"
-                  onClick={() => setIsSearchOpen(true)}
-                  className="p-2 rounded-lg text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-all"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.8 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <Search size={20} />
-                </motion.button>
-              ) : (
-                <motion.form
-                  key="search-bar"
-                  onSubmit={handleSearch}
-                  className="relative"
-                  initial={{ opacity: 0, width: 0 }}
-                  animate={{ opacity: 1, width: "300px" }}
-                  exit={{ opacity: 0, width: 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-                  <input
-                    type="text"
-                    placeholder="Search courses, instructors..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full pl-10 pr-12 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                    autoFocus
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setIsSearchOpen(false)}
-                    className="absolute right-2 top-1/2 transform -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600 transition-all"
+            <div className="relative">
+              <AnimatePresence mode="wait">
+                {!isSearchOpen ? (
+                  <motion.button
+                    key="search-icon"
+                    onClick={() => setIsSearchOpen(true)}
+                    className="p-2 rounded-lg text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-all"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    transition={{ duration: 0.2 }}
                   >
-                    <X size={16} />
-                  </button>
-                </motion.form>
-              )}
-            </AnimatePresence>
+                    <Search size={20} />
+                  </motion.button>
+                ) : (
+                  <motion.div
+                    key="search-container"
+                    className="relative"
+                    initial={{ opacity: 0, width: 0 }}
+                    animate={{ opacity: 1, width: "400px" }}
+                    exit={{ opacity: 0, width: 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <form onSubmit={handleSearch} className="relative">
+                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+                      <input
+                        type="text"
+                        placeholder="Search courses, instructors, topics..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="w-full pl-10 pr-12 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                        autoFocus
+                      />
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setIsSearchOpen(false);
+                          setSearchTerm("");
+                          setSearchResults([]);
+                        }}
+                        className="absolute right-2 top-1/2 transform -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600 transition-all"
+                      >
+                        <X size={16} />
+                      </button>
+                    </form>
 
+                    {/* Search Results Dropdown */}
+                    <AnimatePresence>
+                      {(searchResults.length > 0 || isSearching) && (
+                        <motion.div
+                          initial={{ opacity: 0, y: -10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-xl border border-gray-200 max-h-96 overflow-hidden"
+                        >
+                          {isSearching ? (
+                            <div className="p-4 text-center">
+                              <div className="w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-2"></div>
+                              <p className="text-gray-600 text-sm">Searching...</p>
+                            </div>
+                          ) : (
+                            <>
+                              <div className="max-h-80 overflow-y-auto">
+                                {searchResults.map((course) => (
+                                  <motion.div
+                                    key={course._id}
+                                    whileHover={{ backgroundColor: "#f8fafc" }}
+                                    className="p-3 border-b border-gray-100 last:border-b-0 cursor-pointer"
+                                    onClick={() => handleCourseClick(course)}
+                                  >
+                                    <div className="flex items-start space-x-3">
+                                      <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                                        <BookOpen size={20} className="text-white" />
+                                      </div>
+                                      <div className="flex-1 min-w-0">
+                                        <h4 className="text-sm font-semibold text-gray-900 truncate">
+                                          {course.title}
+                                        </h4>
+                                        <p className="text-xs text-gray-600 mt-1">
+                                          By {course.instructor}
+                                        </p>
+                                        <div className="flex items-center space-x-4 mt-2 text-xs text-gray-500">
+                                          <div className="flex items-center space-x-1">
+                                            <Clock size={12} />
+                                            <span>12h</span>
+                                          </div>
+                                          <div className="flex items-center space-x-1">
+                                            <Users size={12} />
+                                            <span>1.2k</span>
+                                          </div>
+                                          <div className="flex items-center space-x-1">
+                                            <Star size={12} className="text-yellow-500" />
+                                            <span>4.8</span>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div className="text-right">
+                                        <div className="text-sm font-bold text-blue-600">
+                                          ${course.price}
+                                        </div>
+                                        <ArrowRight size={16} className="text-gray-400 mt-1" />
+                                      </div>
+                                    </div>
+                                  </motion.div>
+                                ))}
+                              </div>
+                              
+                              {searchResults.length > 0 && (
+                                <div className="p-3 bg-gray-50 border-t border-gray-200">
+                                  <button
+                                    onClick={handleViewAllResults}
+                                    className="w-full text-center text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors"
+                                  >
+                                    View all {courses.filter(course => 
+                                      course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                                      course.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                                      course.instructor.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                                      course.category.toLowerCase().includes(searchTerm.toLowerCase())
+                                    ).length} results
+                                  </button>
+                                </div>
+                              )}
+                            </>
+                          )}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
 
             {/* Notifications */}
             <motion.button
@@ -238,8 +373,6 @@ export default function Navbar() {
           </motion.button>
         </div>
 
-
-
         {/* Mobile Menu */}
         <AnimatePresence>
           {isMobileMenuOpen && (
@@ -251,8 +384,6 @@ export default function Navbar() {
               className="md:hidden mt-4 bg-gray-50 rounded-xl p-4"
             >
               <div className="space-y-2">
-
-
                 {/* Mobile Search */}
                 <div className="relative mb-4">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
@@ -263,6 +394,70 @@ export default function Navbar() {
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                   />
+                  
+                  {/* Mobile Search Results */}
+                  <AnimatePresence>
+                    {(searchResults.length > 0 || isSearching) && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-xl border border-gray-200 max-h-64 overflow-y-auto z-50"
+                      >
+                        {isSearching ? (
+                          <div className="p-4 text-center">
+                            <div className="w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-2"></div>
+                            <p className="text-gray-600 text-sm">Searching...</p>
+                          </div>
+                        ) : (
+                          <>
+                            {searchResults.map((course) => (
+                              <motion.div
+                                key={course._id}
+                                whileHover={{ backgroundColor: "#f8fafc" }}
+                                className="p-3 border-b border-gray-100 last:border-b-0 cursor-pointer"
+                                onClick={() => {
+                                  handleCourseClick(course);
+                                  setIsMobileMenuOpen(false);
+                                }}
+                              >
+                                <div className="flex items-start space-x-3">
+                                  <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <BookOpen size={16} className="text-white" />
+                                  </div>
+                                  <div className="flex-1 min-w-0">
+                                    <h4 className="text-sm font-semibold text-gray-900 truncate">
+                                      {course.title}
+                                    </h4>
+                                    <p className="text-xs text-gray-600 mt-1">
+                                      By {course.instructor}
+                                    </p>
+                                    <div className="text-sm font-bold text-blue-600 mt-1">
+                                      ${course.price}
+                                    </div>
+                                  </div>
+                                </div>
+                              </motion.div>
+                            ))}
+                            
+                            {searchResults.length > 0 && (
+                              <div className="p-3 bg-gray-50 border-t border-gray-200">
+                                <button
+                                  onClick={() => {
+                                    handleViewAllResults();
+                                    setIsMobileMenuOpen(false);
+                                  }}
+                                  className="w-full text-center text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors"
+                                >
+                                  View all results
+                                </button>
+                              </div>
+                            )}
+                          </>
+                        )}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
 
                 {navItems.map((item) => {
@@ -282,9 +477,9 @@ export default function Navbar() {
                       <Icon size={18} />
                       <span>{item.label}</span>
                     </Link>
-
                   );
                 })}
+                
                 <div className="border-t border-gray-200 pt-2 mt-2">
                   <Link
                     to="/login"
@@ -302,7 +497,6 @@ export default function Navbar() {
                     <UserPlus size={18} />
                     <span>Sign Up</span>
                   </Link>
-
                 </div>
               </div>
             </motion.div>
