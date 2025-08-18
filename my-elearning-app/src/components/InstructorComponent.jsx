@@ -110,4 +110,4 @@ export default function InstructorCard({ instructor }) {
       </div>
     </motion.div>
   );
-}
+} 

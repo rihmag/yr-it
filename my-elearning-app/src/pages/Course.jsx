@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getCourses } from "../data/courses";
+import InstructorComponent from "../components/InstructorComponent";
 
 export default function Course() {
   const { courseId } = useParams();
@@ -112,20 +113,17 @@ export default function Course() {
       {/* Instructor Section */}
       <div
         id="instructor-section"
-        className="bg-white rounded-lg shadow-lg p-6 mt-12"
+        className="mt-12"
       >
-        <div className="flex items-center mb-6">
-          <div>
-            <h3
-              className="text-2xl font-bold mb-2"
-              style={{
-                fontFamily: '"Vazirmatn", "SF Pro Text", sans-serif',
-              }}
-            >
-              {course.instructor}
-            </h3>
-          </div>
-        </div>
+        <InstructorComponent 
+          instructor={{
+            name: course.instructor,
+            role: 'Course Instructor',
+            avatar: '/images/default-avatar.jpg',
+            bio: course.instructor_bio || 'Experienced instructor with expertise in this subject.',
+            tags: ['Teaching', course.category || 'Education']
+          }} 
+        />
       </div>
     </div>
   );

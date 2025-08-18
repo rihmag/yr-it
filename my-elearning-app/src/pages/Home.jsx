@@ -1,5 +1,6 @@
 import CourseCard from "../components/CourseCard";
 import AdvertisementBanner from "../components/AdvertisementBanner";
+import InstructorShowcase from "../components/InstructorShowcase";
 import InstructorCard from "../components/InstructorCard";
 import WhyChooseUs from "../components/WhyChooseUs";
 import CompetitiveAdvantages from "../components/CompetitiveAdvantages";
@@ -338,35 +339,7 @@ export default function Home() {
         </motion.div>
 
         {/* Instructors Section */}
-        <motion.div 
-          className="mb-12"
-          initial={{ y: 30, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.8, delay: 1.2 }}
-        >
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-3xl font-bold text-gray-800">Meet Our Instructors</h2>
-            <motion.div
-              className="w-16 h-1 bg-gradient-to-r from-green-600 to-blue-600 rounded-full"
-              initial={{ width: 0 }}
-              animate={{ width: 64 }}
-              transition={{ duration: 1, delay: 1.4 }}
-            />
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {instructors.map((instructor, idx) => (
-              <motion.div
-                key={instructor.name + idx}
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: idx * 0.2 }}
-                className="flex"
-              >
-                <InstructorCard instructor={instructor} />
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
+            <InstructorShowcase />
       </motion.div>
     </div>
   );
