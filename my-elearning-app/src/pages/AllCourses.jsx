@@ -4,6 +4,7 @@ import CourseCard from "../components/CourseCard";
 import { Search, Filter, Grid, List, BookOpen, Users, Clock, Star, TrendingUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSearchParams } from "react-router-dom";
+import Loader from "../components/Loader"; // <-- Correct import path
 
 export default function AllCourses() {
   const [activeCard, setActiveCard] = useState(null);
@@ -103,23 +104,8 @@ export default function AllCourses() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
-        <div className="container mx-auto px-4 py-8">
-          <div className="flex items-center justify-center min-h-[60vh]">
-            <motion.div
-              className="flex flex-col items-center space-y-4"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-            >
-              <motion.div
-                className="w-16 h-16 border-4 border-blue-200 border-t-blue-600 rounded-full"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-              />
-              <p className="text-gray-600 text-lg font-medium">Loading amazing courses...</p>
-            </motion.div>
-          </div>
-        </div>
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center">
+        <Loader />
       </div>
     );
   }

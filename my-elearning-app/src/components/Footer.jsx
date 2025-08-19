@@ -70,15 +70,15 @@ export default function Footer() {
             <div className="space-y-3">
               <div className="flex items-center space-x-3 text-gray-300">
                 <Mail size={16} className="text-blue-400" />
-                <span>contact@yr-learning.com</span>
+                <span>yr.itsolutions.pvtltd@gmail.com</span>
               </div>
               <div className="flex items-center space-x-3 text-gray-300">
                 <Phone size={16} className="text-blue-400" />
-                <span>+1 (555) 123-4567</span>
+                <span>+91 7404890806</span>
               </div>
               <div className="flex items-center space-x-3 text-gray-300">
                 <MapPin size={16} className="text-blue-400" />
-                <span>123 Learning St, Education City</span>
+                <span>Gurugram, Haryana, India</span>
               </div>
             </div>
           </motion.div>
@@ -197,15 +197,17 @@ export default function Footer() {
               <h4 className="text-lg font-semibold mb-4 text-white">Follow Us</h4>
               <div className="flex space-x-4">
                 {[
-                  { icon: Facebook, color: "hover:text-blue-400" },
-                  { icon: Twitter, color: "hover:text-blue-400" },
-                  { icon: Instagram, color: "hover:text-pink-400" },
-                  { icon: Linkedin, color: "hover:text-blue-400" },
-                  { icon: Youtube, color: "hover:text-red-400" },
+                  { icon: Facebook, color: "hover:text-blue-400", link: "https://www.facebook.com/profile.php?id=61577752955890&rdid=ILY8kzZlwX92GdoH&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F162i8uqYzy%2F#" },
+                  { icon: Twitter, color: "hover:text-blue-400", link: "https://twitter.com/yourhandle" },
+                  { icon: Instagram, color: "hover:text-pink-400", link: "https://www.instagram.com/yritsolutions2025?utm_source=ig_contact_invite" },
+                  { icon: Linkedin, color: "hover:text-blue-400", link: "https://www.linkedin.com/in/yashika-sharma1775/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" },
+                  { icon: Youtube, color: "hover:text-red-400", link: "https://www.youtube.com/@yritsolutions" },
                 ].map((social, index) => (
                   <motion.a
                     key={index}
-                    href="#"
+                    href={social.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className={`text-gray-300 ${social.color} transition-colors duration-300`}
                     whileHover={{ scale: 1.2, y: -2 }}
                     whileTap={{ scale: 0.9 }}
@@ -217,38 +219,6 @@ export default function Footer() {
             </div>
           </motion.div>
         </div>
-
-        {/* Stats Section */}
-        {/* <motion.div 
-          className="mt-12 pt-8 border-t border-white/20"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-        >
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            {[
-              { icon: Users, number: "50K+", label: "Students" },
-              { icon: BookOpen, number: "500+", label: "Courses" },
-              { icon: Award, number: "95%", label: "Success Rate" },
-              { icon: Users, number: "100+", label: "Instructors" },
-            ].map((stat, index) => (
-              <motion.div
-                key={index}
-                className="group cursor-pointer"
-                whileHover={{ y: -5 }}
-                onClick={() => toast.success(`${stat.number} ${stat.label}`)}
-              >
-                <div className="flex flex-col items-center space-y-2">
-                  <div className="p-3 bg-white/10 rounded-full group-hover:bg-white/20 transition-all">
-                    <stat.icon size={24} className="text-blue-400" />
-                  </div>
-                  <div className="text-2xl font-bold text-white">{stat.number}</div>
-                  <div className="text-gray-300 text-sm">{stat.label}</div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div> */}
 
         {/* Bottom Bar */}
         <motion.div 
@@ -275,4 +245,4 @@ export default function Footer() {
       </div>
     </footer>
   );
-} 
+}

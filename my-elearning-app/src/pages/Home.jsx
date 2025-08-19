@@ -1,7 +1,7 @@
 import CourseCard from "../components/CourseCard";
 import AdvertisementBanner from "../components/AdvertisementBanner";
+import Supreme4Banner from "../components/Supreme4Banner";
 import InstructorShowcase from "../components/InstructorShowcase";
-import InstructorCard from "../components/InstructorCard";
 import WhyChooseUs from "../components/WhyChooseUs";
 import CompetitiveAdvantages from "../components/CompetitiveAdvantages";
 import { getCourses } from "../data/courses";
@@ -11,6 +11,7 @@ import { useInView } from "react-intersection-observer";
 import CountUp from "react-countup";
 import { Search, Filter, TrendingUp, Users, Award, Clock } from "lucide-react";
 import toast from "react-hot-toast";
+import Loader from "../components/Loader";
 
 export default function Home() {
   const [courses, setCourses] = useState([]);
@@ -18,6 +19,7 @@ export default function Home() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [isVisible, setIsVisible] = useState(false);
+  const [loading, setLoading] = useState(true);
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 300], [0, -30]);
   
@@ -28,6 +30,7 @@ export default function Home() {
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       const found_courses = await getCourses();
       setCourses(found_courses);
       
@@ -40,6 +43,7 @@ export default function Home() {
         }, {})
       );
       setInstructors(uniqueInstructors);
+      setLoading(false);
     };
     fetchData();
     setIsVisible(true);
@@ -72,6 +76,14 @@ export default function Home() {
     }
   };
 
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+        <Loader />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 relative overflow-hidden">
       {/* Background Pattern */}
@@ -95,6 +107,7 @@ export default function Home() {
         animate={{ opacity: isVisible ? 1 : 0 }}
         transition={{ duration: 0.8 }}
       >
+        <Supreme4Banner />
         <AdvertisementBanner />
         
         {/* Hero Section with Floating Elements */}
@@ -343,4 +356,4 @@ export default function Home() {
       </motion.div>
     </div>
   );
-} 
+}

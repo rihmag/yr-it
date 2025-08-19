@@ -1,16 +1,16 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { 
-  Menu, 
-  X, 
-  Search, 
-  Bell, 
-  User, 
-  BookOpen, 
-  Home, 
-  Info, 
-  LogIn, 
+import {
+  Menu,
+  X,
+  Search,
+  Bell,
+  User,
+  BookOpen,
+  Home,
+  Info,
+  LogIn,
   UserPlus,
   BarChart3,
   ChevronDown,
@@ -18,7 +18,7 @@ import {
   Clock,
   Users,
   Star,
-  ArrowRight
+  ArrowRight,
 } from "lucide-react";
 import toast from "react-hot-toast";
 import { getCourses } from "../data/courses";
@@ -42,7 +42,7 @@ export default function Navbar() {
         const data = await getCourses();
         setCourses(data);
       } catch (error) {
-        console.error('Error fetching courses:', error);
+        console.error("Error fetching courses:", error);
       }
     };
     fetchCourses();
@@ -60,11 +60,12 @@ export default function Navbar() {
   useEffect(() => {
     if (searchTerm.trim().length > 0) {
       setIsSearching(true);
-      const filtered = courses.filter(course => 
-        course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        course.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        course.instructor.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        course.category.toLowerCase().includes(searchTerm.toLowerCase())
+      const filtered = courses.filter(
+        (course) =>
+          course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          course.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          course.instructor.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          course.category.toLowerCase().includes(searchTerm.toLowerCase())
       );
       setSearchResults(filtered.slice(0, 5)); // Show only first 5 results
       setIsSearching(false);
@@ -84,7 +85,6 @@ export default function Navbar() {
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchTerm.trim()) {
-      // Navigate to courses page with search term
       navigate(`/courses?search=${encodeURIComponent(searchTerm)}`);
       setSearchTerm("");
       setIsSearchOpen(false);
@@ -113,31 +113,32 @@ export default function Navbar() {
   return (
     <motion.nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled 
-          ? "bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-100" 
-          : "bg-white"
+        isScrolled
+          ? "bg-white/70 backdrop-blur-lg shadow-xl border-b border-gray-200"
+          : "bg-white/90 backdrop-blur"
       }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6 }}
+      style={{
+        borderBottom: "3px solid",
+        borderImage: "linear-gradient(to right, #6366f1, #a21caf) 1",
+      }}
     >
-      <div className="container mx-auto px-4 py-4">
+      <div className="container mx-auto px-4 py-3">
         <div className="flex items-center justify-between">
-          {/* Logo */}
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <Link to="/" className="flex items-center space-x-2">
-              <img src="/images/Yr-It-Solution.png" 
-              alt="YR IT Solutions"
-              className="w-auto h-10 object-contain"
-              loading="eager"
-              decoding="async"
-              draggable="false"
+          {/* Logo with hover animation */}
+          <motion.div whileHover={{ scale: 1.08, rotate: 2 }} whileTap={{ scale: 0.97 }}>
+            <Link to="/" className="flex items-center space-x-2 group">
+              <img
+                src="/images/Yr-It-Solution.png"
+                alt="YR IT Solutions"
+                className="w-auto h-10 object-contain drop-shadow-lg group-hover:scale-110 transition-transform"
+                loading="eager"
+                decoding="async"
+                draggable="false"
               />
-              <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                
+              <span className="text-2xl font-extrabold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent tracking-tight">
               </span>
             </Link>
           </motion.div>
@@ -152,17 +153,26 @@ export default function Navbar() {
                   key={item.path}
                   whileHover={{ y: -2 }}
                   whileTap={{ scale: 0.95 }}
+                  className="relative"
                 >
                   <Link
                     to={item.path}
-                    className={`flex items-center space-x-1 px-3 py-2 rounded-lg transition-all duration-300 ${
+                    className={`flex items-center space-x-1 px-3 py-2 rounded-lg font-semibold transition-all duration-300 ${
                       isActive
-                        ? "bg-blue-600 text-white shadow-lg"
+                        ? "text-blue-700"
                         : "text-gray-700 hover:text-blue-600 hover:bg-blue-50"
                     }`}
+                    style={{ position: "relative" }}
                   >
-                    <Icon size={16} />
+                    <Icon size={18} />
                     <span>{item.label}</span>
+                    {/* Animated underline for active */}
+                    {isActive && (
+                      <motion.div
+                        layoutId="navbar-underline"
+                        className="absolute left-0 right-0 -bottom-1 h-1 rounded bg-gradient-to-r from-blue-500 to-purple-500"
+                      />
+                    )}
                   </Link>
                 </motion.div>
               );
@@ -280,19 +290,32 @@ export default function Navbar() {
                                   </motion.div>
                                 ))}
                               </div>
-                              
+
                               {searchResults.length > 0 && (
                                 <div className="p-3 bg-gray-50 border-t border-gray-200">
                                   <button
                                     onClick={handleViewAllResults}
                                     className="w-full text-center text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors"
                                   >
-                                    View all {courses.filter(course => 
-                                      course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                                      course.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                                      course.instructor.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                                      course.category.toLowerCase().includes(searchTerm.toLowerCase())
-                                    ).length} results
+                                    View all{" "}
+                                    {
+                                      courses.filter(
+                                        (course) =>
+                                          course.title
+                                            .toLowerCase()
+                                            .includes(searchTerm.toLowerCase()) ||
+                                          course.description
+                                            .toLowerCase()
+                                            .includes(searchTerm.toLowerCase()) ||
+                                          course.instructor
+                                            .toLowerCase()
+                                            .includes(searchTerm.toLowerCase()) ||
+                                          course.category
+                                            .toLowerCase()
+                                            .includes(searchTerm.toLowerCase())
+                                      ).length
+                                    }{" "}
+                                    results
                                   </button>
                                 </div>
                               )}
@@ -306,7 +329,7 @@ export default function Navbar() {
               </AnimatePresence>
             </div>
 
-            {/* Notifications */}
+            {/* Notifications with badge */}
             <motion.button
               onClick={handleNotification}
               className="relative p-2 rounded-lg text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-all"
@@ -314,10 +337,12 @@ export default function Navbar() {
               whileTap={{ scale: 0.9 }}
             >
               <Bell size={20} />
-              <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></span>
+              <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center border-2 border-white shadow">
+                3
+              </span>
             </motion.button>
 
-            {/* User Menu */}
+            {/* User Menu with avatar */}
             <div className="relative">
               <motion.button
                 onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
@@ -325,10 +350,11 @@ export default function Navbar() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center">
-                  <User size={16} className="text-white" />
+                {/* Avatar with initials */}
+                <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center font-bold text-white text-lg shadow">
+                  YI
                 </div>
-                <ChevronDown size={16} className={`transition-transform ${isUserMenuOpen ? 'rotate-180' : ''}`} />
+                <ChevronDown size={16} className={`transition-transform ${isUserMenuOpen ? "rotate-180" : ""}`} />
               </motion.button>
 
               <AnimatePresence>
@@ -394,7 +420,7 @@ export default function Navbar() {
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                   />
-                  
+
                   {/* Mobile Search Results */}
                   <AnimatePresence>
                     {(searchResults.length > 0 || isSearching) && (
@@ -439,7 +465,7 @@ export default function Navbar() {
                                 </div>
                               </motion.div>
                             ))}
-                            
+
                             {searchResults.length > 0 && (
                               <div className="p-3 bg-gray-50 border-t border-gray-200">
                                 <button
@@ -479,7 +505,7 @@ export default function Navbar() {
                     </Link>
                   );
                 })}
-                
+
                 <div className="border-t border-gray-200 pt-2 mt-2">
                   <Link
                     to="/login"
