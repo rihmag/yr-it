@@ -31,6 +31,11 @@ const CreatorPanel = () => {
                                 Earnings
                             </NavLink>
                         </li>
+                        <li>
+                            <NavLink to={`/panel/${id}/edit-banner`} className={({ isActive }) => isActive ? "active-link" : ""}>
+                                edit banner
+                            </NavLink>
+                        </li>
                     </ul>
                 </nav>
             </aside>

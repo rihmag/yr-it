@@ -18,6 +18,7 @@ import ManageCourses from "./panels/ManageCourses";
 import EnrolledStudents from "./panels/EnrolledStudents";
 import Earnings from "./panels/Earnings";
 import EditCourse from "./panels/EditCourse";
+import EditBanner from "./panels/EditBanner";
 
 
 
@@ -67,6 +68,7 @@ function App() {
               <Route index element={<Navigate to="manage-courses" replace />} />
               <Route path="add-course" element={<AddCourse />} />
               <Route path="manage-courses" element={<ManageCourses />} />
+              <Route path="edit-banner" element={<EditBanner />} />
               <Route path="edit-course/:courseId" element={<EditCourse />} />
               <Route path="enrolled-students" element={<EnrolledStudents />} />
               <Route path="earnings" element={<Earnings />} />

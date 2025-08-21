@@ -1,0 +1,98 @@
+/* EditBanner.css */
+.edit-banner-panel {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.edit-banner-panel h2 {
+    text-align: center;
+    font-size: 1.75rem;
+    color: #111827;
+    margin-bottom: 2rem;
+}
+
+.edit-banner-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #374151;
+}
+
+.form-group input[type="text"],
+.form-group input[type="file"] {
+    padding: 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+.image-preview {
+    max-width: 100%;
+    height: auto;
+    max-height: 250px;
+    border-radius: 6px;
+    margin-top: 0.5rem;
+    border: 1px solid #e5e7eb;
+    object-fit: cover;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.form-actions button {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.form-actions button[type="submit"] {
+    background-color: #2563eb;
+    color: white;
+}
+
+.form-actions button[type="submit"]:hover {
+    background-color: #1d4ed8;
+}
+
+.form-actions button[type="button"] {
+    background-color: #f3f4f6;
+    color: #374151;
+    border: 1px solid #d1d5db;
+}
+
+.form-actions button[type="button"]:hover {
+    background-color: #e5e7eb;
+}
+
+.form-actions button:disabled {
+    background-color: #9ca3af;
+    cursor: not-allowed;
+}
+
+.error {
+    color: #ef4444;
+    text-align: center;
+    margin-top: 1rem;
+}
