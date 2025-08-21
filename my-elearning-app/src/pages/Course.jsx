@@ -7,11 +7,13 @@ export default function Course() {
   const { courseId } = useParams();
   const [course, setCourse] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [lesson_data,setlesson_data]=useState([])
 
   useEffect(() => {
     const fetchCourse = async () => {
       const courses = await getCourses();
       const foundCourse = courses.find((c) => c.title === courseId);
+      setlesson_data(foundCourse.lessons)
       setCourse(foundCourse);
       setLoading(false);
     };
@@ -84,6 +86,7 @@ export default function Course() {
             Created by {course.instructor}
           </button>
         </div>
+        
 
         {/* Course Image and Subscribe Card */}
         <div className="md:col-span-1">
@@ -109,7 +112,44 @@ export default function Course() {
           </div>
         </div>
       </div>
+            <div>
+              <div className="bg-blue-200 text-green-700 text-lg font-bold">
+                <h1>Lessons</h1>
+              </div>
+              <br />
+             <ul>
 
+        {lesson_data.map(lesson => (
+          <li key={lesson._id}>
+            <h3 className=" rounded-md border-4 bg-yellow-100">{lesson.title}</h3>
+            <br />
+            <p className=" rounded-md border-4 bg-orange-100 ">{lesson.content}</p>
+            <br />
+            <p className="h-10 w-24 text-sm bg-pink-100">Duration: {lesson.duration} minutes</p>
+        <br />
+         {lesson.contentType === 'video' && (() => {
+                  const url = lesson.video;
+                  const match = url.match(/[?&]v=([^&#]+)/);
+                  const videoId = match ? match[1] : null;
+
+                  if (!videoId) return null;
+
+                  return (
+                    <iframe 
+                      width="560" 
+                      height="315" 
+                      src={`https://www.youtube.com/embed/${videoId}`}
+                      title="YouTube video player" 
+                      frameBorder="0" 
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                      allowFullScreen
+                           />
+                      );
+                          })()}
+      </li>
+        ))}
+      </ul>
+    </div>
       {/* Instructor Section */}
       <div
         id="instructor-section"
@@ -120,7 +160,6 @@ export default function Course() {
             name: course.instructor,
             role: 'Course Instructor',
             avatar: '/images/default-avatar.jpg',
-            bio: course.instructor_bio || 'Experienced instructor with expertise in this subject.',
             tags: ['Teaching', course.category || 'Education']
           }} 
         />

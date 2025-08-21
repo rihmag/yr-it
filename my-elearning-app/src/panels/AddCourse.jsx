@@ -8,6 +8,7 @@ const AddCourse = () => {
         description: '',
         price: '',
         category: '',
+        instructor:'',
         thumbnail: null,
     });
     const [thumbnailPreview, setThumbnailPreview] = useState('');
@@ -87,6 +88,7 @@ const AddCourse = () => {
                 description: '',
                 price: '',
                 category: '',
+                instructor,
                 thumbnail: "",
             });
             setThumbnailPreview('');
@@ -147,6 +149,17 @@ const AddCourse = () => {
                         required
                     />
                 </div>
+                 <div className="form-group">
+                    <label htmlFor="instructor">Instructor Name</label>
+                    <textarea
+                        id="instructor"
+                        name="instructor"
+                        value={courseData.instructor}
+                        onChange={handleChange}
+                        rows="1"
+                        required
+                    ></textarea>
+                </div>
                 <div className="form-group">
                     <label htmlFor="thumbnail">Course Thumbnail</label>
                     <input
@@ -159,6 +172,7 @@ const AddCourse = () => {
                         required
                     />
                 </div>
+                
 
                 {thumbnailPreview && (
                     <div className="thumbnail-preview">
