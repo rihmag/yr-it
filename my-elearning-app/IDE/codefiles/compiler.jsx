@@ -70,7 +70,7 @@ export default function CodeEditor() {
       <div className="gap-10 relative "
 
       >
-       <img src="/public/images/StockCake-Coding Coffee Break_1754419391.jpg"
+       <img src="/public/images/compiler.jpg"
                       style={{position:"absolute", height:"600px",width:"100%",margin:0,backgroundBlendMode:"overlay"}} alt="" />     
          <div className="container mx-auto max-w-7xl py-4 sm:py-6 lg:py-8"
 >
