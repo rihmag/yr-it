@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Code, Brain, Zap, Shield, Star, Users, Clock, Award } from "lucide-react";
+import { Code, Brain, Zap, Shield, Star, Users, Clock, Award, Monitor, Briefcase } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function WhyChooseUs() {
@@ -35,6 +35,22 @@ export default function WhyChooseUs() {
       gradient: "from-green-500 to-emerald-500",
       bgGradient: "from-green-50 to-emerald-50",
       borderColor: "border-green-200"
+    },
+    {
+      icon: <Monitor className="w-8 h-8" />,
+      title: "Online & Offline Access",
+      description: "Our platform is available for both online and offline learning, so you can study anytime, anywhere.",
+      gradient: "from-indigo-500 to-blue-500",
+      bgGradient: "from-indigo-50 to-blue-50",
+      borderColor: "border-indigo-200"
+    },
+    {
+      icon: <Briefcase className="w-8 h-8" />,
+      title: "Industry Internships",
+      description: "We provide internships on real-time industry projects to help you gain practical experience.",
+      gradient: "from-yellow-500 to-orange-500",
+      bgGradient: "from-yellow-50 to-orange-50",
+      borderColor: "border-yellow-200"
     }
   ];
 
@@ -83,7 +99,7 @@ export default function WhyChooseUs() {
         </motion.div>
 
         {/* Features Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
           {features.map((feature, index) => (
             <motion.div
               key={index}

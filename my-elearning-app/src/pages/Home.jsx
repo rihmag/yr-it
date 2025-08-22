@@ -2,8 +2,8 @@ import CourseCard from "../components/CourseCard";
 import AdvertisementBanner from "../components/AdvertisementBanner";
 import Supreme4Banner from "../components/Supreme4Banner";
 import InstructorShowcase from "../components/InstructorShowcase";
+import Testimonials from "../components/Testimonials";
 import WhyChooseUs from "../components/WhyChooseUs";
-import CompetitiveAdvantages from "../components/CompetitiveAdvantages";
 import { getCourses } from "../data/courses";
 import { useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
@@ -107,8 +107,10 @@ export default function Home() {
         animate={{ opacity: isVisible ? 1 : 0 }}
         transition={{ duration: 0.8 }}
       >
-        <Supreme4Banner />
+
         <AdvertisementBanner />
+
+        <Supreme4Banner />
         
         {/* Hero Section with Floating Elements */}
         <motion.div 
@@ -176,12 +178,6 @@ export default function Home() {
             Learn from industry experts and transform your career with our comprehensive course catalog
           </motion.p>
         </motion.div>
-
-        {/* Why Choose Us Section */}
-        <WhyChooseUs />
-
-        {/* Competitive Advantages Section */}
-        <CompetitiveAdvantages />
 
         {/* Interactive Search and Filter */}
         <motion.div 
@@ -351,8 +347,14 @@ export default function Home() {
           </div>
         </motion.div>
 
+        {/* Why Choose Us Section */}
+        <WhyChooseUs />
+
         {/* Instructors Section */}
             <InstructorShowcase />
+
+        {/* Testimonials Section */}
+        <Testimonials />    
       </motion.div>
     </div>
   );
