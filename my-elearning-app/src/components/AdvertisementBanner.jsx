@@ -37,7 +37,7 @@ export default function AdvertisementBanner() {
     
     const interval = setInterval(() => {
       setCurrent((prev) => (prev + 1) % slides.length);
-    }, 5000);
+    }, 4000);
     return () => clearInterval(interval);
   }, [isAutoPlaying, slides.length]);
 
@@ -45,21 +45,21 @@ export default function AdvertisementBanner() {
     if (slides.length === 0) return;
     setCurrent((prev) => (prev + 1) % slides.length);
     setIsAutoPlaying(false);
-    setTimeout(() => setIsAutoPlaying(true), 3000);
+    setTimeout(() => setIsAutoPlaying(true), 4000);
   };
 
   const prevSlide = () => {
     if (slides.length === 0) return;
     setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
     setIsAutoPlaying(false);
-    setTimeout(() => setIsAutoPlaying(true), 3000);
+    setTimeout(() => setIsAutoPlaying(true), 4000);
   };
 
   const goToSlide = (index) => {
     if (slides.length === 0) return;
     setCurrent(index);
     setIsAutoPlaying(false);
-    setTimeout(() => setIsAutoPlaying(true), 3000);
+    setTimeout(() => setIsAutoPlaying(true), 4000);
   };
 
   if (slides.length === 0) {
@@ -91,13 +91,13 @@ export default function AdvertisementBanner() {
               className="flex-1 flex flex-col items-start space-y-6 pr-4 md:pr-8"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
             >
               <motion.div
                 className="flex items-center gap-2 text-yellow-400"
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.4, delay: 0.4 }}
+                transition={{ duration: 0.4, delay: 0.6 }}
               >
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} size={16} fill={i < Math.floor(currentSlide.rating) ? "currentColor" : "none"} />

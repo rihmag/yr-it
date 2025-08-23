@@ -11,7 +11,7 @@ const BannerManager = () => {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const baseUrl = 'https://backend-1-bn9o.onrender.com'; // Using a consistent local base URL
-
+    // https://backend-1-bn9o.onrender.com/api/banner/getbanner
     // Fetch all banners
     const fetchAllBanners = async () => {
         setLoading(true);

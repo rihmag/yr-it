@@ -114,7 +114,7 @@ export default function CourseCard({
                 className="bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 text-sm font-semibold text-gray-800"
                 whileHover={{ scale: 1.05 }}
               >
-                ${price}
+                ₹{price}
               </motion.div>
             </div>
             <div className="absolute bottom-4 left-4">
@@ -177,7 +177,7 @@ export default function CourseCard({
               whileHover={{ x: 5 }}
               transition={{ duration: 0.2 }}
             >
-              <span className="text-2xl font-bold text-blue-600">${price}</span>
+              <span className="text-2xl font-bold text-blue-600">₹{price}</span>
               <motion.div
                 className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-2 rounded-full group-hover:from-blue-700 group-hover:to-purple-700 transition-all"
                 whileHover={{ scale: 1.1 }}

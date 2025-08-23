@@ -98,7 +98,7 @@ export default function Course() {
             />
             <div className="p-6">
               <div className="mb-4">
-                <span className="text-3xl font-bold">${course.price}</span>
+                <span className="text-3xl font-bold">₹{course.price}</span>
               </div>
               <button
                 className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors"
@@ -112,22 +112,21 @@ export default function Course() {
           </div>
         </div>
       </div>
-            <div>
-              <div className="bg-blue-200 text-green-700 text-lg font-bold">
-                <h1>Lessons</h1>
-              </div>
-              <br />
-             <ul>
-
-        {lesson_data.map(lesson => (
-          <li key={lesson._id}>
-            <h3 className=" rounded-md border-4 bg-yellow-100">{lesson.title}</h3>
-            <br />
-            <p className=" rounded-md border-4 bg-orange-100 ">{lesson.content}</p>
-            <br />
-            <p className="h-10 w-24 text-sm bg-pink-100">Duration: {lesson.duration} minutes</p>
-        <br />
-         {lesson.contentType === 'video' && (() => {
+            <div className="mt-12">
+        <h2 className="text-2xl font-bold mb-6">Lessons</h2>
+        <div className="space-y-6">
+          {lesson_data.map((lesson, index) => (
+            <div key={lesson._id} className="bg-white rounded-lg shadow-md overflow-hidden">
+              <div className="p-6">
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="text-xl font-semibold">{`${index + 1}. ${lesson.title}`}</h3>
+                  <p className="text-sm text-gray-600 bg-gray-100 px-3 py-1 rounded-full">
+                    {lesson.duration} mins
+                  </p>
+                </div>
+                <p className="text-gray-700 mb-4">{lesson.content}</p>
+                
+                {lesson.contentType === 'video' && (() => {
                   const url = lesson.video;
                   const match = url.match(/[?&]v=([^&#]+)/);
                   const videoId = match ? match[1] : null;
@@ -135,21 +134,23 @@ export default function Course() {
                   if (!videoId) return null;
 
                   return (
-                    <iframe 
-                      width="560" 
-                      height="315" 
-                      src={`https://www.youtube.com/embed/${videoId} `}
-                      title="YouTube video player" 
-                      frameBorder="0" 
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                      allowFullScreen
-                           />
-                      );
-                          })()}
-      </li>
-        ))}
-      </ul>
-    </div>
+                    <div className="aspect-w-16 aspect-h-9">
+                      <iframe 
+                        className="w-full h-full"
+                        src={`https://www.youtube.com/embed/${videoId}`}
+                        title="YouTube video player" 
+                        frameBorder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        allowFullScreen
+                      />
+                    </div>
+                  );
+                })()}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
       {/* Instructor Section */}
       <div
         id="instructor-section"
