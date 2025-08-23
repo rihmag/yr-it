@@ -190,7 +190,7 @@ export default function Supreme4Banner() {
               animate={{ rotate: [0, 10, -10, 0], y: [0, -3, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
               initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
+              animate={{ opacity: 1.5, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.4 }}
             >
               NEW!

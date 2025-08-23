@@ -5,7 +5,6 @@ import {
   Menu,
   X,
   Search,
-  Bell,
   User,
   BookOpen,
   Home,
@@ -106,9 +105,6 @@ export default function Navbar() {
     setSearchResults([]);
   };
 
-  const handleNotification = () => {
-    toast.success("You have 3 new notifications!");
-  };
 
   return (
     <motion.nav
@@ -329,18 +325,6 @@ export default function Navbar() {
               </AnimatePresence>
             </div>
 
-            {/* Notifications with badge */}
-            <motion.button
-              onClick={handleNotification}
-              className="relative p-2 rounded-lg text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-all"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              <Bell size={20} />
-              <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center border-2 border-white shadow">
-                3
-              </span>
-            </motion.button>
 
             {/* User Menu with avatar */}
             <div className="relative">

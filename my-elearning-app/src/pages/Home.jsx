@@ -108,10 +108,6 @@ export default function Home() {
         transition={{ duration: 0.8 }}
       >
 
-        <AdvertisementBanner />
-
-        <Supreme4Banner />
-        
         {/* Hero Section with Floating Elements */}
         <motion.div 
           className="text-center mb-16 relative"
@@ -179,45 +175,7 @@ export default function Home() {
           </motion.p>
         </motion.div>
 
-        {/* Interactive Search and Filter */}
-        <motion.div 
-          className="mb-8"
-          initial={{ y: 30, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-        >
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg p-6 mb-6 border border-white/20">
-            <div className="flex flex-col md:flex-row gap-4">
-              <div className="flex-1 relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-                <input
-                  type="text"
-                  placeholder="Search courses..."
-                  value={searchTerm}
-                  onChange={(e) => handleSearch(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-white/50 backdrop-blur-sm"
-                />
-              </div>
-              <div className="flex gap-2 overflow-x-auto pb-2">
-                {categories.map((category) => (
-                  <motion.button
-                    key={category}
-                    onClick={() => handleCategoryChange(category)}
-                    className={`px-4 py-2 rounded-full whitespace-nowrap transition-all ${
-                      selectedCategory === category
-                        ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg"
-                        : "bg-white/70 text-gray-700 hover:bg-white/90 backdrop-blur-sm"
-                    }`}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    {category}
-                  </motion.button>
-                ))}
-              </div>
-            </div>
-          </div>
-        </motion.div>
+        <AdvertisementBanner />
 
         {/* Stats Section */}
         <motion.div 
@@ -315,43 +273,10 @@ export default function Home() {
           </div>
         </motion.div>
 
-        {/* All Courses Section */}
-        <motion.div 
-          className="mb-12"
-          initial={{ y: 30, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.8, delay: 1 }}
-        >
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-3xl font-bold text-gray-800">All Courses</h2>
-            <span className="text-gray-600">{filteredCourses.length} courses found</span>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8" id="courses">
-            {filteredCourses.map((course, index) => (
-              <motion.div
-                key={course._id}
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="flex"
-              >
-                <CourseCard  key={course._id} 
-                          course={course.title}
-                          courseImage={course.thumbnail}
-                          price={course.price}
-                          description={course.description}
-                          instructor={course.instructor}
-                          category={course.category} />
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
+        <Supreme4Banner />
 
         {/* Why Choose Us Section */}
         <WhyChooseUs />
-
-        {/* Instructors Section */}
-            <InstructorShowcase />
 
         {/* Testimonials Section */}
         <Testimonials />    

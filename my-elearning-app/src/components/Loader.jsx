@@ -1,16 +1,42 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
-export default function Loader({ show = true }) {
+export default function Loader({ show = true, onComplete }) {
   const loaderRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(show);
 
   useEffect(() => {
-    if (!show && loaderRef.current) {
-      loaderRef.current.classList.add("animate-zoomOut");
+    if (show) {
+      setIsVisible(true);
+      
+      // Auto-hide after 1.5 seconds
+      const timer = setTimeout(() => {
+        if (loaderRef.current) {
+          loaderRef.current.classList.add("animate-zoomOut");
+        }
+        
+        // Wait for zoom out animation to complete, then hide completely
+        setTimeout(() => {
+          setIsVisible(false);
+          onComplete?.(); // Call callback if provided
+        }, 500); // Match the zoomOut animation duration
+        
+      }, 1500); // Show for 1.5 seconds, then start exit animation (total 2s)
+
+      return () => clearTimeout(timer);
+    } else {
+      // Manual hide trigger
+      if (loaderRef.current) {
+        loaderRef.current.classList.add("animate-zoomOut");
+      }
+      setTimeout(() => {
+        setIsVisible(false);
+        onComplete?.();
+      }, 500);
     }
-  }, [show]);
+  }, [show, onComplete]);
 
   return (
-    show && (
+    isVisible && (
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#0f172a]">
         <div
           ref={loaderRef}
@@ -23,7 +49,7 @@ export default function Loader({ show = true }) {
           </div>
           {/* Animated Gradient Text */}
           <span className="relative text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent tracking-widest animate-glow-text drop-shadow-xl select-none text-center px-4 pb-2">
-          Yr-It E-Learning
+            Yr-It E-Learning
           </span>
         </div>
         <style>

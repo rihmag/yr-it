@@ -4,7 +4,8 @@ import CourseCard from "../components/CourseCard";
 import { Search, Filter, Grid, List, BookOpen, Users, Clock, Star, TrendingUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSearchParams } from "react-router-dom";
-import Loader from "../components/Loader"; // <-- Correct import path
+import Loader from "../components/Loader"; 
+import InstructorShowcase from "../components/InstructorShowcase"
 
 export default function AllCourses() {
   const [activeCard, setActiveCard] = useState(null);
@@ -365,6 +366,9 @@ export default function AllCourses() {
             </motion.button>
           </div>
         )}
+
+          <InstructorShowcase/>
+
       </div>
     </div>
   );
