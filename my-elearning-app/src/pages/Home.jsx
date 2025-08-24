@@ -260,7 +260,7 @@ export default function Home() {
                 className="flex"
               >
                 <CourseCard 
-                          key={course._id} 
+                          id={course._id} 
                           course={course.title}
                           courseImage={course.thumbnail}
                           price={course.price}

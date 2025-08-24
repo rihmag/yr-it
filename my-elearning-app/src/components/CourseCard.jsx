@@ -5,6 +5,7 @@ import { Clock, Users, Star, BookOpen, ArrowRight, Heart, Share2, ChevronDown, C
 import toast from "react-hot-toast";
 
 export default function CourseCard({ 
+  id,
   course,
   courseImage,
   price,
@@ -99,7 +100,7 @@ export default function CourseCard({
           </motion.button>
         </div>
 
-        <Link to={`/course/${course}`} onClick={handleCourseClick} className="flex-1 flex flex-col">
+        <Link to={`/course/${id}`} onClick={handleCourseClick} className="flex-1 flex flex-col">
           <div className="relative overflow-hidden">
             <motion.img
               src={`data:image/jpeg;base64,${courseImage}`}

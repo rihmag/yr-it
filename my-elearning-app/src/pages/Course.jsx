@@ -12,7 +12,7 @@ export default function Course() {
   useEffect(() => {
     const fetchCourse = async () => {
       const courses = await getCourses();
-      const foundCourse = courses.find((c) => c.title === courseId);
+      const foundCourse = courses.find((c) => c._id === courseId);
       setlesson_data(foundCourse.lessons)
       setCourse(foundCourse);
       setLoading(false);
