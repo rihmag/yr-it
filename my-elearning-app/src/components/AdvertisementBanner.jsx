@@ -19,7 +19,7 @@ export default function AdvertisementBanner() {
         title: course.title,
         description: course.description,
         button: `View ${course.title}` ,
-        link: `/course/${course.title}`,
+        link: `/api/course/${course.title}`,
         image: `data:image/jpeg;base64,${course.thumbnail}`,
         price: course.price,
         category: course.category,
