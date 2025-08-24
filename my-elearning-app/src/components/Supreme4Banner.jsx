@@ -149,7 +149,7 @@ export default function Supreme4Banner() {
           </div>
 
           {/* Full-width banner image container */}
-          <div className="relative w-full h-[400px] md:h-[450px] p-0 md:p-0">
+          <div className="">
             {/* Image with border */}
             <div className="relative w-full h-full ">
               <motion.img 
@@ -190,8 +190,7 @@ export default function Supreme4Banner() {
               animate={{ rotate: [0, 10, -10, 0], y: [0, -3, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
               initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1.5, scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
+              
             >
               NEW!
             </motion.div>
