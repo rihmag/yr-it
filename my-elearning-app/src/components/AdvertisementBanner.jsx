@@ -1,16 +1,14 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight, Play, Star } from "lucide-react";
+import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 import { getCourses } from "../data/courses";
+import { useNavigate } from "react-router-dom";
 
 export default function AdvertisementBanner() {
   const [current, setCurrent] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [slides, setSlides] = useState([]);
-  const [isActive, setIsActive] = useState(false);
-  const Onclick = () => {
-    
-  };
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -41,21 +39,24 @@ export default function AdvertisementBanner() {
     return () => clearInterval(interval);
   }, [isAutoPlaying, slides.length]);
 
-  const nextSlide = () => {
+  const nextSlide = (e) => {
+    e.stopPropagation();
     if (slides.length === 0) return;
     setCurrent((prev) => (prev + 1) % slides.length);
     setIsAutoPlaying(false);
     setTimeout(() => setIsAutoPlaying(true), 4000);
   };
 
-  const prevSlide = () => {
+  const prevSlide = (e) => {
+    e.stopPropagation();
     if (slides.length === 0) return;
     setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
     setIsAutoPlaying(false);
     setTimeout(() => setIsAutoPlaying(true), 4000);
   };
 
-  const goToSlide = (index) => {
+  const goToSlide = (e, index) => {
+    e.stopPropagation();
     if (slides.length === 0) return;
     setCurrent(index);
     setIsAutoPlaying(false);
@@ -77,7 +78,8 @@ export default function AdvertisementBanner() {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -100 }}
           transition={{ duration: 0.5, ease: "easeInOut" }}
-          className="relative bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700 text-white rounded-2xl shadow-2xl overflow-hidden"
+          className="relative bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700 text-white rounded-2xl shadow-2xl overflow-hidden cursor-pointer"
+          onClick={() => navigate(currentSlide.link)}
         >
           {/* Background Pattern */}
           <div className="absolute inset-0 opacity-10">
@@ -133,18 +135,6 @@ export default function AdvertisementBanner() {
                 <span>⏱️ {currentSlide.duration} course</span>
               </motion.div>
 
-              <motion.a
-                href={currentSlide.link}
-                className="group bg-white text-blue-600 font-semibold px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 inline-flex items-center gap-2"
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 1.2 }}
-              >
-                <Play size={20} className="group-hover:translate-x-1 transition-transform" />
-                {currentSlide.button}
-              </motion.a>
             </motion.div>
 
             <motion.div 
@@ -206,7 +196,7 @@ export default function AdvertisementBanner() {
             {slides.map((_, idx) => (
               <motion.button
                 key={idx}
-                onClick={() => goToSlide(idx)}
+                onClick={(e) => goToSlide(e, idx)}
                 className={`w-3 h-3 rounded-full transition-all duration-300 ${
                   current === idx 
                     ? 'bg-white scale-125' 
@@ -222,4 +212,4 @@ export default function AdvertisementBanner() {
       </AnimatePresence>
     </div>
   );
-} 
+}
