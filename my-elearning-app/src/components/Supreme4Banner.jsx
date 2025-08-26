@@ -196,57 +196,42 @@ export default function Supreme4Banner() {
             </motion.div>
           </div>
 
-          {/* Navigation Controls */}
-          {banners.length > 1 && (
-            <>
-              {/* Arrow buttons - smaller and more subtle */}
-              <motion.button
-                onClick={prevSlide}
-                className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/30 backdrop-blur-sm text-white p-2 rounded-full hover:bg-black/50 transition-all duration-300 z-10"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                aria-label="Previous banner"
-              >
-                <ChevronLeft size={18} />
-              </motion.button>
-              
-              <motion.button
-                onClick={nextSlide}
-                className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/30 backdrop-blur-sm text-white p-2 rounded-full hover:bg-black/50 transition-all duration-300 z-10"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                aria-label="Next banner"
-              >
-                <ChevronRight size={18} />
-              </motion.button>
+          {/* Navigation Arrows */}
+          <motion.button
+            onClick={prevSlide}
+            className="absolute left-3 top-1/2 -translate-y-1/2 bg-white/20 backdrop-blur-sm text-white p-2 rounded-full hover:bg-white/30 transition-all duration-300 z-10"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            aria-label="Previous banner"
+          >
+            <ChevronLeft size={22} />
+          </motion.button>
+          <motion.button
+            onClick={nextSlide}
+            className="absolute right-3 top-1/2 -translate-y-1/2 bg-white/20 backdrop-blur-sm text-white p-2 rounded-full hover:bg-white/30 transition-all duration-300 z-10"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            aria-label="Next banner"
+          >
+            <ChevronRight size={22} />
+          </motion.button>
 
-              {/* Dots indicator - positioned at bottom right */}
-              <motion.div 
-                className="absolute bottom-4 right-4 flex space-x-2 z-10"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: 0.5 }}
-              >
-                {banners.map((_, idx) => (
-                  <button
-                    key={idx}
-                    aria-label={`Go to banner ${idx + 1}`}
-                    onClick={() => setCurrentIndex(idx)}
-                    className={`h-2 w-2 rounded-full transition-all duration-300 ${
-                      idx === currentIndex 
-                        ? "bg-white w-4 shadow-lg" 
-                        : "bg-white/50 hover:bg-white/70"
-                    }`}
-                  />
-                ))}
-              </motion.div>
-
-              {/* Banner counter - positioned at bottom left */}
-              <div className="absolute bottom-4 left-4 bg-black/40 backdrop-blur-sm text-white px-2 py-1 rounded-full text-xs font-medium">
-                {currentIndex + 1} / {banners.length}
-              </div>
-            </>
-          )}
+          {/* Dots Indicator inside banner */}
+          <motion.div 
+            className="absolute bottom-3 left-1/2 -translate-x-1/2 flex space-x-2 z-10"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.3 }}
+          >
+            {banners.map((_, idx) => (
+              <button
+                key={idx}
+                aria-label={`Go to banner ${idx + 1}`}
+                onClick={() => setCurrentIndex(idx)}
+                className={`h-2 w-2 rounded-full transition-all duration-300 ${idx === currentIndex ? "bg-white w-6" : "bg-white/40"}`}
+              />
+            ))}
+          </motion.div>
         </motion.div>
       </AnimatePresence>
     </div>
