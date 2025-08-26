@@ -369,6 +369,28 @@ export default function AllCourses() {
 
           <InstructorShowcase/>
 
+          {/* Bottom Stats */}
+				<div className="mt-16 bg-white/60 backdrop-blur-sm rounded-3xl p-8 border border-white/50 shadow-lg">
+					<div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+						<div className="group">
+							<div className="text-3xl font-bold text-blue-600 group-hover:scale-110 transition-transform">10,000+</div>
+							<div className="text-sm text-gray-600 mt-1">Students Enrolled</div>
+						</div>
+						<div className="group">
+							<div className="text-3xl font-bold text-green-600 group-hover:scale-110 transition-transform">95%</div>
+							<div className="text-sm text-gray-600 mt-1">Placement Rate</div>
+						</div>
+						<div className="group">
+							<div className="text-3xl font-bold text-purple-600 group-hover:scale-110 transition-transform">4.9/5</div>
+							<div className="text-sm text-gray-600 mt-1">Student Rating</div>
+						</div>
+						<div className="group">
+							<div className="text-3xl font-bold text-orange-600 group-hover:scale-110 transition-transform">500+</div>
+							<div className="text-sm text-gray-600 mt-1">Companies Hiring</div>
+						</div>
+					</div>
+				</div>
+
       </div>
     </div>
   );

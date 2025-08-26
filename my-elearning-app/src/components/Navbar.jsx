@@ -129,7 +129,7 @@ export default function Navbar() {
               <img
                 src="/images/Yr-It-Solution.png"
                 alt="YR IT Solutions"
-                className="w-auto h-10 object-contain drop-shadow-lg group-hover:scale-110 transition-transform"
+                className="w-auto h-10 object-contain group-hover:scale-110 transition-transform"
                 loading="eager"
                 decoding="async"
                 draggable="false"
