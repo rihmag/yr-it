@@ -83,12 +83,12 @@ function App() {
             <Route 
               path="/panel/:id/*" 
               element={
-                <PrivateRoute isAuthenticated={isAuthenticated}>
+                
                   <CreatorPanel />
-                </PrivateRoute>
+                
               }
             >
-              <Route index element={<Navigate to="manage-courses" replace />} />
+             
               <Route path="add-course" element={<AddCourse />} />
               <Route path="manage-courses" element={<ManageCourses />} />
               <Route path="edit-banner" element={<EditBanner />} />
