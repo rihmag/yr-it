@@ -3,7 +3,7 @@ import { NavLink, Outlet, useParams } from 'react-router-dom';
 import './CreatorPanel.css';
 
 const CreatorPanel = () => {
-    const { id } = useParams(); // Educator's ID
+     // Educator's ID
     const [isAdmin, setIsAdmin] = useState(false);
 
     useEffect(() => {
@@ -24,27 +24,27 @@ const CreatorPanel = () => {
                 <nav>
                     <ul>
                         <li>
-                            <NavLink to={`/panel/${id}/add-course`} className={({ isActive }) => isActive ? "active-link" : ""}>
+                            <NavLink to={`/panel/add-course`} className={({ isActive }) => isActive ? "active-link" : ""}>
                                 Add Course
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink to={`/panel/${id}/manage-courses`} className={({ isActive }) => isActive ? "active-link" : ""}>
+                            <NavLink to={`/panel/manage-courses`} className={({ isActive }) => isActive ? "active-link" : ""}>
                                 Manage Courses
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink to={`/panel/${id}/enrolled-students`} className={({ isActive }) => isActive ? "active-link" : ""}>
+                            <NavLink to={`/panel/enrolled-students`} className={({ isActive }) => isActive ? "active-link" : ""}>
                                 Enrolled Students
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink to={`/panel/${id}/earnings`} className={({ isActive }) => isActive ? "active-link" : ""}>
+                            <NavLink to={`/panel/earnings`} className={({ isActive }) => isActive ? "active-link" : ""}>
                                 Earnings
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink to={`/panel/${id}/edit-banner`} className={({ isActive }) => isActive ? "active-link" : ""}>
+                            <NavLink to={`/panel/edit-banner`} className={({ isActive }) => isActive ? "active-link" : ""}>
                                 edit banner
                             </NavLink>
                         </li>
