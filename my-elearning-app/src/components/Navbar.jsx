@@ -128,7 +128,7 @@ export default function Navbar() {
           <motion.div >
             <Link to="/" className="flex items-center ">
               <img
-                src="images/Your_paragraph_text-removebg-preview.png"
+                src="/images/Your_paragraph_text-removebg-preview.png"
                 alt="YR IT Solutions"
                 className=""
                 loading="eager"
