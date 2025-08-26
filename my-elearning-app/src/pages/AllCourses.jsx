@@ -4,7 +4,6 @@ import CourseCard from "../components/CourseCard";
 import { Search, Filter, Grid, List, BookOpen, Users, Clock, Star, TrendingUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSearchParams } from "react-router-dom";
-import Loader from "../components/Loader"; 
 import InstructorShowcase from "../components/InstructorShowcase"
 
 export default function AllCourses() {
@@ -106,7 +105,10 @@ export default function AllCourses() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center">
-        <Loader />
+        <div className="text-center">
+          <div className="text-4xl mb-4">📚</div>
+          <p className="text-gray-600">Loading courses...</p>
+        </div>
       </div>
     );
   }

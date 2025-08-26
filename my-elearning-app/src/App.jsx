@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Toaster } from "react-hot-toast";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -21,6 +21,7 @@ import EditCourse from "./panels/EditCourse";
 import EditBanner from "./panels/EditBanner";
 import Chatbot from "./components/Chatbot";
 import ScrollToTop from "./components/ScrollToTop";
+import Loader from "./components/Loader";
 
 
 
@@ -29,11 +30,23 @@ const PrivateRoute = ({ children, isAuthenticated }) => {
 };
 
 function App() {
-
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isInitialLoading, setIsInitialLoading] = useState(true);
+  
+  useEffect(() => {
+    // Show initial loader for first-time page load
+    const timer = setTimeout(() => {
+      setIsInitialLoading(false);
+    }, 2000); // Show loader for 2 seconds on initial load
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isInitialLoading) {
+    return <Loader />;
+  }
   
   return (
-
     <div>
       <Router>
         <ScrollToTop />
