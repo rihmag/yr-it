@@ -70,9 +70,9 @@ function App() {
             <Route 
               path="/panel/:id/*" 
               element={
-               
+                <PrivateRoute isAuthenticated={isAuthenticated}>
                   <CreatorPanel />
-                
+                </PrivateRoute>
               }
             >
               <Route index element={<Navigate to="manage-courses" replace />} />
