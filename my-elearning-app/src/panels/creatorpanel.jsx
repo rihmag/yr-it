@@ -1,9 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink, Outlet, useParams } from 'react-router-dom';
 import './CreatorPanel.css';
 
 const CreatorPanel = () => {
     const { id } = useParams(); // Educator's ID
+    const [isAdmin, setIsAdmin] = useState(false);
+
+    useEffect(() => {
+        const userRole = localStorage.getItem('role');
+        if (userRole === 'admin') {
+            setIsAdmin(true);
+        }
+    }, []);
+
+    if (!isAdmin) {
+        return <div>You are not authorized to view this page.</div>;
+    }
 
     return (
         <div className="creator-panel">

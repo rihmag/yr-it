@@ -67,7 +67,14 @@ function App() {
               } 
             />
             
-            <Route path="/panel/:id/*" element={<CreatorPanel />}>
+            <Route 
+              path="/panel/:id/*" 
+              element={
+               
+                  <CreatorPanel />
+                
+              }
+            >
               <Route index element={<Navigate to="manage-courses" replace />} />
               <Route path="add-course" element={<AddCourse />} />
               <Route path="manage-courses" element={<ManageCourses />} />

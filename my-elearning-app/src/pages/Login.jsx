@@ -42,6 +42,7 @@ export default function Login({SetIsAuthenticated}) {
         // Store token or user data in localStorage/sessionStorage
         localStorage.setItem('token', data.token);
         localStorage.setItem('user', JSON.stringify(data.user));
+        localStorage.setItem('role', data.role);
         console.log("Login successful:", data);
         // Redirect to dashboard
         SetIsAuthenticated(true);

@@ -7,8 +7,14 @@ const ManageCourses = () => {
     const { id: educatorId } = useParams();
     const [courses, setCourses] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [isAdmin, setIsAdmin] = useState(false);
 
     useEffect(() => {
+        const userRole = localStorage.getItem('role');
+        if (userRole === 'admin') {
+            setIsAdmin(true);
+        }
+
         const fetchCourses = async () => {
             try {
                 const token = localStorage.getItem('token');
@@ -38,8 +44,10 @@ const ManageCourses = () => {
             }
         };
 
-        fetchCourses();
-    }, []);
+        if (isAdmin) {
+            fetchCourses();
+        }
+    }, [isAdmin]);
 
     const handleDelete = (courseId) => {
         // TODO: Implement delete functionality with an API call.
@@ -52,7 +60,11 @@ const ManageCourses = () => {
     };
 
     if (loading) {
-        return <div>Loading your courses...</div>;
+        return <div>Loading...</div>;
+    }
+
+    if (!isAdmin) {
+        return <div>You are not authorized to view this page.</div>;
     }
 
     return (
