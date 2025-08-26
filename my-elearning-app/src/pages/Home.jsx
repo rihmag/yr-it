@@ -11,7 +11,7 @@ import { useInView } from "react-intersection-observer";
 import CountUp from "react-countup";
 import { Search, Filter, TrendingUp, Users, Award, Clock } from "lucide-react";
 import toast from "react-hot-toast";
-import Loader from "../components/Loader";
+
 
 export default function Home() {
   const [courses, setCourses] = useState([]);
@@ -76,13 +76,13 @@ export default function Home() {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
-        <Loader />
-      </div>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+  //       <Loader />
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 relative overflow-hidden">

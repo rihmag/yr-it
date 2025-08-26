@@ -19,8 +19,8 @@ import EnrolledStudents from "./panels/EnrolledStudents";
 import Earnings from "./panels/Earnings";
 import EditCourse from "./panels/EditCourse";
 import EditBanner from "./panels/EditBanner";
-
-
+import Chatbot from "./components/Chatbot";
+import ScrollToTop from "./components/ScrollToTop";
 
 
 
@@ -36,6 +36,7 @@ function App() {
 
     <div>
       <Router>
+        <ScrollToTop />
         <Refreshhandler SetIsAuthenticated={setIsAuthenticated} />
         <div className="pt-20">
           <Navbar SetisAuthenticated={setIsAuthenticated} />
@@ -54,6 +55,7 @@ function App() {
                 </PrivateRoute>
               } 
             />
+            <Route path="/chatbot" element={<Chatbot />} />
             <Route path="/login" element={<Login SetIsAuthenticated={setIsAuthenticated} />} />
             <Route path="/signup" element={<SignUp />} />
             <Route 
@@ -64,6 +66,7 @@ function App() {
                 </PrivateRoute>
               } 
             />
+            
             <Route path="/panel/:id/*" element={<CreatorPanel />}>
               <Route index element={<Navigate to="manage-courses" replace />} />
               <Route path="add-course" element={<AddCourse />} />

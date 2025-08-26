@@ -79,6 +79,7 @@ export default function Navbar() {
     { path: "/dashboard", label: "Dashboard", icon: BarChart3 },
     { path: "/ide", label: "IDE", icon: Code },
     { path: "/about", label: "About", icon: Info },
+    {path:"/chatbot",label:"Chatbot",icon:User}
   ];
 
   const handleSearch = (e) => {
@@ -124,18 +125,18 @@ export default function Navbar() {
       <div className="container mx-auto px-4 py-3">
         <div className="flex items-center justify-between">
           {/* Logo with hover animation */}
-          <motion.div whileHover={{ scale: 1.08, rotate: 2 }} whileTap={{ scale: 0.97 }}>
-            <Link to="/" className="flex items-center space-x-2 group">
+          <motion.div >
+            <Link to="/" className="flex items-center ">
               <img
-                src="/images/Yr-It-Solution.png"
+                src="images/Your_paragraph_text-removebg-preview.png"
                 alt="YR IT Solutions"
-                className="w-auto h-10 object-contain drop-shadow-lg group-hover:scale-110 transition-transform"
+                className=""
                 loading="eager"
                 decoding="async"
                 draggable="false"
+                style={{ height: "40px", width: "110px" }}
               />
-              <span className="text-2xl font-extrabold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent tracking-tight">
-              </span>
+              
             </Link>
           </motion.div>
 

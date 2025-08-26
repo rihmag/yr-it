@@ -100,14 +100,14 @@ export default function Course() {
               <div className="mb-4">
                 <span className="text-3xl font-bold">₹{course.price}</span>
               </div>
-              <button
-                className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors"
-                onClick={() =>
-                  alert("Subscribe functionality to be implemented")
-                }
+              <a
+                href="https://docs.google.com/forms/d/e/1FAIpQLSe-dr0_7my4ic_lMQplEDivsmOMTcAoQgTRJkA5TMtMzBLBYg/viewform"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full block text-center bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors"
               >
                 Subscribe to Course
-              </button>
+              </a>
             </div>
           </div>
         </div>
