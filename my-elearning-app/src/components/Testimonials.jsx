@@ -158,6 +158,35 @@ const StarRating = () => {
 export default function Testimonials() {
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [isAnimating, setIsAnimating] = useState(false);
+	const [screenSize, setScreenSize] = useState('desktop');
+
+	// Detect screen size
+	useEffect(() => {
+		const checkScreenSize = () => {
+			const width = window.innerWidth;
+			if (width < 768) {
+				setScreenSize('mobile');
+			} else if (width < 1280) {
+				setScreenSize('tablet');
+			} else {
+				setScreenSize('desktop');
+			}
+		};
+
+		checkScreenSize();
+		window.addEventListener('resize', checkScreenSize);
+		return () => window.removeEventListener('resize', checkScreenSize);
+	}, []);
+
+	// Get number of reviews to show based on screen size
+	const getReviewCount = () => {
+		switch (screenSize) {
+			case 'mobile': return 1;
+			case 'tablet': return 2;
+			case 'desktop': return 3;
+			default: return 3;
+		}
+	};
 
 	// Auto-rotate reviews
 	useEffect(() => {
@@ -172,10 +201,11 @@ export default function Testimonials() {
 		return () => clearInterval(interval);
 	}, []);
 
-	// Get 3 consecutive reviews starting from currentIndex
+	// Get visible reviews based on screen size
 	const getVisibleReviews = () => {
+		const reviewCount = getReviewCount();
 		const reviews = [];
-		for (let i = 0; i < 3; i++) {
+		for (let i = 0; i < reviewCount; i++) {
 			const index = (currentIndex + i) % testimonials.length;
 			reviews.push({
 				...testimonials[index],
@@ -186,57 +216,62 @@ export default function Testimonials() {
 	};
 
 	const visibleReviews = getVisibleReviews();
+	const reviewCount = getReviewCount();
 
 	return (
-		<section className="py-16 bg-gradient-to-br from-gray-50 via-blue-50/30 to-purple-50/20 relative overflow-hidden">
+		<section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-gray-50 via-blue-50/30 to-purple-50/20 relative overflow-hidden">
 			{/* Background decoration */}
 			<div className="absolute inset-0">
-				<div className="absolute top-20 left-10 w-72 h-72 bg-blue-200/30 rounded-full blur-3xl animate-pulse"></div>
-				<div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-200/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
+				<div className="absolute top-10 sm:top-20 left-5 sm:left-10 w-48 sm:w-72 h-48 sm:h-72 bg-blue-200/30 rounded-full blur-3xl animate-pulse"></div>
+				<div className="absolute bottom-10 sm:bottom-20 right-5 sm:right-10 w-64 sm:w-96 h-64 sm:h-96 bg-purple-200/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
 			</div>
 
 			<div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 				{/* Header */}
-				<div className="text-center mb-16">
-					<div className="inline-flex items-center gap-2 px-4 py-2 bg-white/80 backdrop-blur-sm border border-blue-100 rounded-full mb-6 shadow-sm">
+				<div className="text-center mb-12 sm:mb-16">
+					<div className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 bg-white/80 backdrop-blur-sm border border-blue-100 rounded-full mb-4 sm:mb-6 shadow-sm">
 						<div className="flex gap-1">
-							<div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-							<div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
-							<div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+							<div className="w-1.5 sm:w-2 h-1.5 sm:h-2 bg-green-500 rounded-full animate-pulse"></div>
+							<div className="w-1.5 sm:w-2 h-1.5 sm:h-2 bg-blue-500 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+							<div className="w-1.5 sm:w-2 h-1.5 sm:h-2 bg-purple-500 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
 						</div>
-						<span className="text-sm font-semibold text-gray-700">Live Student Reviews</span>
+						<span className="text-xs sm:text-sm font-semibold text-gray-700">Live Student Reviews</span>
 					</div>
 
-					<h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 bg-clip-text text-transparent mb-6">
+					<h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 bg-clip-text text-transparent mb-4 sm:mb-6 leading-tight">
 						Success Stories from Our Students
 					</h2>
-					<p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+					<p className="text-sm sm:text-base lg:text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed px-4">
 						See how our courses have transformed careers and helped students crack top tech interviews
 					</p>
 					
-					<div className="mt-6 flex justify-center items-center gap-6">
+					<div className="mt-4 sm:mt-6 flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-6">
 						<div className="flex items-center gap-2">
 							<StarRating />
-							<span className="text-sm font-semibold text-gray-700">4.9/5</span>
+							<span className="text-xs sm:text-sm font-semibold text-gray-700">4.9/5</span>
 						</div>
-						<div className="h-4 w-px bg-gray-300"></div>
-						<span className="text-sm text-gray-600">10,000+ Happy Students</span>
-						<div className="h-4 w-px bg-gray-300"></div>
+						<div className="hidden sm:block h-4 w-px bg-gray-300"></div>
+						<span className="text-xs sm:text-sm text-gray-600">10,000+ Happy Students</span>
+						<div className="hidden sm:block h-4 w-px bg-gray-300"></div>
 						<div className="flex items-center gap-2">
-							<div className="w-2 h-2 bg-green-500 rounded-full"></div>
-							<span className="text-sm text-gray-600">Auto-updating</span>
+							<div className="w-1.5 sm:w-2 h-1.5 sm:h-2 bg-green-500 rounded-full"></div>
+							<span className="text-xs sm:text-sm text-gray-600">Auto-updating</span>
 						</div>
 					</div>
 				</div>
 
-				{/* Single Row Reviews */}
+				{/* Reviews Display */}
 				<div className="relative overflow-hidden">
-					<div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+					<div className={`grid gap-4 sm:gap-6 lg:gap-8 max-w-6xl mx-auto ${
+						reviewCount === 1 ? 'grid-cols-1 max-w-md' : 
+						reviewCount === 2 ? 'grid-cols-1 sm:grid-cols-2 max-w-4xl' : 
+						'grid-cols-1 md:grid-cols-2 xl:grid-cols-3'
+					}`}>
 						{visibleReviews.map((testimonial, index) => (
 							<div
 								key={`${testimonial.name}-${currentIndex}-${index}`}
 								className={`
-									bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/50
+									bg-white/90 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg border border-white/50
 									hover:shadow-2xl hover:scale-105 transition-all duration-500
 									relative overflow-hidden group cursor-pointer
 									${isAnimating ? 'animate-slideLeft' : 'animate-slideInRight'}
@@ -246,27 +281,27 @@ export default function Testimonials() {
 								}}
 							>
 								{/* Gradient border effect */}
-								<div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 via-purple-500/20 to-pink-500/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+								<div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 via-purple-500/20 to-pink-500/20 rounded-xl sm:rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 								
 								{/* Content */}
 								<div className="relative z-10">
 									{/* Header with avatar and info */}
-									<div className="flex items-start gap-4 mb-6">
-										<div className="relative">
+									<div className="flex items-start gap-3 sm:gap-4 mb-4 sm:mb-6">
+										<div className="relative flex-shrink-0">
 											<img
 												src={testimonial.avatar}
 												alt={testimonial.name}
-												className="w-16 h-16 rounded-full object-cover border-3 border-white shadow-lg"
+												className="w-12 sm:w-16 h-12 sm:h-16 rounded-full object-cover border-2 sm:border-3 border-white shadow-lg"
 											/>
 											{/* Online status */}
-											<div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 border-2 border-white rounded-full"></div>
+											<div className="absolute -bottom-0.5 sm:-bottom-1 -right-0.5 sm:-right-1 w-3 sm:w-5 h-3 sm:h-5 bg-green-500 border-2 border-white rounded-full"></div>
 										</div>
 										
-										<div className="flex-1">
-											<h4 className="font-bold text-gray-900 text-lg mb-1">
+										<div className="flex-1 min-w-0">
+											<h4 className="font-bold text-gray-900 text-sm sm:text-base lg:text-lg mb-1 truncate">
 												{testimonial.name}
 											</h4>
-											<p className="text-blue-600 font-medium text-sm mb-2">
+											<p className="text-blue-600 font-medium text-xs sm:text-sm mb-2 truncate">
 												{testimonial.role}
 											</p>
 											<div className="flex items-center gap-2">
@@ -276,21 +311,21 @@ export default function Testimonials() {
 									</div>
 									
 									{/* Review content */}
-									<div className="mb-6">
-										<svg className="w-8 h-8 text-blue-200 mb-2" fill="currentColor" viewBox="0 0 24 24">
+									<div className="mb-4 sm:mb-6">
+										<svg className="w-6 sm:w-8 h-6 sm:h-8 text-blue-200 mb-2" fill="currentColor" viewBox="0 0 24 24">
 											<path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z"/>
 										</svg>
-										<p className="text-gray-700 leading-relaxed text-sm">
+										<p className="text-gray-700 leading-relaxed text-xs sm:text-sm">
 											{testimonial.content}
 										</p>
 									</div>
 									
 									{/* Tags */}
 									<div className="flex flex-wrap gap-2">
-										<span className="px-3 py-1 bg-blue-50 text-blue-700 text-xs font-semibold rounded-full border border-blue-100">
+										<span className="px-2 sm:px-3 py-1 bg-blue-50 text-blue-700 text-xs font-semibold rounded-full border border-blue-100 truncate max-w-32 sm:max-w-none">
 											{testimonial.course}
 										</span>
-										<span className="px-3 py-1 bg-green-50 text-green-700 text-xs font-semibold rounded-full border border-green-100">
+										<span className="px-2 sm:px-3 py-1 bg-green-50 text-green-700 text-xs font-semibold rounded-full border border-green-100 truncate max-w-24 sm:max-w-none">
 											@ {testimonial.company}
 										</span>
 									</div>
@@ -300,41 +335,53 @@ export default function Testimonials() {
 					</div>
 
 					{/* Progress indicators */}
-					<div className="flex justify-center mt-8 gap-2">
-						{testimonials.map((_, index) => (
-							<div
-								key={index}
-								className={`h-1 rounded-full transition-all duration-500 ${
-									index >= currentIndex && index < currentIndex + 3
-										? 'w-8 bg-blue-500'
-										: index === (currentIndex + 3) % testimonials.length
-										? 'w-6 bg-blue-300'
-										: 'w-2 bg-gray-300'
-								}`}
-							/>
-						))}
+					<div className="flex justify-center mt-6 sm:mt-8 gap-1 sm:gap-2 px-4">
+						{testimonials.map((_, index) => {
+							const isActive = index >= currentIndex && index < currentIndex + reviewCount;
+							const isNext = index === (currentIndex + reviewCount) % testimonials.length;
+							
+							return (
+								<div
+									key={index}
+									className={`h-1 sm:h-1.5 rounded-full transition-all duration-500 ${
+										isActive
+											? 'w-6 sm:w-8 bg-blue-500'
+											: isNext
+											? 'w-4 sm:w-6 bg-blue-300'
+											: 'w-1.5 sm:w-2 bg-gray-300'
+									}`}
+								/>
+							);
+						})}
+					</div>
+
+					{/* Screen size indicator (for development - can be removed) */}
+					<div className="text-center mt-4">
+						<span className="text-xs text-gray-500 bg-white/50 px-2 py-1 rounded">
+							{screenSize} - showing {reviewCount} review{reviewCount > 1 ? 's' : ''}
+						</span>
 					</div>
 
 				</div>
 
 				{/* Bottom Stats */}
-				<div className="mt-16 bg-white/60 backdrop-blur-sm rounded-3xl p-8 border border-white/50 shadow-lg">
-					<div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+				<div className="mt-12 sm:mt-16 bg-white/60 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 border border-white/50 shadow-lg">
+					<div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 text-center">
 						<div className="group">
-							<div className="text-3xl font-bold text-blue-600 group-hover:scale-110 transition-transform">10,000+</div>
-							<div className="text-sm text-gray-600 mt-1">Students Enrolled</div>
+							<div className="text-xl sm:text-2xl lg:text-3xl font-bold text-blue-600 group-hover:scale-110 transition-transform">10,000+</div>
+							<div className="text-xs sm:text-sm text-gray-600 mt-1">Students Enrolled</div>
 						</div>
 						<div className="group">
-							<div className="text-3xl font-bold text-green-600 group-hover:scale-110 transition-transform">95%</div>
-							<div className="text-sm text-gray-600 mt-1">Placement Rate</div>
+							<div className="text-xl sm:text-2xl lg:text-3xl font-bold text-green-600 group-hover:scale-110 transition-transform">95%</div>
+							<div className="text-xs sm:text-sm text-gray-600 mt-1">Placement Rate</div>
 						</div>
 						<div className="group">
-							<div className="text-3xl font-bold text-purple-600 group-hover:scale-110 transition-transform">4.9/5</div>
-							<div className="text-sm text-gray-600 mt-1">Student Rating</div>
+							<div className="text-xl sm:text-2xl lg:text-3xl font-bold text-purple-600 group-hover:scale-110 transition-transform">4.9/5</div>
+							<div className="text-xs sm:text-sm text-gray-600 mt-1">Student Rating</div>
 						</div>
 						<div className="group">
-							<div className="text-3xl font-bold text-orange-600 group-hover:scale-110 transition-transform">500+</div>
-							<div className="text-sm text-gray-600 mt-1">Companies Hiring</div>
+							<div className="text-xl sm:text-2xl lg:text-3xl font-bold text-orange-600 group-hover:scale-110 transition-transform">500+</div>
+							<div className="text-xs sm:text-sm text-gray-600 mt-1">Companies Hiring</div>
 						</div>
 					</div>
 				</div>

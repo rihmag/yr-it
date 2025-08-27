@@ -12,7 +12,10 @@ export default function CourseCard({
   description,
   instructor,
   category,
-   isActive, onHover }) {
+  isActive, 
+  onHover,
+  viewMode = "grid" 
+}) {
   const [showOnLeft, setShowOnLeft] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -41,10 +44,10 @@ export default function CourseCard({
       navigator.share({
         title: course,
         text: description,
-        url: window.location.origin + `/course/${key}`,
+        url: window.location.origin + `/course/${id}`,
       });
     } else {
-      navigator.clipboard.writeText(window.location.origin + `/course/${course.id}`);
+      navigator.clipboard.writeText(window.location.origin + `/course/${id}`);
       toast.success("Course link copied to clipboard!");
     }
   };
@@ -72,15 +75,17 @@ export default function CourseCard({
       whileHover={{ y: -8 }}
     >
       <motion.div 
-        className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg overflow-hidden border border-white/20 hover:shadow-2xl transition-all duration-300 relative h-full flex flex-col"
+        className={`bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg overflow-hidden border border-white/20 hover:shadow-2xl transition-all duration-300 relative h-full ${
+          viewMode === "list" ? "flex flex-col sm:flex-row" : "flex flex-col"
+        }`}
         whileHover={{ scale: 1.02 }}
         transition={{ duration: 0.3 }}
       >
         {/* Action buttons overlay */}
-        <div className="absolute top-4 left-4 z-10 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <div className="absolute top-3 sm:top-4 left-3 sm:left-4 z-10 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <motion.button
             onClick={handleLike}
-            className={`p-2 rounded-full backdrop-blur-sm transition-all ${
+            className={`p-1.5 sm:p-2 rounded-full backdrop-blur-sm transition-all ${
               isLiked 
                 ? "bg-red-500 text-white" 
                 : "bg-white/80 text-gray-600 hover:bg-red-500 hover:text-white"
@@ -88,42 +93,44 @@ export default function CourseCard({
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
           >
-            <Heart size={16} fill={isLiked ? "currentColor" : "none"} />
+            <Heart size={14} fill={isLiked ? "currentColor" : "none"} />
           </motion.button>
           <motion.button
             onClick={handleShare}
-            className="p-2 rounded-full bg-white/80 text-gray-600 hover:bg-blue-500 hover:text-white backdrop-blur-sm transition-all"
+            className="p-1.5 sm:p-2 rounded-full bg-white/80 text-gray-600 hover:bg-blue-500 hover:text-white backdrop-blur-sm transition-all"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
           >
-            <Share2 size={16} />
+            <Share2 size={14} />
           </motion.button>
         </div>
 
-        <Link to={`/course/${id}`} onClick={handleCourseClick} className="flex-1 flex flex-col">
-          <div className="relative overflow-hidden">
+        <Link to={`/course/${id}`} onClick={handleCourseClick} className={`flex-1 ${viewMode === "list" ? "flex flex-col sm:flex-row" : "flex flex-col"}`}>
+          <div className={`relative overflow-hidden ${viewMode === "list" ? "sm:w-64 sm:flex-shrink-0" : ""}`}>
             <motion.img
               src={`data:image/jpeg;base64,${courseImage}`}
               alt={course}
-              className="w-full h-48 object-cover transition-transform duration-500"
+              className={`w-full object-cover transition-transform duration-500 ${
+                viewMode === "list" ? "h-40 sm:h-full" : "h-40 sm:h-48"
+              }`}
               whileHover={{ scale: 1.1 }}
               loading="lazy"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-            <div className="absolute top-4 right-4">
+            <div className="absolute top-3 sm:top-4 right-3 sm:right-4">
               <motion.div 
-                className="bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 text-sm font-semibold text-gray-800"
+                className="bg-white/90 backdrop-blur-sm rounded-full px-2 sm:px-3 py-1 text-xs sm:text-sm font-semibold text-gray-800"
                 whileHover={{ scale: 1.05 }}
               >
                 ₹{price}
               </motion.div>
             </div>
-            <div className="absolute bottom-4 left-4">
+            <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4">
               <motion.div 
-                className="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full px-3 py-1 text-sm font-medium"
+                className="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full px-2 sm:px-3 py-1 text-xs sm:text-sm font-medium"
                 whileHover={{ scale: 1.05 }}
               >
-                {course.category}
+                {category}
               </motion.div>
             </div>
             
@@ -135,7 +142,7 @@ export default function CourseCard({
                 animate={{ opacity: 1 }}
               >
                 <motion.div
-                  className="w-8 h-8 border-2 border-white border-t-transparent rounded-full"
+                  className="w-6 sm:w-8 h-6 sm:h-8 border-2 border-white border-t-transparent rounded-full"
                   animate={{ rotate: 360 }}
                   transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
                 />
@@ -143,48 +150,56 @@ export default function CourseCard({
             )}
           </div>
           
-          <div className="p-6 flex-1 flex flex-col">
+          <div className={`p-4 sm:p-6 flex-1 flex flex-col ${viewMode === "list" ? "justify-between" : ""}`}>
             <motion.h3 
-              className="text-xl font-bold mb-3 text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2"
+              className={`font-bold mb-2 sm:mb-3 text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2 ${
+                viewMode === "list" ? "text-lg sm:text-xl" : "text-base sm:text-xl"
+              }`}
               whileHover={{ x: 5 }}
               transition={{ duration: 0.2 }}
             >
               {course}
             </motion.h3>
             
-            <p className="text-gray-600 text-sm mb-4 line-clamp-2 flex-shrink-0">
+            <p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2 flex-shrink-0">
               By {instructor}
             </p>
             
-            <div className="flex items-center justify-between mb-4 flex-shrink-0">
-              <div className="flex items-center gap-4 text-sm text-gray-500">
+            <div className={`flex items-center justify-between mb-3 sm:mb-4 flex-shrink-0 ${
+              viewMode === "list" ? "flex-wrap gap-2" : ""
+            }`}>
+              <div className="flex items-center gap-3 sm:gap-4 text-xs sm:text-sm text-gray-500">
                 <div className="flex items-center gap-1">
-                  <Clock size={14} />
+                  <Clock size={12} />
                   <span>12h</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <Users size={14} />
+                  <Users size={12} />
                   <span>1.2k</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <Star size={14} className="text-yellow-500" />
+                  <Star size={12} className="text-yellow-500" />
                   <span>4.8</span>
                 </div>
               </div>
             </div>
             
             <motion.div
-              className="flex items-center justify-between mt-auto"
+              className={`flex items-center justify-between mt-auto ${
+                viewMode === "list" ? "flex-row-reverse sm:flex-row" : ""
+              }`}
               whileHover={{ x: 5 }}
               transition={{ duration: 0.2 }}
             >
-              <span className="text-2xl font-bold text-blue-600">₹{price}</span>
+              <span className={`font-bold text-blue-600 ${
+                viewMode === "list" ? "text-xl sm:text-2xl" : "text-lg sm:text-2xl"
+              }`}>₹{price}</span>
               <motion.div
-                className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-2 rounded-full group-hover:from-blue-700 group-hover:to-purple-700 transition-all"
+                className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-1.5 sm:p-2 rounded-full group-hover:from-blue-700 group-hover:to-purple-700 transition-all"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
-                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
               </motion.div>
             </motion.div>
           </div>

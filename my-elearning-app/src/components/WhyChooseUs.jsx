@@ -129,27 +129,27 @@ export default function WhyChooseUs() {
           transition={{ duration: 0.8, delay: 0.6 }}
           className="text-center"
         >
-          <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 rounded-3xl p-12 text-white relative overflow-hidden">
+          <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-12 text-white relative overflow-hidden">
             {/* Background Pattern */}
             <div className="absolute inset-0 opacity-10">
-              <div className="absolute top-0 left-0 w-32 h-32 border-2 border-white rounded-full"></div>
-              <div className="absolute bottom-0 right-0 w-24 h-24 border-2 border-white rounded-full"></div>
+              <div className="absolute top-0 left-0 w-16 sm:w-24 lg:w-32 h-16 sm:h-24 lg:h-32 border-2 border-white rounded-full"></div>
+              <div className="absolute bottom-0 right-0 w-12 sm:w-18 lg:w-24 h-12 sm:h-18 lg:h-24 border-2 border-white rounded-full"></div>
             </div>
             
             <div className="relative z-10">
-              <h3 className="text-3xl lg:text-4xl font-bold mb-4">
+              <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4 leading-tight">
                 Ready to Start Your Learning Journey?
               </h3>
-              <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
+              <p className="text-sm sm:text-base md:text-lg lg:text-xl text-blue-100 mb-6 sm:mb-8 max-w-2xl mx-auto leading-relaxed px-4">
                 Join thousands of learners who have transformed their careers with YR-Learning. 
                 Start building your future today.
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="bg-white text-blue-600 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-gray-100 transition-colors duration-300 shadow-lg"
+                  className="bg-white text-blue-600 px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold text-base sm:text-lg hover:bg-gray-100 transition-colors duration-300 shadow-lg"
                 >
                   <Link to="/courses">Explore Courses</Link>
                 </motion.button>
@@ -157,7 +157,7 @@ export default function WhyChooseUs() {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="border-2 border-white/30 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:bg-white/10 transition-colors duration-300"
+                  className="border-2 border-white/30 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold text-base sm:text-lg hover:bg-white/10 transition-colors duration-300"
                 >
                   <Link to="/about">Learn More</Link>
                 </motion.button>
