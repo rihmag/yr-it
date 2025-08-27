@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 import './ManageCourses.css';
 
 const ManageCourses = () => {
-    const { id: educatorId } = useParams();
+  
     const [courses, setCourses] = useState([]);
     const [loading, setLoading] = useState(true);
     const [isAdmin, setIsAdmin] = useState(false);
@@ -71,7 +71,7 @@ const ManageCourses = () => {
         <div className="manage-courses-container">
             <h2>Manage Your Courses</h2>
             {courses.length === 0 ? (
-                <p>You haven't created any courses yet. <Link to={`/panel/${educatorId}/add-course`}>Add a new course</Link> to get started.</p>
+                <p>You haven't created any courses yet. <Link to={`/panel/add-course`}>Add a new course</Link> to get started.</p>
             ) : (
                 <table className="courses-table">
                     <thead>
@@ -87,7 +87,7 @@ const ManageCourses = () => {
                                 <td><img src={`data:image/jpeg;base64,${course.thumbnail}`} alt={course.title} className="course-thumbnail-small" /></td>
                                 <td>{course.title}</td>
                                 <td className="course-actions">
-                                    <Link to={`/panel/${educatorId}/edit-course/${course._id}`} className="action-btn edit-btn">Edit</Link>
+                                    <Link to={`/panel/edit-course/${course._id}`} className="action-btn edit-btn">Edit</Link>
                                     <button onClick={() => handleDelete(course._id)} className="action-btn delete-btn">Delete</button>
                                 </td>
                             </tr>

@@ -81,7 +81,7 @@ function App() {
             />
             
             <Route 
-              path="/panel/:id/*" 
+              path="/panel/" 
               element={
                 
                   <CreatorPanel />
