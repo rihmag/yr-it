@@ -178,7 +178,7 @@ export default function About() {
           />
           
           <motion.h1 
-            className="text-6xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent leading-tight"
+            className="text-6xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent leading-loose pb-3"
             initial={{ scale: 0.5, opacity: 0 }}
             animate={heroInView ? { scale: 1, opacity: 1 } : {}}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -380,7 +380,7 @@ export default function About() {
         >
           <div className="text-center mb-12">
             <motion.h2 
-              className="text-6xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent leading-tight"
+              className="text-6xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent leading-tight pb-3"
               initial={{ y: 30, opacity: 0 }}
               animate={techInView ? { y: 0, opacity: 1 } : {}}
               transition={{ duration: 0.6 }}
