@@ -294,7 +294,7 @@ export default function About() {
         >
           <div className="text-center mb-12">
             <motion.h2 
-              className="text-4xl font-bold text-gray-800 mb-4"
+              className="text-6xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent leading-tight"
               initial={{ y: 30, opacity: 0 }}
               animate={featuresInView ? { y: 0, opacity: 1 } : {}}
               transition={{ duration: 0.6 }}
@@ -380,7 +380,7 @@ export default function About() {
         >
           <div className="text-center mb-12">
             <motion.h2 
-              className="text-4xl font-bold text-gray-800 mb-4"
+              className="text-6xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent leading-tight"
               initial={{ y: 30, opacity: 0 }}
               animate={techInView ? { y: 0, opacity: 1 } : {}}
               transition={{ duration: 0.6 }}
