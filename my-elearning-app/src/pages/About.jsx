@@ -333,6 +333,7 @@ export default function About() {
                     perspective: "1000px"
                   }}
                 >
+                  
                   {/* Glow effect background */}
                   <motion.div
                     className={`absolute inset-0 bg-gradient-to-r ${feature.color} opacity-0 group-hover:opacity-20 rounded-xl sm:rounded-2xl blur-xl transition-opacity duration-500`}
