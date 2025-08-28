@@ -344,14 +344,19 @@ export default function About() {
                   {/* Card content */}
                   <div className="relative z-10">
                     <motion.div 
-                      className={`w-12 sm:w-14 lg:w-16 h-12 sm:h-14 lg:h-16 bg-gradient-to-r ${feature.color} rounded-xl sm:rounded-2xl flex items-center justify-center mb-3 sm:mb-4 transition-all duration-300`}
+                      className={`w-12 sm:w-14 lg:w-16 h-12 sm:h-14 lg:h-16 bg-gradient-to-r ${feature.color} rounded-xl sm:rounded-2xl flex items-center justify-center mb-3 sm:mb-4 transition-all duration-300 mx-auto`}
                       whileHover={{ 
                         scale: 1.15, 
                         rotate: 5,
                         transition: { duration: 0.3, ease: "easeOut" }
                       }}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                      }}
                     >
-                      <Icon className="text-white" size={24} />
+                      <Icon className="text-white flex-shrink-0" size={window.innerWidth < 640 ? 20 : window.innerWidth < 1024 ? 22 : 24} />
                     </motion.div>
                     <motion.h3 
                       className="text-lg sm:text-xl font-bold text-gray-800 mb-2 sm:mb-3 group-hover:text-blue-700 transition-colors duration-300"
