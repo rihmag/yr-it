@@ -252,11 +252,8 @@ export default function Testimonials() {
 						</div>
 						<div className="hidden sm:block h-4 w-px bg-gray-300"></div>
 						<span className="text-xs sm:text-sm text-gray-600">10,000+ Happy Students</span>
-						<div className="hidden sm:block h-4 w-px bg-gray-300"></div>
-						<div className="flex items-center gap-2">
-							<div className="w-1.5 sm:w-2 h-1.5 sm:h-2 bg-green-500 rounded-full"></div>
-							<span className="text-xs sm:text-sm text-gray-600">Auto-updating</span>
-						</div>
+						
+						
 					</div>
 				</div>
 
@@ -353,13 +350,6 @@ export default function Testimonials() {
 								/>
 							);
 						})}
-					</div>
-
-					{/* Screen size indicator (for development - can be removed) */}
-					<div className="text-center mt-4">
-						<span className="text-xs text-gray-500 bg-white/50 px-2 py-1 rounded">
-							{screenSize} - showing {reviewCount} review{reviewCount > 1 ? 's' : ''}
-						</span>
 					</div>
 
 				</div>
