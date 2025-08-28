@@ -4,8 +4,10 @@ import { useState, useEffect } from "react";
 
 export default function Supreme4Banner() {
   const [banners, setBanners] = useState([]);
+  const [instructorBanners, setInstructorBanners] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [timeLeft, setTimeLeft] = useState({
     days: 7,
     hours: 12,
@@ -15,22 +17,47 @@ export default function Supreme4Banner() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    const fetchBanners = async () => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
       try {
-        const response = await fetch('https://backend-1-bn9o.onrender.com/api/banner/getbanner');
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
+        const [bannerRes, instructorRes] = await Promise.all([
+          fetch('https://backend-1-bn9o.onrender.com/api/banner/getbanner'),
+          fetch('https://backend-1-bn9o.onrender.com/api/banner/getinstructor')
+        ]);
+
+        if (!bannerRes.ok) {
+          throw new Error('Banner network response was not ok');
         }
-        const data = await response.json();
-        
-        // Transform the simple banner data into the expected format
-        const transformedBanners = data.map((banner, index) => ({
+        if (!instructorRes.ok) {
+            throw new Error('Instructor network response was not ok');
+        }
+
+        const bannerData = await bannerRes.json();
+        const instructorData = await instructorRes.json();
+
+        const transformedBanners = bannerData.map((banner, index) => ({
           ...banner,
           titleRest: banner.title,
-          imageSrc: banner.image, // This will be the base64 string
+          imageSrc: banner.image,
+        }));
+
+        const transformedInstructorBanners = instructorData.map((banner, index) => ({
+          ...banner,
+          titleRest: banner.title,
+          imageSrc: banner.image,
         }));
         
         setBanners(transformedBanners);
+        setInstructorBanners(transformedInstructorBanners);
+
       } catch (error) {
         setError(error.message);
       } finally {
@@ -38,7 +65,7 @@ export default function Supreme4Banner() {
       }
     };
 
-    fetchBanners();
+    fetchData();
   }, []);
 
   useEffect(() => {
@@ -62,14 +89,16 @@ export default function Supreme4Banner() {
     return () => clearInterval(timer);
   }, []);
 
+  const displayedBanners = isMobile ? instructorBanners : banners;
+
   useEffect(() => {
-    if (banners.length > 1) {
+    if (displayedBanners.length > 1) {
       const intervalId = setInterval(() => {
-        setCurrentIndex(prev => (prev + 1) % banners.length);
+        setCurrentIndex(prev => (prev + 1) % displayedBanners.length);
       }, 5000);
       return () => clearInterval(intervalId);
     }
-  }, [banners.length]);
+  }, [displayedBanners.length]);
 
   if (loading) {
     return (
@@ -91,7 +120,7 @@ export default function Supreme4Banner() {
   if (error) {
     return (
       <div className="relative mb-6 overflow-hidden">
-        <div className="bg-gradient-to-r from-red-600 to-red-700 text-white rounded-2xl shadow-2xl p-8 text-center min-h-[300px] flex items-center justify-center">
+        <div className="bg-gradient-to-r from-red-600 to-red-700 text-white rounded-2xl shadow-2xl p-0 text-center min-h-[300px] flex items-center justify-center">
           <div>
             <h3 className="text-xl font-bold mb-2">Unable to load banners</h3>
             <p className="text-red-100">Error: {error}</p>
@@ -101,10 +130,10 @@ export default function Supreme4Banner() {
     );
   }
 
-  if (banners.length === 0) {
+  if (displayedBanners.length === 0) {
     return (
       <div className="relative mb-6 overflow-hidden">
-        <div className="bg-gradient-to-r from-gray-600 to-gray-700 text-white rounded-2xl shadow-2xl p-8 text-center min-h-[300px] flex items-center justify-center">
+        <div className="bg-gradient-to-r from-gray-600 to-gray-700 text-white rounded-2xl shadow-2xl p-2 text-center min-h-[300px] flex items-center justify-center">
           <div>
             <h3 className="text-xl font-bold mb-2">No banners available</h3>
             <p className="text-gray-300">Check back later for updates!</p>
@@ -114,12 +143,12 @@ export default function Supreme4Banner() {
     );
   }
 
-  const active = banners[currentIndex];
-  const nextSlide = () => setCurrentIndex(prev => (prev + 1) % banners.length);
-  const prevSlide = () => setCurrentIndex(prev => (prev - 1 + banners.length) % banners.length);
+  const active = displayedBanners[currentIndex];
+  const nextSlide = () => setCurrentIndex(prev => (prev + 1) % displayedBanners.length);
+  const prevSlide = () => setCurrentIndex(prev => (prev - 1 + displayedBanners.length) % displayedBanners.length);
 
   return (
-    <div className="relative mb-6 overflow-hidden">
+    <div className="relative mb-6 overflow-hidden ">
       <AnimatePresence mode="wait">
         <motion.div
           key={currentIndex}
@@ -149,16 +178,18 @@ export default function Supreme4Banner() {
           </div>
 
           {/* Full-width banner image container */}
-          <div className="">
+          <div className=" flex items-center justify-stretch">
             {/* Image with border */}
-            <div className="relative w-full h-full ">
+            <div className="relative w-full h-full ml-0 mr-0 justify-end flex"> 
               <motion.img 
                 src={`data:image/jpeg;base64,${active.imageSrc}`}
                 alt={active.titleRest || "Banner Image"} 
-                className="w-full h-full "
+    
+                className="w-full h-full  border-4 border-white/30"
                 initial={{ scale: 0.95, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 0.8 }}
+                style={{ height: '400px' , width: '100%', objectFit: 'cover' }}
                 onError={(e) => {
                   e.target.onerror = null;
                   e.target.style.display = 'none';
@@ -223,7 +254,7 @@ export default function Supreme4Banner() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.3 }}
           >
-            {banners.map((_, idx) => (
+            {displayedBanners.map((_, idx) => (
               <button
                 key={idx}
                 aria-label={`Go to banner ${idx + 1}`}

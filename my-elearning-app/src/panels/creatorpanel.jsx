@@ -48,6 +48,11 @@ const CreatorPanel = () => {
                                 edit banner
                             </NavLink>
                         </li>
+                        <li>
+                            <NavLink to={`/panel/mobilebanners`} className={({ isActive }) => isActive ? "active-link" : ""}>
+                                Mobile Banners
+                            </NavLink>
+                        </li>
                     </ul>
                 </nav>
             </aside>

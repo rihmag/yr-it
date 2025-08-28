@@ -1,0 +1,158 @@
+/* EditInstructorBanner.css */
+.edit-instructor-panel {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.edit-instructor-panel h2 {
+    text-align: center;
+    font-size: 1.75rem;
+    color: #111827;
+    margin-bottom: 2rem;
+}
+
+.edit-instructor-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #374151;
+}
+
+.form-group input[type="text"],
+.form-group textarea,
+.form-group input[type="file"] {
+    padding: 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+.image-preview {
+    max-width: 100%;
+    height: auto;
+    max-height: 250px;
+    border-radius: 6px;
+    margin-top: 0.5rem;
+    border: 1px solid #e5e7eb;
+    object-fit: cover;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.form-actions button {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.form-actions button[type="submit"] {
+    background-color: #2563eb;
+    color: white;
+}
+
+.form-actions button[type="submit"]:hover {
+    background-color: #1d4ed8;
+}
+
+.form-actions button[type="button"] {
+    background-color: #f3f4f6;
+    color: #374151;
+    border: 1px solid #d1d5db;
+}
+
+.form-actions button[type="button"]:hover {
+    background-color: #e5e7eb;
+}
+
+.form-actions button:disabled {
+    background-color: #9ca3af;
+    cursor: not-allowed;
+}
+
+.error {
+    color: #ef4444;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.instructors-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.instructor-card {
+    background-color: #f9fafb;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    overflow: hidden;
+}
+
+.instructor-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.instructor-info {
+    padding: 1rem;
+}
+
+.instructor-info h4 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #111827;
+    margin: 0 0 0.5rem 0;
+}
+
+.instructor-info p {
+    font-size: 0.9rem;
+    color: #4b5563;
+    margin-bottom: 1rem;
+}
+
+.instructor-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
+.instructor-actions button {
+    flex: 1;
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    border-radius: 4px;
+}
+
+.instructor-actions .delete-button {
+    background-color: #fee2e2;
+    color: #b91c1c;
+}
+
+.instructor-actions .delete-button:hover {
+    background-color: #fecaca;
+}

@@ -22,7 +22,7 @@ import EditBanner from "./panels/EditBanner";
 import Chatbot from "./components/Chatbot";
 import ScrollToTop from "./components/ScrollToTop";
 import Loader from "./components/Loader";
-
+import InstructorManager from "./panels/EditInstructorBanner";
 
 
 const PrivateRoute = ({ children, isAuthenticated }) => {
@@ -95,6 +95,7 @@ function App() {
               <Route path="edit-course/:courseId" element={<EditCourse />} />
               <Route path="enrolled-students" element={<EnrolledStudents />} />
               <Route path="earnings" element={<Earnings />} />
+              <Route path="mobilebanners" element={<InstructorManager/> } />
             </Route>
           </Routes>
           
