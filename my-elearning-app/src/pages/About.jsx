@@ -197,22 +197,22 @@ export default function About() {
           </motion.p>
 
           <motion.div
-            className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4 mb-8 sm:mb-12 px-2"
+            className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-8 sm:mb-12 px-2 w-full"
             initial={{ y: 30, opacity: 0 }}
             animate={heroInView ? { y: 0, opacity: 1 } : {}}
             transition={{ duration: 0.8, delay: 0.6 }}
           >
-            <div className="flex items-center space-x-2 bg-white/80 backdrop-blur-sm rounded-full px-4 sm:px-6 py-2 sm:py-3 shadow-lg">
-              <Award className="text-yellow-500" size={16} />
-              <span className="font-semibold text-gray-700 text-sm sm:text-base">Award-Winning Platform</span>
+            <div className="flex items-center justify-center space-x-2 bg-white/80 backdrop-blur-sm rounded-full px-4 sm:px-6 py-2 sm:py-3 shadow-lg w-full sm:w-auto max-w-xs sm:max-w-none">
+              <Award className="text-yellow-500 flex-shrink-0" size={16} />
+              <span className="font-semibold text-gray-700 text-sm sm:text-base text-center">Award-Winning Platform</span>
             </div>
-            <div className="flex items-center space-x-2 bg-white/80 backdrop-blur-sm rounded-full px-4 sm:px-6 py-2 sm:py-3 shadow-lg">
-              <Users className="text-blue-500" size={16} />
-              <span className="font-semibold text-gray-700 text-sm sm:text-base">10K+ Active Learners</span>
+            <div className="flex items-center justify-center space-x-2 bg-white/80 backdrop-blur-sm rounded-full px-4 sm:px-6 py-2 sm:py-3 shadow-lg w-full sm:w-auto max-w-xs sm:max-w-none">
+              <Users className="text-blue-500 flex-shrink-0" size={16} />
+              <span className="font-semibold text-gray-700 text-sm sm:text-base text-center">10K+ Active Learners</span>
             </div>
-            <div className="flex items-center space-x-2 bg-white/80 backdrop-blur-sm rounded-full px-4 sm:px-6 py-2 sm:py-3 shadow-lg">
-              <Star className="text-purple-500" size={16} />
-              <span className="font-semibold text-gray-700 text-sm sm:text-base">4.9/5 Rating</span>
+            <div className="flex items-center justify-center space-x-2 bg-white/80 backdrop-blur-sm rounded-full px-4 sm:px-6 py-2 sm:py-3 shadow-lg w-full sm:w-auto max-w-xs sm:max-w-none">
+              <Star className="text-purple-500 flex-shrink-0" size={16} />
+              <span className="font-semibold text-gray-700 text-sm sm:text-base text-center">4.9/5 Rating</span>
             </div>
           </motion.div>
         </motion.div>
@@ -253,13 +253,13 @@ export default function About() {
             className="bg-white/80 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-xl border border-white/20"
             whileHover={{ y: -5 }}
           >
-            <div className="flex items-center mb-4 sm:mb-6">
-              <div className="w-10 sm:w-12 h-10 sm:h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl flex items-center justify-center mr-3 sm:mr-4">
+            <div className="flex flex-col items-center text-center mb-4 sm:mb-6">
+              <div className="w-10 sm:w-12 h-10 sm:h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl flex items-center justify-center mb-3 sm:mb-4">
                 <Target className="text-white" size={20} />
               </div>
               <h3 className="text-xl sm:text-2xl font-bold text-gray-800">Our Mission</h3>
             </div>
-            <p className="text-gray-700 leading-relaxed text-sm sm:text-base">
+            <p className="text-gray-700 leading-relaxed text-sm sm:text-base text-center">
               To democratize quality programming education by providing an integrated learning environment 
               that combines theoretical knowledge with practical coding experience, making technology 
               education accessible to everyone, everywhere.
@@ -270,13 +270,13 @@ export default function About() {
             className="bg-white/80 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-xl border border-white/20"
             whileHover={{ y: -5 }}
           >
-            <div className="flex items-center mb-4 sm:mb-6">
-              <div className="w-10 sm:w-12 h-10 sm:h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mr-3 sm:mr-4">
+            <div className="flex flex-col items-center text-center mb-4 sm:mb-6">
+              <div className="w-10 sm:w-12 h-10 sm:h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mb-3 sm:mb-4">
                 <Lightbulb className="text-white" size={20} />
               </div>
               <h3 className="text-xl sm:text-2xl font-bold text-gray-800">Our Vision</h3>
             </div>
-            <p className="text-gray-700 leading-relaxed text-sm sm:text-base">
+            <p className="text-gray-700 leading-relaxed text-sm sm:text-base text-center">
               To become the world's leading platform for interactive programming education, 
               fostering a global community of skilled developers who can build the future 
               through innovative technology solutions.

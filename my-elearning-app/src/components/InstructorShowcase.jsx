@@ -2,6 +2,10 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function InstructorShowcase() {
+	const [currentIndex, setCurrentIndex] = useState(0);
+	const [isAnimating, setIsAnimating] = useState(false);
+	const [screenSize, setScreenSize] = useState('desktop');
+
 	// Instructor data with enhanced styling
 	const instructors = [
 		{
@@ -22,7 +26,6 @@ export default function InstructorShowcase() {
 			tags: ["Web", "Cloud", "Career", "Code Reviews"],
 			accent: "from-emerald-500 via-teal-500 to-sky-500",
 		},
-
 		{
 			name: "Isha",
 			role: "UI/UX Design Specialist",
@@ -32,151 +35,279 @@ export default function InstructorShowcase() {
 			tags: ["UI/UX", "Design Systems", "Wireframing", "User Research"],
 			accent: "from-pink-500 via-rose-500 to-red-500",
 		},
+		{
+			name: "Ridham",
+			role: "Data Science Trainer",
+			avatar: "/images/Trainer5.jpeg",
+			bio:
+				"Ex-Data Science Trainee at Creator's Bite US. Learn from industry expert and gain hands-on experience in Data Science, Machine Learning, and Analytics.",
+			tags: ["Data Science", "Machine Learning", "Analytics", "Python"],
+			accent: "from-orange-500 via-amber-500 to-yellow-500",
+		},
+		{
+			name: "Gautam",
+			role: "Cyber Security Trainer",
+			avatar: "/images/Trainer4.jpeg",
+			bio:
+				"Penetration tester at YR IT SOLUTION and Cyber Security Practitioner at TCS. Learn from industry expert and gain hands-on experience in Cybersecurity.",
+			tags: ["Penetration Testing", "Cyber Security", "Ethical Hacking", "Network Security"],
+			accent: "from-cyan-500 via-blue-500 to-indigo-500",
+		},
+		{
+			name: "Vishal",
+			role: "Machine Learning Trainer",
+			avatar: "/images/Trainer6.jpeg",
+			bio:
+				"Ex-data analyst at Novateur Electrical and Digital System Pvt Ltd. Learn from industry expert and gain hands-on experience in Machine Learning and AI.",
+			tags: ["Machine Learning", "AI", "Data Analysis", "Deep Learning"],
+			accent: "from-violet-500 via-purple-500 to-fuchsia-500",
+		},
 	];
 
+	// Detect screen size
+	useEffect(() => {
+		const checkScreenSize = () => {
+			const width = window.innerWidth;
+			if (width < 768) {
+				setScreenSize('mobile');
+			} else if (width < 1280) {
+				setScreenSize('tablet');
+			} else {
+				setScreenSize('desktop');
+			}
+		};
+
+		checkScreenSize();
+		window.addEventListener('resize', checkScreenSize);
+		return () => window.removeEventListener('resize', checkScreenSize);
+	}, []);
+
+	// Get number of instructors to show based on screen size
+	const getInstructorCount = () => {
+		switch (screenSize) {
+			case 'mobile': return 1;
+			case 'tablet': return 2;
+			case 'desktop': return 3;
+			default: return 3;
+		}
+	};
+
+	// Auto-rotate instructors
+	useEffect(() => {
+		const interval = setInterval(() => {
+			setIsAnimating(true);
+			setTimeout(() => {
+				setCurrentIndex((prev) => (prev + 1) % instructors.length);
+				setIsAnimating(false);
+			}, 500);
+		}, 4000);
+
+		return () => clearInterval(interval);
+	}, []);
+
+	// Get visible instructors based on screen size
+	const getVisibleInstructors = () => {
+		const instructorCount = getInstructorCount();
+		const visibleInstructors = [];
+		for (let i = 0; i < instructorCount; i++) {
+			const index = (currentIndex + i) % instructors.length;
+			visibleInstructors.push({
+				...instructors[index],
+				displayIndex: i,
+			});
+		}
+		return visibleInstructors;
+	};
+
+	const visibleInstructors = getVisibleInstructors();
+	const instructorCount = getInstructorCount();
+
 	return (
-		<div className="mb-20 relative">
-			<div className="mb-12 text-center">
-				<motion.h2 
-					className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent inline-block mb-3"
-					initial={{ opacity: 0, y: 20 }}
-					animate={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.5 }}
-				>
-					Meet Our Instructors
-				</motion.h2>
-				<motion.div 
-					className="h-1 w-24 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto mb-4 rounded-full"
-					initial={{ width: 0, opacity: 0 }}
-					animate={{ width: 96, opacity: 1 }}
-					transition={{ duration: 0.7, delay: 0.2 }}
-				/>
-				<motion.p 
-					className="text-gray-600 mt-4 max-w-2xl mx-auto"
-					initial={{ opacity: 0 }}
-					animate={{ opacity: 1 }}
-					transition={{ duration: 0.5, delay: 0.3 }}
-				>
-				</motion.p>
+		<section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-gray-50 via-blue-50/30 to-purple-50/20 relative overflow-hidden">
+			{/* Background decoration */}
+			<div className="absolute inset-0">
+				<div className="absolute top-10 sm:top-20 left-5 sm:left-10 w-48 sm:w-72 h-48 sm:h-72 bg-blue-200/30 rounded-full blur-3xl animate-pulse"></div>
+				<div className="absolute bottom-10 sm:bottom-20 right-5 sm:right-10 w-64 sm:w-96 h-64 sm:h-96 bg-purple-200/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
 			</div>
 
-			{/* Instructors horizontally */}
-			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-				{instructors.map((instructor, index) => (
-					<motion.div 
-						key={instructor.name} 
-						className="relative rounded-3xl bg-white/90 backdrop-blur-xl border border-white/50 shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 group"
-						initial={{ opacity: 0, y: 30 }}
-						animate={{ opacity: 1, y: 0 }}
-						transition={{ duration: 0.5, delay: index * 0.1 }}
-						whileHover={{ y: -5 }}
-					>
-						{/* Accent line */}
-						<div
-							className={`absolute top-0 left-0 h-2 w-full bg-gradient-to-r ${instructor.accent} transition-all duration-300 group-hover:h-3`}
-						/>
+			<div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+				{/* Header */}
+				<div className="text-center mb-12 sm:mb-16">
+					<div className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 bg-white/80 backdrop-blur-sm border border-blue-100 rounded-full mb-4 sm:mb-6 shadow-sm">
+						<div className="flex gap-1">
+							<div className="w-1.5 sm:w-2 h-1.5 sm:h-2 bg-green-500 rounded-full animate-pulse"></div>
+							<div className="w-1.5 sm:w-2 h-1.5 sm:h-2 bg-blue-500 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+							<div className="w-1.5 sm:w-2 h-1.5 sm:h-2 bg-purple-500 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+						</div>
+						<span className="text-xs sm:text-sm font-semibold text-gray-700">Expert Instructors</span>
+					</div>
 
-						{/* Subtle grid */}
-						<div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.04)_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none opacity-70 group-hover:opacity-100 transition-opacity duration-300" />
+					<h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 bg-clip-text text-transparent mb-4 sm:mb-6 leading-tight">
+						Meet Our Expert Instructors
+					</h2>
+					<p className="text-sm sm:text-base lg:text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed px-4">
+						Learn from industry professionals with years of experience at top companies
+					</p>
+				</div>
 
-						<div className="relative p-6 md:p-8 z-10">
-							<div className="flex flex-col gap-6 items-center">
-								{/* Portrait */}
-								<div className="w-full max-w-[180px] transform transition-transform duration-300 group-hover:scale-105">
-									<div className={`relative mx-auto w-full rounded-2xl p-1.5 bg-gradient-to-br ${instructor.accent} shadow-lg`}>
-										<div className="rounded-xl overflow-hidden aspect-square ring-2 ring-white/50">
-											<motion.img
-												src={instructor.avatar}
-												alt={instructor.name}
-												className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-												initial={{ opacity: 0, y: 20 }}
-												animate={{ opacity: 1, y: 0 }}
-												transition={{ duration: 0.4 }}
-											/>
+				{/* Instructors Display */}
+				<div className="relative overflow-hidden">
+					<div className={`grid gap-4 sm:gap-6 lg:gap-8 max-w-6xl mx-auto ${
+						instructorCount === 1 ? 'grid-cols-1 max-w-md' : 
+						instructorCount === 2 ? 'grid-cols-1 sm:grid-cols-2 max-w-4xl' : 
+						'grid-cols-1 md:grid-cols-2 xl:grid-cols-3'
+					}`}>
+						{visibleInstructors.map((instructor, index) => (
+							<div
+								key={`${instructor.name}-${currentIndex}-${index}`}
+								className={`
+									bg-white/90 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg border border-white/50
+									hover:shadow-2xl hover:scale-105 transition-all duration-500
+									relative overflow-hidden group cursor-pointer
+									${isAnimating ? 'animate-slideLeft' : 'animate-slideInRight'}
+								`}
+								style={{
+									animationDelay: `${index * 0.1}s`,
+								}}
+							>
+								{/* Gradient border effect */}
+								<div className={`absolute inset-0 bg-gradient-to-br ${instructor.accent} opacity-0 group-hover:opacity-20 rounded-xl sm:rounded-2xl transition-opacity duration-500`}></div>
+								
+								{/* Accent line */}
+								<div className={`absolute top-0 left-0 h-2 w-full bg-gradient-to-r ${instructor.accent} transition-all duration-300 group-hover:h-3`} />
+
+								{/* Content */}
+								<div className="relative z-10">
+									{/* Portrait */}
+									<div className="flex justify-center mb-4 sm:mb-6">
+										<div className="relative">
+											<div className={`w-20 sm:w-24 h-20 sm:h-24 rounded-2xl p-1.5 bg-gradient-to-br ${instructor.accent} shadow-lg`}>
+												<img
+													src={instructor.avatar}
+													alt={instructor.name}
+													className="w-full h-full rounded-xl object-cover border-2 border-white shadow-lg"
+												/>
+											</div>
+											{/* Online status */}
+											<div className="absolute -bottom-0.5 sm:-bottom-1 -right-0.5 sm:-right-1 w-3 sm:w-5 h-3 sm:h-5 bg-green-500 border-2 border-white rounded-full"></div>
 										</div>
+									</div>
+									
+									{/* Info */}
+									<div className="text-center mb-4 sm:mb-6">
+										<h4 className="font-bold text-gray-900 text-sm sm:text-base lg:text-lg mb-1">
+											{instructor.name}
+										</h4>
+										<p className={`bg-gradient-to-r ${instructor.accent} bg-clip-text text-transparent font-medium text-xs sm:text-sm mb-3`}>
+											{instructor.role}
+										</p>
+									</div>
+									
+									{/* Bio content */}
+									<div className="mb-4 sm:mb-6">
+										<svg className="w-6 sm:w-8 h-6 sm:h-8 text-blue-200 mb-2 mx-auto" fill="currentColor" viewBox="0 0 24 24">
+											<path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z"/>
+										</svg>
+										<p className="text-gray-700 leading-relaxed text-xs sm:text-sm text-center">
+											{instructor.bio}
+										</p>
+									</div>
+									
+									{/* Tags */}
+									<div className="flex flex-wrap gap-2 justify-center">
+										{instructor.tags?.map((tag, tagIndex) => (
+											<span
+												key={tag}
+												className={`px-2 sm:px-3 py-1 bg-gradient-to-r ${instructor.accent} text-white text-xs font-semibold rounded-full shadow-sm hover:shadow-md transition-all duration-300 cursor-default`}
+											>
+												{tag}
+											</span>
+										))}
 									</div>
 								</div>
 
-								{/* Content */}
-								<div className="w-full text-center mt-2">
-									<motion.div
-										initial={{ opacity: 0, y: 20 }}
-										animate={{ opacity: 1, y: 0 }}
-										transition={{ duration: 0.35 }}
-									>
-										<h3 className="text-xl font-bold tracking-tight bg-gradient-to-r from-gray-800 to-gray-900 bg-clip-text text-transparent">{instructor.name}</h3>
-										<p className={`text-md bg-gradient-to-r ${instructor.accent} bg-clip-text text-transparent font-medium mt-1`}>{instructor.role}</p>
-										<blockquote className="mt-4 text-gray-700 leading-relaxed relative text-sm px-4">
-											<span className={`absolute top-0 left-0 text-4xl opacity-20 font-serif ${instructor.accent.includes('blue') ? 'text-blue-400' : instructor.accent.includes('emerald') ? 'text-emerald-400' : 'text-pink-400'}`}>"</span>
-											{instructor.bio}
-											<span className={`absolute bottom-0 right-0 text-4xl opacity-20 font-serif ${instructor.accent.includes('blue') ? 'text-blue-400' : instructor.accent.includes('emerald') ? 'text-emerald-400' : 'text-pink-400'}`}>"</span>
-										</blockquote>
-
-										{/* Expertise chips */}
-										<div className="mt-6 flex flex-wrap gap-2 justify-center">
-											{instructor.tags?.map((t) => (
-												<motion.span
-													key={t}
-													className={`px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r ${instructor.accent} text-white shadow-sm hover:shadow-md transition-all duration-300 cursor-default`}
-													whileHover={{ scale: 1.05 }}
-													whileTap={{ scale: 0.95 }}
-												>
-													{t}
-												</motion.span>
-											))}
-										</div>
-									</motion.div>
-								</div>
+								{/* Decorative element */}
+								<div className={`absolute bottom-0 right-0 w-16 h-16 rounded-tl-3xl bg-gradient-to-br ${instructor.accent} opacity-10 group-hover:opacity-20 transition-opacity duration-300`}></div>
 							</div>
+						))}
+					</div>
+
+					{/* Progress indicators */}
+					<div className="flex justify-center mt-6 sm:mt-8 gap-1 sm:gap-2 px-4">
+						{instructors.map((_, index) => {
+							const isActive = index >= currentIndex && index < currentIndex + instructorCount;
+							const isNext = index === (currentIndex + instructorCount) % instructors.length;
+							
+							return (
+								<div
+									key={index}
+									className={`h-1 sm:h-1.5 rounded-full transition-all duration-500 ${
+										isActive
+											? 'w-6 sm:w-8 bg-blue-500'
+											: isNext
+											? 'w-4 sm:w-6 bg-blue-300'
+											: 'w-1.5 sm:w-2 bg-gray-300'
+									}`}
+								/>
+							);
+						})}
+					</div>
+				</div>
+
+				{/* Bottom Stats */}
+				<div className="mt-12 sm:mt-16 bg-white/60 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 border border-white/50 shadow-lg">
+					<div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 text-center">
+						<div className="group">
+							<div className="text-xl sm:text-2xl lg:text-3xl font-bold text-blue-600 group-hover:scale-110 transition-transform">6+</div>
+							<div className="text-xs sm:text-sm text-gray-600 mt-1">Expert Instructors</div>
 						</div>
-						
-						{/* Decorative element */}
-						<div className={`absolute bottom-0 right-0 w-16 h-16 rounded-tl-3xl bg-gradient-to-br ${instructor.accent} opacity-10 group-hover:opacity-20 transition-opacity duration-300`}></div>
-					</motion.div>
-				))}
+						<div className="group">
+							<div className="text-xl sm:text-2xl lg:text-3xl font-bold text-green-600 group-hover:scale-110 transition-transform">15+</div>
+							<div className="text-xs sm:text-sm text-gray-600 mt-1">Years Combined Experience</div>
+						</div>
+						<div className="group">
+							<div className="text-xl sm:text-2xl lg:text-3xl font-bold text-purple-600 group-hover:scale-110 transition-transform">5000+</div>
+							<div className="text-xs sm:text-sm text-gray-600 mt-1">Students Taught</div>
+						</div>
+						<div className="group">
+							<div className="text-xl sm:text-2xl lg:text-3xl font-bold text-orange-600 group-hover:scale-110 transition-transform">100+</div>
+							<div className="text-xs sm:text-sm text-gray-600 mt-1">Companies Represented</div>
+						</div>
+					</div>
+				</div>
 			</div>
-			
-			{/* Decorative background elements */}
-			<motion.div 
-				className="absolute -top-10 -left-10 w-40 h-40 bg-blue-100 rounded-full opacity-30 blur-3xl"
-				animate={{ 
-					scale: [1, 1.2, 1],
-					opacity: [0.2, 0.3, 0.2]
-				}}
-				transition={{ 
-					duration: 8,
-					repeat: Infinity,
-					repeatType: "reverse"
-				}}
-			/>
-			<motion.div 
-				className="absolute -bottom-10 -right-10 w-40 h-40 bg-purple-100 rounded-full opacity-30 blur-3xl"
-				animate={{ 
-					scale: [1, 1.1, 1],
-					opacity: [0.2, 0.3, 0.2]
-				}}
-				transition={{ 
-					duration: 6,
-					repeat: Infinity,
-					repeatType: "reverse",
-					delay: 1
-				}}
-			/>
-			<motion.div 
-				className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-60 h-60 bg-indigo-50 rounded-full opacity-20 blur-3xl -z-10"
-				animate={{ 
-					scale: [1, 1.3, 1],
-					opacity: [0.1, 0.2, 0.1]
-				}}
-				transition={{ 
-					duration: 10,
-					repeat: Infinity,
-					repeatType: "reverse",
-					delay: 2
-				}}
-			/>
-		</div>
+
+			<style jsx>{`
+				@keyframes slideInRight {
+					0% {
+						opacity: 0;
+						transform: translateX(100px);
+					}
+					100% {
+						opacity: 1;
+						transform: translateX(0);
+					}
+				}
+				
+				@keyframes slideLeft {
+					0% {
+						opacity: 1;
+						transform: translateX(0);
+					}
+					100% {
+						opacity: 0;
+						transform: translateX(-100px);
+					}
+				}
+				
+				.animate-slideInRight {
+					animation: slideInRight 0.7s ease-out forwards;
+				}
+				
+				.animate-slideLeft {
+					animation: slideLeft 0.5s ease-in forwards;
+				}
+			`}</style>
+		</section>
 	);
 }
-
-
