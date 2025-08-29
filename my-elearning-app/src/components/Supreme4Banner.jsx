@@ -103,14 +103,14 @@ export default function Supreme4Banner() {
   if (loading) {
     return (
       <div className="relative mb-6 overflow-hidden">
-        <div className="bg-gradient-to-r from-blue-700 via-indigo-800 to-purple-900 text-white rounded-2xl shadow-2xl overflow-hidden min-h-[300px] flex items-center justify-center">
-          <div className="text-center">
+        <div className="bg-gradient-to-r from-blue-700 via-indigo-800 to-purple-900 text-white rounded-2xl shadow-2xl overflow-hidden min-h-[250px] sm:min-h-[300px] md:min-h-[400px] lg:min-h-[500px] xl:min-h-[600px] flex items-center justify-center">
+          <div className="text-center p-4">
             <motion.div
-              className="w-12 h-12 border-4 border-white/30 border-t-white rounded-full mx-auto mb-4"
+              className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 border-4 border-white/30 border-t-white rounded-full mx-auto mb-2 sm:mb-4"
               animate={{ rotate: 360 }}
               transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
             />
-            <p className="text-lg font-semibold">Loading banners...</p>
+            <p className="text-sm sm:text-base md:text-lg font-semibold">Loading banners...</p>
           </div>
         </div>
       </div>
@@ -120,10 +120,10 @@ export default function Supreme4Banner() {
   if (error) {
     return (
       <div className="relative mb-6 overflow-hidden">
-        <div className="bg-gradient-to-r from-red-600 to-red-700 text-white rounded-2xl shadow-2xl p-0 text-center min-h-[300px] flex items-center justify-center">
+        <div className="bg-gradient-to-r from-red-600 to-red-700 text-white rounded-2xl shadow-2xl p-4 text-center min-h-[250px] sm:min-h-[300px] md:min-h-[400px] lg:min-h-[500px] xl:min-h-[600px] flex items-center justify-center">
           <div>
-            <h3 className="text-xl font-bold mb-2">Unable to load banners</h3>
-            <p className="text-red-100">Error: {error}</p>
+            <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-2">Unable to load banners</h3>
+            <p className="text-red-100 text-sm sm:text-base">Error: {error}</p>
           </div>
         </div>
       </div>
@@ -133,10 +133,10 @@ export default function Supreme4Banner() {
   if (displayedBanners.length === 0) {
     return (
       <div className="relative mb-6 overflow-hidden">
-        <div className="bg-gradient-to-r from-gray-600 to-gray-700 text-white rounded-2xl shadow-2xl p-2 text-center min-h-[300px] flex items-center justify-center">
+        <div className="bg-gradient-to-r from-gray-600 to-gray-700 text-white rounded-2xl shadow-2xl p-4 text-center min-h-[250px] sm:min-h-[300px] md:min-h-[400px] lg:min-h-[500px] xl:min-h-[600px] flex items-center justify-center">
           <div>
-            <h3 className="text-xl font-bold mb-2">No banners available</h3>
-            <p className="text-gray-300">Check back later for updates!</p>
+            <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-2">No banners available</h3>
+            <p className="text-gray-300 text-sm sm:text-base">Check back later for updates!</p>
           </div>
         </div>
       </div>
@@ -178,32 +178,31 @@ export default function Supreme4Banner() {
           </div>
 
           {/* Full-width banner image container */}
-          <div className=" flex items-center justify-stretch">
+          <div className="flex items-center justify-stretch">
             {/* Image with border */}
             <div className="relative w-full h-full ml-0 mr-0 justify-end flex"> 
               <motion.img 
                 src={`data:image/jpeg;base64,${active.imageSrc}`}
                 alt={active.titleRest || "Banner Image"} 
     
-                className="w-full h-full  border-4 border-white/30"
+                className="w-full h-auto min-h-[250px] sm:min-h-[300px] md:min-h-[400px] lg:min-h-[500px] xl:min-h-[600px] border-4 border-white/30 object-cover"
                 initial={{ scale: 0.95, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 0.8 }}
-                style={{ height: '400px' , width: '100%', objectFit: 'cover' }}
                 onError={(e) => {
                   e.target.onerror = null;
                   e.target.style.display = 'none';
                   const fallback = document.createElement('div');
-                  fallback.className = 'w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600 text-white font-bold text-2xl md:text-4xl';
-                  fallback.innerHTML = `<div class="text-center p-8"><div class="text-4xl md:text-6xl mb-4">📚</div><div>${active.titleRest || 'Training Program'}</div></div>`;
+                  fallback.className = 'w-full h-auto min-h-[250px] sm:min-h-[300px] md:min-h-[400px] lg:min-h-[500px] xl:min-h-[600px] flex items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600 text-white font-bold text-lg sm:text-xl md:text-2xl lg:text-4xl';
+                  fallback.innerHTML = `<div class="text-center p-4 sm:p-6 md:p-8"><div class="text-2xl sm:text-3xl md:text-4xl lg:text-6xl mb-2 sm:mb-4">📚</div><div>${active.titleRest || 'Training Program'}</div></div>`;
                   e.target.parentNode.appendChild(fallback);
                 }}
               />
 
               {/* Title overlay at bottom of image */}
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent p-4 md:p-6">
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent p-2 sm:p-3 md:p-4 lg:p-6">
                 <motion.h2 
-                  className="text-2xl md:text-3xl lg:text-4xl font-bold leading-tight text-white drop-shadow-lg"
+                  className="text-sm sm:text-lg md:text-2xl lg:text-3xl xl:text-4xl font-bold leading-tight text-white drop-shadow-lg"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.3 }}
@@ -217,7 +216,7 @@ export default function Supreme4Banner() {
 
             {/* Floating NEW badge */}
             <motion.div 
-              className="absolute top-8 right-8 w-12 h-12 md:w-14 md:h-14 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center text-gray-900 font-bold text-xs md:text-sm shadow-lg z-10"
+              className="absolute top-2 right-2 sm:top-4 sm:right-4 md:top-6 md:right-6 w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center text-gray-900 font-bold text-xs sm:text-xs md:text-sm shadow-lg z-10"
               animate={{ rotate: [0, 10, -10, 0], y: [0, -3, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
               initial={{ opacity: 0, scale: 0.8 }}
@@ -230,26 +229,26 @@ export default function Supreme4Banner() {
           {/* Navigation Arrows */}
           <motion.button
             onClick={prevSlide}
-            className="absolute left-3 top-1/2 -translate-y-1/2 bg-white/20 backdrop-blur-sm text-white p-2 rounded-full hover:bg-white/30 transition-all duration-300 z-10"
+            className="absolute left-1 sm:left-2 md:left-3 top-1/2 -translate-y-1/2 bg-white/20 backdrop-blur-sm text-white p-1 sm:p-1.5 md:p-2 rounded-full hover:bg-white/30 transition-all duration-300 z-10"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             aria-label="Previous banner"
           >
-            <ChevronLeft size={22} />
+            <ChevronLeft size={16} className="sm:w-5 sm:h-5 md:w-6 md:h-6" />
           </motion.button>
           <motion.button
             onClick={nextSlide}
-            className="absolute right-3 top-1/2 -translate-y-1/2 bg-white/20 backdrop-blur-sm text-white p-2 rounded-full hover:bg-white/30 transition-all duration-300 z-10"
+            className="absolute right-1 sm:right-2 md:right-3 top-1/2 -translate-y-1/2 bg-white/20 backdrop-blur-sm text-white p-1 sm:p-1.5 md:p-2 rounded-full hover:bg-white/30 transition-all duration-300 z-10"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             aria-label="Next banner"
           >
-            <ChevronRight size={22} />
+            <ChevronRight size={16} className="sm:w-5 sm:h-5 md:w-6 md:h-6" />
           </motion.button>
 
           {/* Dots Indicator inside banner */}
           <motion.div 
-            className="absolute bottom-3 left-1/2 -translate-x-1/2 flex space-x-2 z-10"
+            className="absolute bottom-1 sm:bottom-2 md:bottom-3 left-1/2 -translate-x-1/2 flex space-x-1 sm:space-x-2 z-10"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.3 }}
@@ -259,7 +258,7 @@ export default function Supreme4Banner() {
                 key={idx}
                 aria-label={`Go to banner ${idx + 1}`}
                 onClick={() => setCurrentIndex(idx)}
-                className={`h-2 w-2 rounded-full transition-all duration-300 ${idx === currentIndex ? "bg-white w-6" : "bg-white/40"}`}
+                className={`h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full transition-all duration-300 ${idx === currentIndex ? "bg-white w-3 sm:w-4 md:w-6" : "bg-white/40"}`}
               />
             ))}
           </motion.div>

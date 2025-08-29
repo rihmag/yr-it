@@ -44,7 +44,7 @@ export default function InstructorCard({ instructor }) {
           <motion.img
             src={instructor.avatar}
             alt={instructor.name}
-            className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-lg group-hover:border-blue-200 transition-all duration-300"
+            className="w-24 h-24 rounded-full object-contain bg-gray-100 border-4 border-white shadow-lg group-hover:border-blue-200 transition-all duration-300"
             whileHover={{ scale: 1.1, rotate: 5 }}
             transition={{ duration: 0.3 }}
           />
