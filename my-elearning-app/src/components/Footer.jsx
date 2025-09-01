@@ -198,7 +198,6 @@ export default function Footer() {
               <div className="flex space-x-4">
                 {[
                   { icon: Facebook, color: "hover:text-blue-400", link: "https://www.facebook.com/profile.php?id=61577752955890&rdid=ILY8kzZlwX92GdoH&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F162i8uqYzy%2F#" },
-                  { icon: Twitter, color: "hover:text-blue-400", link: "https://twitter.com/yourhandle" },
                   { icon: Instagram, color: "hover:text-pink-400", link: "https://www.instagram.com/yritsolutions2025?utm_source=ig_contact_invite" },
                   { icon: Linkedin, color: "hover:text-blue-400", link: "https://www.linkedin.com/in/yashika-sharma1775/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" },
                   { icon: Youtube, color: "hover:text-red-400", link: "https://www.youtube.com/@yritsolutions" },
