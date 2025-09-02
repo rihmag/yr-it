@@ -67,7 +67,7 @@ export default function Navbar() {
           course.instructor.toLowerCase().includes(searchTerm.toLowerCase()) ||
           course.category.toLowerCase().includes(searchTerm.toLowerCase())
       );
-      setSearchResults(filtered.slice(0, 5)); // Show only first 5 results
+      setSearchResults(filtered.slice(0, 5)); 
       setIsSearching(false);
     } else {
       setSearchResults([]);

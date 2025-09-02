@@ -70,7 +70,6 @@ export default function AllCourses() {
         break;
       case "popular":
       default:
-        // Keep original order for popular (assuming it's already sorted by popularity)
         break;
     }
 

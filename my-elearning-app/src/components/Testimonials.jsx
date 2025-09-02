@@ -344,28 +344,6 @@ export default function Testimonials() {
 					</div>
 
 				</div>
-
-				{/* Bottom Stats
-				<div className="mt-12 sm:mt-16 bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 border border-white/50 dark:border-gray-700/50 shadow-lg">
-					<div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 text-center">
-						<div className="group">
-							<div className="text-xl sm:text-2xl lg:text-3xl font-bold text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform">10,000+</div>
-							<div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1">Students Enrolled</div>
-						</div>
-						<div className="group">
-							<div className="text-xl sm:text-2xl lg:text-3xl font-bold text-green-600 dark:text-green-400 group-hover:scale-110 transition-transform">95%</div>
-							<div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1">Placement Rate</div>
-						</div>
-						<div className="group">
-							<div className="text-xl sm:text-2xl lg:text-3xl font-bold text-purple-600 dark:text-purple-400 group-hover:scale-110 transition-transform">4.9/5</div>
-							<div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1">Student Rating</div>
-						</div>
-						<div className="group">
-							<div className="text-xl sm:text-2xl lg:text-3xl font-bold text-orange-600 dark:text-orange-400 group-hover:scale-110 transition-transform">500+</div>
-							<div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1">Companies Hiring</div>
-						</div>
-					</div>
-				</div> */}
 			</div>
 
 			<style jsx>{`
