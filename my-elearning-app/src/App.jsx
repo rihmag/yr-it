@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Toaster } from "react-hot-toast";
+import { ThemeProvider } from "./contexts/ThemeContext";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
@@ -24,7 +25,6 @@ import ScrollToTop from "./components/ScrollToTop";
 import Loader from "./components/Loader";
 import InstructorManager from "./panels/EditInstructorBanner";
 
-
 const PrivateRoute = ({ children, isAuthenticated }) => {
   return isAuthenticated ? children : <Navigate to="/login" />;
 };
@@ -47,63 +47,65 @@ function App() {
   }
   
   return (
-    <div>
-      <Router>
-        <ScrollToTop />
-        <Refreshhandler SetIsAuthenticated={setIsAuthenticated} />
-        <div className="pt-20">
-          <Navbar SetisAuthenticated={setIsAuthenticated} />
-          
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/course/:courseId" element={<Course />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/courses" element={<AllCourses/>}/>
-                          
-            <Route 
-              path="/dashboard" 
-              element={
-                <PrivateRoute isAuthenticated={isAuthenticated}>
-                  <Dashboard />
-                </PrivateRoute>
-              } 
-            />
-            <Route path="/chatbot" element={<Chatbot />} />
-            <Route path="/login" element={<Login SetIsAuthenticated={setIsAuthenticated} />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route 
-              path="/ide" 
-              element={
-                <PrivateRoute isAuthenticated={isAuthenticated}>
-                  <CodeEditor />
-                </PrivateRoute>
-              } 
-            />
+    <ThemeProvider>
+      <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
+        <Router>
+          <ScrollToTop />
+          <Refreshhandler SetIsAuthenticated={setIsAuthenticated} />
+          <div className="pt-20">
+            <Navbar SetisAuthenticated={setIsAuthenticated} />
             
-            <Route 
-              path="/panel/" 
-              element={
-                
-                  <CreatorPanel />
-                
-              }
-            >
-             
-              <Route path="add-course" element={<AddCourse />} />
-              <Route path="manage-courses" element={<ManageCourses />} />
-              <Route path="edit-banner" element={<EditBanner />} />
-              <Route path="edit-course/:courseId" element={<EditCourse />} />
-              <Route path="enrolled-students" element={<EnrolledStudents />} />
-              <Route path="earnings" element={<Earnings />} />
-              <Route path="mobilebanners" element={<InstructorManager/> } />
-            </Route>
-          </Routes>
-          
-          <Footer />
-        </div>
-        <Toaster />
-      </Router>
-    </div>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/course/:courseId" element={<Course />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/courses" element={<AllCourses/>}/>
+                            
+              <Route 
+                path="/dashboard" 
+                element={
+                  <PrivateRoute isAuthenticated={isAuthenticated}>
+                    <Dashboard />
+                  </PrivateRoute>
+                } 
+              />
+              <Route path="/chatbot" element={<Chatbot />} />
+              <Route path="/login" element={<Login SetIsAuthenticated={setIsAuthenticated} />} />
+              <Route path="/signup" element={<SignUp />} />
+              <Route 
+                path="/ide" 
+                element={
+                  <PrivateRoute isAuthenticated={isAuthenticated}>
+                    <CodeEditor />
+                  </PrivateRoute>
+                } 
+              />
+              
+              <Route 
+                path="/panel/" 
+                element={
+                  
+                    <CreatorPanel />
+                  
+                }
+              >
+               
+                <Route path="add-course" element={<AddCourse />} />
+                <Route path="manage-courses" element={<ManageCourses />} />
+                <Route path="edit-banner" element={<EditBanner />} />
+                <Route path="edit-course/:courseId" element={<EditCourse />} />
+                <Route path="enrolled-students" element={<EnrolledStudents />} />
+                <Route path="earnings" element={<Earnings />} />
+                <Route path="mobilebanners" element={<InstructorManager/> } />
+              </Route>
+            </Routes>
+            
+            <Footer />
+          </div>
+          <Toaster />
+        </Router>
+      </div>
+    </ThemeProvider>
   );
 }
 

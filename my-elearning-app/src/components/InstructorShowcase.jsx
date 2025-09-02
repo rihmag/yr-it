@@ -123,29 +123,29 @@ export default function InstructorShowcase() {
 	const instructorCount = getInstructorCount();
 
 	return (
-		<section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-gray-50 via-blue-50/30 to-purple-50/20 relative overflow-hidden">
-			{/* Background decoration */}
+		<section className="py-12 sm:py-16 lg:py-20 relative overflow-hidden transition-colors duration-300">
+			{/* Background decoration
 			<div className="absolute inset-0">
-				<div className="absolute top-10 sm:top-20 left-5 sm:left-10 w-48 sm:w-72 h-48 sm:h-72 bg-blue-200/30 rounded-full blur-3xl animate-pulse"></div>
-				<div className="absolute bottom-10 sm:bottom-20 right-5 sm:right-10 w-64 sm:w-96 h-64 sm:h-96 bg-purple-200/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
-			</div>
+				<div className="absolute top-10 sm:top-20 left-5 sm:left-10 w-48 sm:w-72 h-48 sm:h-72 bg-blue-400/20 dark:bg-blue-600/20 rounded-full blur-3xl animate-pulse transition-colors duration-300"></div>
+				<div className="absolute bottom-10 sm:bottom-20 right-5 sm:right-10 w-64 sm:w-96 h-64 sm:h-96 bg-indigo-400/15 dark:bg-indigo-600/15 rounded-full blur-3xl animate-pulse transition-colors duration-300" style={{ animationDelay: '2s' }}></div>
+			</div> */}
 
 			<div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 				{/* Header */}
 				<div className="text-center mb-12 sm:mb-16">
-					<div className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 bg-white/80 backdrop-blur-sm border border-blue-100 rounded-full mb-4 sm:mb-6 shadow-sm">
+					<div className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-blue-100 dark:border-gray-700 rounded-full mb-4 sm:mb-6 shadow-sm transition-colors duration-300">
 						<div className="flex gap-1">
 							<div className="w-1.5 sm:w-2 h-1.5 sm:h-2 bg-green-500 rounded-full animate-pulse"></div>
 							<div className="w-1.5 sm:w-2 h-1.5 sm:h-2 bg-blue-500 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
 							<div className="w-1.5 sm:w-2 h-1.5 sm:h-2 bg-purple-500 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
 						</div>
-						<span className="text-xs sm:text-sm font-semibold text-gray-700">Expert Instructors</span>
+						<span className="text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-300 transition-colors duration-300">Expert Instructors</span>
 					</div>
 
-					<h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 bg-clip-text text-transparent mb-4 sm:mb-6 leading-tight">
+					<h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 dark:from-white dark:via-blue-200 dark:to-purple-200 bg-clip-text text-transparent mb-4 sm:mb-6 leading-tight transition-all duration-300">
 						Meet Our Expert Instructors
 					</h2>
-					<p className="text-sm sm:text-base lg:text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed px-4">
+					<p className="text-sm sm:text-base lg:text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed px-4 transition-colors duration-300">
 						Learn from industry professionals with years of experience at top companies
 					</p>
 				</div>
@@ -161,7 +161,7 @@ export default function InstructorShowcase() {
 							<div
 								key={`${instructor.name}-${currentIndex}-${index}`}
 								className={`
-									bg-white/90 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg border border-white/50
+									bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg border border-white/50 dark:border-gray-700/50
 									hover:shadow-2xl hover:scale-105 transition-all duration-500
 									relative overflow-hidden group cursor-pointer
 									${isAnimating ? 'animate-slideLeft' : 'animate-slideInRight'}
@@ -185,17 +185,17 @@ export default function InstructorShowcase() {
 												<img
 													src={instructor.avatar}
 													alt={instructor.name}
-													className="w-full h-full rounded-xl object-cover border-2 border-white shadow-lg"
+													className="w-full h-full rounded-xl object-cover border-2 border-white dark:border-gray-200 shadow-lg transition-colors duration-300"
 												/>
 											</div>
 											{/* Online status */}
-											<div className="absolute -bottom-0.5 sm:-bottom-1 -right-0.5 sm:-right-1 w-3 sm:w-5 h-3 sm:h-5 bg-green-500 border-2 border-white rounded-full"></div>
+											<div className="absolute -bottom-0.5 sm:-bottom-1 -right-0.5 sm:-right-1 w-3 sm:w-5 h-3 sm:h-5 bg-green-500 border-2 border-white dark:border-gray-200 rounded-full transition-colors duration-300"></div>
 										</div>
 									</div>
 									
 									{/* Info */}
 									<div className="text-center mb-4 sm:mb-6">
-										<h4 className="font-bold text-gray-900 text-sm sm:text-base lg:text-lg mb-1">
+										<h4 className="font-bold text-gray-900 dark:text-white text-sm sm:text-base lg:text-lg mb-1 transition-colors duration-300">
 											{instructor.name}
 										</h4>
 										<p className={`bg-gradient-to-r ${instructor.accent} bg-clip-text text-transparent font-medium text-xs sm:text-sm mb-3`}>
@@ -205,10 +205,10 @@ export default function InstructorShowcase() {
 									
 									{/* Bio content */}
 									<div className="mb-4 sm:mb-6">
-										<svg className="w-6 sm:w-8 h-6 sm:h-8 text-blue-200 mb-2 mx-auto" fill="currentColor" viewBox="0 0 24 24">
+										<svg className="w-6 sm:w-8 h-6 sm:h-8 text-blue-200 dark:text-blue-600 mb-2 mx-auto transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24">
 											<path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z"/>
 										</svg>
-										<p className="text-gray-700 leading-relaxed text-xs sm:text-sm text-center">
+										<p className="text-gray-700 dark:text-gray-300 leading-relaxed text-xs sm:text-sm text-center transition-colors duration-300">
 											{instructor.bio}
 										</p>
 									</div>
@@ -245,8 +245,8 @@ export default function InstructorShowcase() {
 										isActive
 											? 'w-6 sm:w-8 bg-blue-500'
 											: isNext
-											? 'w-4 sm:w-6 bg-blue-300'
-											: 'w-1.5 sm:w-2 bg-gray-300'
+											? 'w-4 sm:w-6 bg-blue-300 dark:bg-blue-600'
+											: 'w-1.5 sm:w-2 bg-gray-300 dark:bg-gray-600'
 									}`}
 								/>
 							);

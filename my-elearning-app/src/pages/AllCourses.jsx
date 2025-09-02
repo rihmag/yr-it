@@ -104,10 +104,12 @@ export default function AllCourses() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center overflow-x-hidden">
-        <div className="text-center">
-          <div className="text-4xl mb-4">📚</div>
-          <p className="text-gray-600">Loading courses...</p>
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 relative overflow-hidden transition-colors duration-300">
+        <div className="container mx-auto px-4 py-8 relative z-10">
+          <div className="text-center">
+            <div className="text-4xl mb-4">📚</div>
+            <p className="text-gray-600 dark:text-gray-400">Loading courses...</p>
+          </div>
         </div>
       </div>
     );
@@ -115,8 +117,8 @@ export default function AllCourses() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 overflow-x-hidden">
-        <div className="container mx-auto px-4 py-8 overflow-x-hidden">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 relative overflow-hidden transition-colors duration-300">
+        <div className="container mx-auto px-4 py-8 relative z-10">
           <div className="flex items-center justify-center min-h-[60vh]">
             <motion.div
               className="text-center"
@@ -124,11 +126,11 @@ export default function AllCourses() {
               animate={{ opacity: 1, y: 0 }}
             >
               <div className="text-red-500 text-6xl mb-4">⚠️</div>
-              <h2 className="text-2xl font-bold text-gray-800 mb-2">Oops! Something went wrong</h2>
-              <p className="text-gray-600 mb-6">{error}</p>
+              <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-2">Oops! Something went wrong</h2>
+              <p className="text-gray-600 dark:text-gray-400 mb-6">{error}</p>
               <button
                 onClick={() => window.location.reload()}
-                className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
+                className="bg-blue-600 dark:bg-blue-400 text-white px-6 py-3 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-500 transition-colors"
               >
                 Try Again
               </button>
@@ -140,262 +142,248 @@ export default function AllCourses() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 overflow-x-hidden">
-      {/* Hero Section */}
-      <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700 text-white overflow-x-hidden">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16 max-w-full">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center w-full"
-          >
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 leading-tight max-w-full">
-              {searchTerm ? `Search Results for "${searchTerm}"` : "Discover Amazing Courses"}
-            </h1>
-            <p className="text-base sm:text-lg lg:text-xl text-blue-100 mb-6 sm:mb-8 max-w-2xl mx-auto px-2 sm:px-4">
-              {searchTerm 
-                ? `Found ${filteredCourses.length} course${filteredCourses.length !== 1 ? 's' : ''} matching your search`
-                : "Explore our comprehensive collection of courses designed to help you master new skills and advance your career"
-              }
-            </p>
-            
-            {/* Search Bar */}
-            <div className="max-w-2xl mx-auto mb-6 sm:mb-8 px-2 sm:px-4">
-              <div className="relative w-full">
-                <Search className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
-                <input
-                  type="text"
-                  placeholder="Search courses..."
-                  value={searchTerm}
-                  onChange={handleSearchChange}
-                  className="w-full pl-10 sm:pl-12 pr-4 py-3 sm:py-4 rounded-xl text-sm sm:text-base text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-300"
-                />
-              </div>
-            </div>
-
-            {/* Stats */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 max-w-4xl mx-auto px-2 sm:px-4">
-              <motion.div
-                className="text-center"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-              >
-                <div className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold">{stats.totalCourses}+</div>
-                <div className="text-xs sm:text-sm text-blue-100">Courses</div>
-              </motion.div>
-              <motion.div
-                className="text-center"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-              >
-                <div className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold">{stats.totalStudents.toLocaleString()}+</div>
-                <div className="text-xs sm:text-sm text-blue-100">Students</div>
-              </motion.div>
-              <motion.div
-                className="text-center"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-              >
-                <div className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold">{stats.totalHours}+</div>
-                <div className="text-xs sm:text-sm text-blue-100">Hours</div>
-              </motion.div>
-              <motion.div
-                className="text-center"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 }}
-              >
-                <div className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold">{stats.avgRating}★</div>
-                <div className="text-xs sm:text-sm text-blue-100">Rating</div>
-              </motion.div>
-            </div>
-          </motion.div>
-        </div>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 relative overflow-hidden transition-colors duration-300">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 opacity-20 dark:opacity-10">
+        <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-blue-400 to-purple-400 dark:from-blue-600 dark:to-purple-600 rounded-full mix-blend-multiply filter blur-xl animate-pulse"></div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-purple-400 to-pink-400 dark:from-purple-600 dark:to-pink-600 rounded-full mix-blend-multiply filter blur-xl animate-pulse" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute bottom-0 left-1/2 w-96 h-96 bg-gradient-to-br from-indigo-400 to-blue-400 dark:from-indigo-600 dark:to-blue-600 rounded-full mix-blend-multiply filter blur-xl animate-pulse" style={{ animationDelay: '4s' }}></div>
       </div>
 
-      {/* Main Content */}
-      <div className="w-full overflow-x-hidden">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 max-w-full">
-          {/* Filters and Controls */}
-          <div className="bg-white rounded-2xl shadow-lg p-4 sm:p-6 mb-6 sm:mb-8">
-            <div className="flex flex-col space-y-4 lg:space-y-0 lg:flex-row lg:items-center lg:justify-between">
-              {/* Results Info */}
-              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
-                <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-800">
-                  {filteredCourses.length} Course{filteredCourses.length !== 1 ? 's' : ''} Found
-                </h2>
-                {searchTerm && (
-                  <span className="text-sm sm:text-base text-gray-600">
-                    for "{searchTerm}"
-                  </span>
-                )}
-                {(searchTerm || selectedCategory !== "All") && (
-                  <button
-                    onClick={clearFilters}
-                    className="text-blue-600 hover:text-blue-700 text-sm font-medium transition-colors self-start sm:self-auto"
-                  >
-                    Clear all filters
-                  </button>
-                )}
-              </div>
+      <div className="container mx-auto px-4 py-8 relative z-10">
+        {/* Header */}
+        <motion.div 
+          className="text-center mb-12"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 dark:from-blue-400 dark:via-purple-400 dark:to-indigo-400 bg-clip-text text-transparent">
+            All Courses
+          </h1>
+          <p className="text-xl text-gray-700 dark:text-gray-300 max-w-2xl mx-auto">
+            Discover our comprehensive collection of programming courses designed to advance your skills
+          </p>
+        </motion.div>
 
-              {/* Controls */}
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-                {/* Category Filter */}
-                <div className="flex items-center gap-2">
-                  <Filter size={18} className="text-gray-600 flex-shrink-0" />
-                  <select
-                    value={selectedCategory}
-                    onChange={(e) => setSelectedCategory(e.target.value)}
-                    className="flex-1 sm:flex-none px-3 sm:px-4 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  >
-                    {categories.map(category => (
-                      <option key={category} value={category}>{category}</option>
-                    ))}
-                  </select>
-                </div>
-
-                {/* Sort */}
-                <div className="flex items-center gap-2">
-                  <TrendingUp size={18} className="text-gray-600 flex-shrink-0" />
-                  <select
-                    value={sortBy}
-                    onChange={(e) => setSortBy(e.target.value)}
-                    className="flex-1 sm:flex-none px-3 sm:px-4 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  >
-                    <option value="popular">Most Popular</option>
-                    <option value="price-low">Price: Low to High</option>
-                    <option value="price-high">Price: High to Low</option>
-                    <option value="name">Name: A to Z</option>
-                  </select>
-                </div>
-
-                {/* View Mode */}
-                <div className="flex items-center gap-2 bg-gray-100 rounded-lg p-1 self-start sm:self-auto">
-                  <button
-                    onClick={() => setViewMode("grid")}
-                    className={`p-2 rounded-md transition-colors ${
-                      viewMode === "grid" ? "bg-white shadow-sm" : "text-gray-600"
-                    }`}
-                  >
-                    <Grid size={18} />
-                  </button>
-                  <button
-                    onClick={() => setViewMode("list")}
-                    className={`p-2 rounded-md transition-colors ${
-                      viewMode === "list" ? "bg-white shadow-sm" : "text-gray-600"
-                    }`}
-                  >
-                    <List size={18} />
-                  </button>
-                </div>
-              </div>
-            </div>
+        {/* Stats */}
+        <motion.div 
+          className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
+          <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl p-4 text-center shadow-lg border border-white/20 dark:border-gray-700/20">
+            <BookOpen className="mx-auto mb-2 text-blue-600 dark:text-blue-400" size={24} />
+            <div className="text-2xl font-bold text-gray-800 dark:text-gray-100">{courses.length}</div>
+            <div className="text-gray-600 dark:text-gray-400 text-sm">Total Courses</div>
           </div>
+          <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl p-4 text-center shadow-lg border border-white/20 dark:border-gray-700/20">
+            <Users className="mx-auto mb-2 text-green-600 dark:text-green-400" size={24} />
+            <div className="text-2xl font-bold text-gray-800 dark:text-gray-100">50K+</div>
+            <div className="text-gray-600 dark:text-gray-400 text-sm">Students</div>
+          </div>
+          <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl p-4 text-center shadow-lg border border-white/20 dark:border-gray-700/20">
+            <Clock className="mx-auto mb-2 text-orange-600 dark:text-orange-400" size={24} />
+            <div className="text-2xl font-bold text-gray-800 dark:text-gray-100">500+</div>
+            <div className="text-gray-600 dark:text-gray-400 text-sm">Hours Content</div>
+          </div>
+          <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl p-4 text-center shadow-lg border border-white/20 dark:border-gray-700/20">
+            <Star className="mx-auto mb-2 text-yellow-600 dark:text-yellow-400" size={24} />
+            <div className="text-2xl font-bold text-gray-800 dark:text-gray-100">4.8</div>
+            <div className="text-gray-600 dark:text-gray-400 text-sm">Avg Rating</div>
+          </div>
+        </motion.div>
 
-          {/* Courses Grid */}
-          <AnimatePresence mode="wait">
-            {filteredCourses.length === 0 ? (
-              <motion.div
-                key="no-results"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                className="text-center py-12 sm:py-16 px-4"
+        {/* Search and Filters */}
+        <motion.div 
+          className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-6 mb-8 shadow-lg border border-white/20 dark:border-gray-700/20"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+        >
+          <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
+            {/* Search */}
+            <div className="relative flex-1 max-w-md">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500" size={20} />
+              <input
+                type="text"
+                placeholder="Search courses..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-10 pr-4 py-3 border border-gray-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 transition-all"
+              />
+            </div>
+
+            {/* Category Filter */}
+            <div className="flex items-center gap-2">
+              <Filter className="text-gray-600 dark:text-gray-400" size={20} />
+              <select
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+                className="px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-all"
               >
-                <div className="text-gray-400 text-4xl sm:text-6xl mb-4">🔍</div>
-                <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">No courses found</h3>
-                <p className="text-sm sm:text-base text-gray-600 mb-6 max-w-md mx-auto">
-                  {searchTerm 
-                    ? `No courses match "${searchTerm}". Try adjusting your search terms or filters.`
-                    : "Try adjusting your search terms or filters to find what you're looking for."
-                  }
-                </p>
-                <button
-                  onClick={clearFilters}
-                  className="bg-blue-600 text-white px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base rounded-lg hover:bg-blue-700 transition-colors"
-                >
-                  Clear Filters
-                </button>
-              </motion.div>
-            ) : (
-              <motion.div
-                key="courses-grid"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className={`grid gap-4 sm:gap-6 ${
-                  viewMode === "grid"
-                    ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-                    : "grid-cols-1 max-w-4xl mx-auto"
+                {categories.map(category => (
+                  <option key={category} value={category}>{category}</option>
+                ))}
+              </select>
+            </div>
+
+            {/* Sort */}
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-all"
+            >
+              <option value="popular">Most Popular</option>
+              <option value="newest">Newest First</option>
+              <option value="price-low">Price: Low to High</option>
+              <option value="price-high">Price: High to Low</option>
+              <option value="rating">Highest Rated</option>
+            </select>
+
+            {/* View Mode */}
+            <div className="flex bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
+              <button
+                onClick={() => setViewMode("grid")}
+                className={`p-2 rounded-md transition-all ${
+                  viewMode === "grid" 
+                    ? "bg-white dark:bg-gray-600 text-blue-600 dark:text-blue-400 shadow-sm" 
+                    : "text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
                 }`}
               >
-                {filteredCourses.map((course, index) => (
-                  <motion.div
-                    key={course._id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                  >
-                    <CourseCard 
-                      course={course.title}
-                      courseImage={course.thumbnail}
-                      price={course.price}
-                      description={course.description}
-                      instructor={course.instructor}
-                      category={course.category}
-                      isActive={activeCard === course._id}
-                      onHover={() => setActiveCard(course._id)}
-                      viewMode={viewMode}
-                    />
-                  </motion.div>
-                ))}
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          {/* Load More Button (if needed) */}
-          {filteredCourses.length > 0 && (
-            <div className="text-center mt-8 sm:mt-12">
-              <motion.button
-                className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base rounded-xl font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                <Grid size={20} />
+              </button>
+              <button
+                onClick={() => setViewMode("list")}
+                className={`p-2 rounded-md transition-all ${
+                  viewMode === "list" 
+                    ? "bg-white dark:bg-gray-600 text-blue-600 dark:text-blue-400 shadow-sm" 
+                    : "text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
+                }`}
               >
-                Load More Courses
-              </motion.button>
-            </div>
-          )}
-
-          <InstructorShowcase/>
-
-          {/* Bottom Stats */}
-          <div className="mt-12 sm:mt-16 bg-white/60 backdrop-blur-sm rounded-3xl p-6 sm:p-8 border border-white/50 shadow-lg">
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 text-center">
-              <div className="group">
-                <div className="text-2xl sm:text-3xl font-bold text-blue-600 group-hover:scale-110 transition-transform">10,000+</div>
-                <div className="text-xs sm:text-sm text-gray-600 mt-1">Students Enrolled</div>
-              </div>
-              <div className="group">
-                <div className="text-2xl sm:text-3xl font-bold text-green-600 group-hover:scale-110 transition-transform">95%</div>
-                <div className="text-xs sm:text-sm text-gray-600 mt-1">Placement Rate</div>
-              </div>
-              <div className="group">
-                <div className="text-2xl sm:text-3xl font-bold text-purple-600 group-hover:scale-110 transition-transform">4.9/5</div>
-                <div className="text-xs sm:text-sm text-gray-600 mt-1">Student Rating</div>
-              </div>
-              <div className="group">
-                <div className="text-2xl sm:text-3xl font-bold text-orange-600 group-hover:scale-110 transition-transform">500+</div>
-                <div className="text-xs sm:text-sm text-gray-600 mt-1">Companies Hiring</div>
-              </div>
+                <List size={20} />
+              </button>
             </div>
           </div>
+        </motion.div>
 
+        {/* Results Info */}
+        <motion.div 
+          className="flex items-center justify-between mb-6"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
+        >
+          <div className="text-gray-700 dark:text-gray-300">
+            Showing {filteredCourses.length} of {courses.length} courses
+            {searchTerm && ` for "${searchTerm}"`}
+            {selectedCategory !== "All" && ` in ${selectedCategory}`}
+          </div>
+          <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+            <TrendingUp size={16} />
+            <span>Sorted by {sortBy.replace('-', ' ')}</span>
+          </div>
+        </motion.div>
+
+        {/* Courses Grid */}
+        <AnimatePresence mode="wait">
+          {filteredCourses.length === 0 ? (
+            <motion.div
+              key="no-results"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="text-center py-12 sm:py-16 px-4"
+            >
+              <div className="text-gray-400 dark:text-gray-500 text-4xl sm:text-6xl mb-4">🔍</div>
+              <h3 className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-gray-100 mb-2">No courses found</h3>
+              <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-6 max-w-md mx-auto">
+                {searchTerm 
+                  ? `No courses match "${searchTerm}". Try adjusting your search terms or filters.`
+                  : "Try adjusting your search terms or filters to find what you're looking for."
+                }
+              </p>
+              <button
+                onClick={clearFilters}
+                className="bg-blue-600 dark:bg-blue-400 text-white px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base rounded-lg hover:bg-blue-700 dark:hover:bg-blue-500 transition-colors"
+              >
+                Clear Filters
+              </button>
+            </motion.div>
+          ) : (
+            <motion.div
+              key="courses-grid"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className={`grid gap-4 sm:gap-6 ${
+                viewMode === "grid"
+                  ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+                  : "grid-cols-1 max-w-4xl mx-auto"
+              }`}
+            >
+              {filteredCourses.map((course, index) => (
+                <motion.div
+                  key={course._id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <CourseCard 
+                    course={course.title}
+                    courseImage={course.thumbnail}
+                    price={course.price}
+                    description={course.description}
+                    instructor={course.instructor}
+                    category={course.category}
+                    isActive={activeCard === course._id}
+                    onHover={() => setActiveCard(course._id)}
+                    viewMode={viewMode}
+                  />
+                </motion.div>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Load More Button (if needed) */}
+        {filteredCourses.length > 0 && (
+          <div className="text-center mt-8 sm:mt-12">
+            <motion.button
+              className="bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 text-white px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base rounded-xl font-semibold hover:from-blue-700 dark:hover:from-blue-500 hover:to-purple-700 dark:hover:to-purple-500 transition-all duration-300 shadow-lg hover:shadow-xl"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Load More Courses
+            </motion.button>
+          </div>
+        )}
+
+        <InstructorShowcase/>
+
+        {/* Bottom Stats */}
+        <div className="mt-12 sm:mt-16 bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-3xl p-6 sm:p-8 border border-white/50 dark:border-gray-700/50 shadow-lg">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 text-center">
+            <div className="group">
+              <div className="text-2xl sm:text-3xl font-bold text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform">10,000+</div>
+              <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1">Students Enrolled</div>
+            </div>
+            <div className="group">
+              <div className="text-2xl sm:text-3xl font-bold text-green-600 dark:text-green-400 group-hover:scale-110 transition-transform">95%</div>
+              <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1">Placement Rate</div>
+            </div>
+            <div className="group">
+              <div className="text-2xl sm:text-3xl font-bold text-purple-600 dark:text-purple-400 group-hover:scale-110 transition-transform">4.9/5</div>
+              <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1">Student Rating</div>
+            </div>
+            <div className="group">
+              <div className="text-2xl sm:text-3xl font-bold text-orange-600 dark:text-orange-400 group-hover:scale-110 transition-transform">500+</div>
+              <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1">Companies Hiring</div>
+            </div>
+          </div>
         </div>
+
       </div>
     </div>
   );

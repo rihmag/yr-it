@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import toast from "react-hot-toast";
 import { getCourses } from "../data/courses";
+import ThemeToggle from "./ThemeToggle";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -111,8 +112,8 @@ export default function Navbar() {
     <motion.nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-white/70 backdrop-blur-lg shadow-xl border-b border-gray-200"
-          : "bg-white/90 backdrop-blur"
+          ? "bg-white/70 dark:bg-gray-900/70 backdrop-blur-lg shadow-xl border-b border-gray-200 dark:border-gray-700"
+          : "bg-white/90 dark:bg-gray-900/90 backdrop-blur"
       }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
@@ -156,8 +157,8 @@ export default function Navbar() {
                     to={item.path}
                     className={`flex items-center space-x-1 px-3 py-2 rounded-lg font-semibold transition-all duration-300 ${
                       isActive
-                        ? "text-blue-700"
-                        : "text-gray-700 hover:text-blue-600 hover:bg-blue-50"
+                        ? "text-blue-700 dark:text-blue-400"
+                        : "text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-800"
                     }`}
                     style={{ position: "relative" }}
                   >
@@ -185,7 +186,7 @@ export default function Navbar() {
                   <motion.button
                     key="search-icon"
                     onClick={() => setIsSearchOpen(true)}
-                    className="p-2 rounded-lg text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-all"
+                    className="p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-800 transition-all"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                     initial={{ opacity: 0, scale: 0.8 }}
@@ -205,13 +206,13 @@ export default function Navbar() {
                     transition={{ duration: 0.3 }}
                   >
                     <form onSubmit={handleSearch} className="relative">
-                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500" size={20} />
                       <input
                         type="text"
                         placeholder="Search courses, instructors, topics..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full pl-10 pr-12 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                        className="w-full pl-10 pr-12 py-2 border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent transition-all"
                         autoFocus
                       />
                       <button
@@ -221,7 +222,7 @@ export default function Navbar() {
                           setSearchTerm("");
                           setSearchResults([]);
                         }}
-                        className="absolute right-2 top-1/2 transform -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600 transition-all"
+                        className="absolute right-2 top-1/2 transform -translate-y-1/2 p-1 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-400 transition-all"
                       >
                         <X size={16} />
                       </button>
@@ -234,12 +235,12 @@ export default function Navbar() {
                           initial={{ opacity: 0, y: -10 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -10 }}
-                          className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-xl border border-gray-200 max-h-96 overflow-hidden"
+                          className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-gray-900 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 max-h-96 overflow-hidden"
                         >
                           {isSearching ? (
                             <div className="p-4 text-center">
-                              <div className="w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-2"></div>
-                              <p className="text-gray-600 text-sm">Searching...</p>
+                              <div className="w-6 h-6 border-2 border-blue-600 dark:border-blue-400 border-t-transparent rounded-full animate-spin mx-auto mb-2"></div>
+                              <p className="text-gray-600 dark:text-gray-400 text-sm">Searching...</p>
                             </div>
                           ) : (
                             <>
@@ -248,7 +249,7 @@ export default function Navbar() {
                                   <motion.div
                                     key={course._id}
                                     whileHover={{ backgroundColor: "#f8fafc" }}
-                                    className="p-3 border-b border-gray-100 last:border-b-0 cursor-pointer"
+                                    className="p-3 border-b border-gray-100 dark:border-gray-700 last:border-b-0 cursor-pointer"
                                     onClick={() => handleCourseClick(course)}
                                   >
                                     <div className="flex items-start space-x-3">
@@ -256,13 +257,13 @@ export default function Navbar() {
                                         <BookOpen size={20} className="text-white" />
                                       </div>
                                       <div className="flex-1 min-w-0">
-                                        <h4 className="text-sm font-semibold text-gray-900 truncate">
+                                        <h4 className="text-sm font-semibold text-gray-900 dark:text-gray-100 truncate">
                                           {course.title}
                                         </h4>
-                                        <p className="text-xs text-gray-600 mt-1">
+                                        <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
                                           By {course.instructor}
                                         </p>
-                                        <div className="flex items-center space-x-4 mt-2 text-xs text-gray-500">
+                                        <div className="flex items-center space-x-4 mt-2 text-xs text-gray-500 dark:text-gray-400">
                                           <div className="flex items-center space-x-1">
                                             <Clock size={12} />
                                             <span>12h</span>
@@ -278,10 +279,10 @@ export default function Navbar() {
                                         </div>
                                       </div>
                                       <div className="text-right">
-                                        <div className="text-sm font-bold text-blue-600">
+                                        <div className="text-sm font-bold text-blue-600 dark:text-blue-400">
                                           ${course.price}
                                         </div>
-                                        <ArrowRight size={16} className="text-gray-400 mt-1" />
+                                        <ArrowRight size={16} className="text-gray-400 dark:text-gray-500 mt-1" />
                                       </div>
                                     </div>
                                   </motion.div>
@@ -289,10 +290,10 @@ export default function Navbar() {
                               </div>
 
                               {searchResults.length > 0 && (
-                                <div className="p-3 bg-gray-50 border-t border-gray-200">
+                                <div className="p-3 bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
                                   <button
                                     onClick={handleViewAllResults}
-                                    className="w-full text-center text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors"
+                                    className="w-full text-center text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-500 transition-colors"
                                   >
                                     View all{" "}
                                     {
@@ -326,12 +327,14 @@ export default function Navbar() {
               </AnimatePresence>
             </div>
 
+            {/* Theme Toggle */}
+            <ThemeToggle />
 
             {/* User Menu with avatar */}
             <div className="relative">
               <motion.button
                 onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                className="flex items-center space-x-2 p-2 rounded-lg text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-all"
+                className="flex items-center space-x-2 p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-800 transition-all"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -349,11 +352,11 @@ export default function Navbar() {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 10, scale: 0.95 }}
                     transition={{ duration: 0.2 }}
-                    className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 py-2"
+                    className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 py-2"
                   >
                     <Link
                       to="/login"
-                      className="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-all"
+                      className="flex items-center space-x-2 px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-600 dark:hover:text-blue-400 rounded-lg transition-all"
                       onClick={() => setIsUserMenuOpen(false)}
                     >
                       <LogIn size={16} />
@@ -361,7 +364,7 @@ export default function Navbar() {
                     </Link>
                     <Link
                       to="/signup"
-                      className="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-all"
+                      className="flex items-center space-x-2 px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-600 dark:hover:text-blue-400 rounded-lg transition-all"
                       onClick={() => setIsUserMenuOpen(false)}
                     >
                       <UserPlus size={16} />
@@ -376,7 +379,7 @@ export default function Navbar() {
           {/* Mobile Menu Button */}
           <motion.button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-2 rounded-lg text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-all"
+            className="md:hidden p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-800 transition-all"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
           >
@@ -392,18 +395,18 @@ export default function Navbar() {
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3 }}
-              className="md:hidden mt-4 bg-gray-50 rounded-xl p-4"
+              className="md:hidden mt-4 bg-gray-50 dark:bg-gray-900 rounded-xl p-4"
             >
               <div className="space-y-2">
                 {/* Mobile Search */}
                 <div className="relative mb-4">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500" size={20} />
                   <input
                     type="text"
                     placeholder="Search courses, instructors..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    className="w-full pl-10 pr-4 py-3 border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent transition-all"
                   />
 
                   {/* Mobile Search Results */}
@@ -413,12 +416,12 @@ export default function Navbar() {
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
-                        className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-xl border border-gray-200 max-h-64 overflow-y-auto z-50"
+                        className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-gray-900 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 max-h-64 overflow-y-auto z-50"
                       >
                         {isSearching ? (
                           <div className="p-4 text-center">
-                            <div className="w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-2"></div>
-                            <p className="text-gray-600 text-sm">Searching...</p>
+                            <div className="w-6 h-6 border-2 border-blue-600 dark:border-blue-400 border-t-transparent rounded-full animate-spin mx-auto mb-2"></div>
+                            <p className="text-gray-600 dark:text-gray-400 text-sm">Searching...</p>
                           </div>
                         ) : (
                           <>
@@ -426,7 +429,7 @@ export default function Navbar() {
                               <motion.div
                                 key={course._id}
                                 whileHover={{ backgroundColor: "#f8fafc" }}
-                                className="p-3 border-b border-gray-100 last:border-b-0 cursor-pointer"
+                                className="p-3 border-b border-gray-100 dark:border-gray-700 last:border-b-0 cursor-pointer"
                                 onClick={() => {
                                   handleCourseClick(course);
                                   setIsMobileMenuOpen(false);
@@ -437,13 +440,13 @@ export default function Navbar() {
                                     <BookOpen size={16} className="text-white" />
                                   </div>
                                   <div className="flex-1 min-w-0">
-                                    <h4 className="text-sm font-semibold text-gray-900 truncate">
+                                    <h4 className="text-sm font-semibold text-gray-900 dark:text-gray-100 truncate">
                                       {course.title}
                                     </h4>
-                                    <p className="text-xs text-gray-600 mt-1">
+                                    <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
                                       By {course.instructor}
                                     </p>
-                                    <div className="text-sm font-bold text-blue-600 mt-1">
+                                    <div className="text-sm font-bold text-blue-600 dark:text-blue-400 mt-1">
                                       ${course.price}
                                     </div>
                                   </div>
@@ -452,13 +455,13 @@ export default function Navbar() {
                             ))}
 
                             {searchResults.length > 0 && (
-                              <div className="p-3 bg-gray-50 border-t border-gray-200">
+                              <div className="p-3 bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
                                 <button
                                   onClick={() => {
                                     handleViewAllResults();
                                     setIsMobileMenuOpen(false);
                                   }}
-                                  className="w-full text-center text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors"
+                                  className="w-full text-center text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-500 transition-colors"
                                 >
                                   View all results
                                 </button>
@@ -471,6 +474,11 @@ export default function Navbar() {
                   </AnimatePresence>
                 </div>
 
+                {/* Mobile Theme Toggle */}
+                <div className="flex justify-center mb-4">
+                  <ThemeToggle />
+                </div>
+
                 {navItems.map((item) => {
                   const Icon = item.icon;
                   const isActive = location.pathname === item.path;
@@ -481,8 +489,8 @@ export default function Navbar() {
                       onClick={() => setIsMobileMenuOpen(false)}
                       className={`flex items-center space-x-2 px-4 py-3 rounded-lg transition-all ${
                         isActive
-                          ? "bg-blue-600 text-white"
-                          : "text-gray-700 hover:text-blue-600 hover:bg-blue-50"
+                          ? "bg-blue-600 dark:bg-blue-400 text-white"
+                          : "text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-800"
                       }`}
                     >
                       <Icon size={18} />
@@ -491,11 +499,11 @@ export default function Navbar() {
                   );
                 })}
 
-                <div className="border-t border-gray-200 pt-2 mt-2">
+                <div className="border-t border-gray-200 dark:border-gray-700 pt-2 mt-2">
                   <Link
                     to="/login"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="flex items-center space-x-2 px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all"
+                    className="flex items-center space-x-2 px-4 py-3 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-800 rounded-lg transition-all"
                   >
                     <LogIn size={18} />
                     <span>Login</span>
@@ -503,7 +511,7 @@ export default function Navbar() {
                   <Link
                     to="/signup"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="flex items-center space-x-2 px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all"
+                    className="flex items-center space-x-2 px-4 py-3 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-800 rounded-lg transition-all"
                   >
                     <UserPlus size={18} />
                     <span>Sign Up</span>

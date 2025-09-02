@@ -2,11 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-
-
-export default function Login({SetIsAuthenticated}) {
+export default function Login({ SetIsAuthenticated }) {
   const navigate = useNavigate();
- 
 
   const [formData, setFormData] = useState({
     email: "",
@@ -17,44 +14,42 @@ export default function Login({SetIsAuthenticated}) {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    try{
-       // TODO: Replace with real API call
-      const response = await fetch('https://backend-1-bn9o.onrender.com/api/auth/login', {
-
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
+    try {
+      // TODO: Replace with real API call
+      const response = await fetch(
+        "https://backend-1-bn9o.onrender.com/api/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();
         // Store token or user data in localStorage/sessionStorage
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('user', JSON.stringify(data.user));
-        localStorage.setItem('role', data.role);
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+        localStorage.setItem("role", data.role);
         console.log("Login successful:", data);
         // Redirect to dashboard
         SetIsAuthenticated(true);
-        navigate('/dashboard');
-
+        navigate("/dashboard");
       } else {
         const errorData = await response.json();
-        setError(errorData.message || 'Login failed. Please try again.');
+        setError(errorData.message || "Login failed. Please try again.");
         console.log("Login error in else block:", errorData);
       }
     } catch (err) {
-      setError('Network error. Please check your connection.');
+      setError("Network error. Please check your connection.");
       console.log("Login error catched:", err);
     } finally {
       setLoading(false);
@@ -62,98 +57,83 @@ export default function Login({SetIsAuthenticated}) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center py-6 px-4 sm:px-6 lg:px-8" style={{ minHeight: 'calc(100vh - 120px)' }}>
-      <div className="max-w-lg w-full space-y-6">
-        <div className="text-center">
-          <h2 className="text-4xl font-extrabold text-gray-900 mb-3">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center p-4 transition-colors duration-300">
+      <div className="max-w-md w-full bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 border border-gray-200 dark:border-gray-700">
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
             Welcome Back
-          </h2>
-          <p className="text-lg text-gray-600">
-            Sign in to continue your learning journey
+          </h1>
+          <p className="text-gray-600 dark:text-gray-400">
+            Sign in to your account
           </p>
         </div>
-        
-        <div className="bg-white rounded-lg shadow-lg p-8">
-          <form className="space-y-6" onSubmit={handleSubmit}>
-            {error && (
-              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded text-base">
-                {error}
-              </div>
-            )}
-            
-            <div>
-              <label htmlFor="email" className="block text-base font-medium text-gray-700 mb-2">
-                Email Address
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                required
-                value={formData.email}
-                onChange={handleChange}
-                className="w-full px-3 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base"
-                placeholder="Enter your email"
-              />
-            </div>
 
-            <div>
-              <label htmlFor="password" className="block text-base font-medium text-gray-700 mb-2">
-                Password
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                required
-                value={formData.password}
-                onChange={handleChange}
-                className="w-full px-3 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base"
-                placeholder="Enter your password"
-              />
-            </div>
+        {error && (
+          <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 px-4 py-3 rounded-lg mb-6">
+            {error}
+          </div>
+        )}
 
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <input
-                  id="remember-me"
-                  name="remember-me"
-                  type="checkbox"
-                  className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                />
-                <label htmlFor="remember-me" className="ml-2 block text-base text-gray-900">
-                  Remember me
-                </label>
-              </div>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+            >
+              Email Address
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 transition-all"
+              placeholder="Enter your email"
+            />
+          </div>
 
-              <div className="text-base">
-                <a href="#" className="font-medium text-blue-600 hover:text-blue-500">
-                  Forgot your password?
-                </a>
-              </div>
-            </div>
+          <div>
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+            >
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 transition-all"
+              placeholder="Enter your password"
+            />
+          </div>
 
-            <div>
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {loading ? "Signing in..." : "Sign in"}
-              </button>
-            </div>
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-500 dark:to-purple-500 text-white py-3 px-4 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 dark:hover:from-blue-600 dark:hover:to-purple-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:ring-offset-2 dark:focus:ring-offset-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+          >
+            {loading ? "Signing in..." : "Sign In"}
+          </button>
+        </form>
 
-            <div className="text-center">
-              <p className="text-base text-gray-600">
-                Don't have an account?{" "}
-                <Link to="/signup" className="font-medium text-blue-600 hover:text-blue-500">
-                  Sign up here
-                </Link>
-              </p>
-            </div>
-          </form>
+        <div className="mt-6 text-center">
+          <p className="text-gray-600 dark:text-gray-400">
+            Don't have an account?{" "}
+            <Link
+              to="/signup"
+              className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-semibold transition-colors"
+            >
+              Sign up
+            </Link>
+          </p>
         </div>
       </div>
     </div>
   );
-} 
+}

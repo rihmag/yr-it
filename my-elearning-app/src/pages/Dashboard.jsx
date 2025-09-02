@@ -68,46 +68,48 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
       {/* Welcoming and Motivational Section */}
-      <div className="bg-gradient-to-r from-blue-100 to-blue-300 rounded-xl p-6 mb-8 flex flex-col md:flex-row items-center gap-6 shadow">
+      <div className="bg-gradient-to-r from-blue-100 to-blue-300 dark:from-blue-900/80 dark:to-blue-700/80 rounded-xl p-6 mb-8 flex flex-col md:flex-row items-center gap-6 shadow-lg dark:shadow-gray-800/30">
         <div className="flex-1">
-          <h1 className="text-3xl md:text-4xl font-extrabold text-blue-800 mb-2">Welcome back, {userName}! 👋</h1>
-          <p className="text-lg text-blue-700 font-medium mb-2">We're excited to see you continue your learning journey.</p>
-          <div className="italic text-blue-900 text-base flex items-center gap-2 font-bold font-serif">
-            <svg className="w-6 h-6 text-blue-500 inline-block" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M17 8h2a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V10a2 2 0 0 1 2-2h2M12 15v-6m0 0l-3 3m3-3l3 3" /></svg>
+          <h1 className="text-3xl md:text-4xl font-extrabold text-blue-800 dark:text-blue-200 mb-2">Welcome back, {userName}! 👋</h1>
+          <p className="text-lg text-blue-700 dark:text-blue-300 font-medium mb-2">We're excited to see you continue your learning journey.</p>
+          <div className="italic text-blue-900 dark:text-blue-100 text-base flex items-center gap-2 font-bold font-serif">
+            <svg className="w-6 h-6 text-blue-500 dark:text-blue-400 inline-block" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M17 8h2a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V10a2 2 0 0 1 2-2h2M12 15v-6m0 0l-3 3m3-3l3 3" /></svg>
             {quote}
           </div>
         </div>
-        <img src="/images/ai.jpg" alt="Motivation" className="w-32 h-32 object-cover rounded-full shadow-lg border-4 border-blue-200" />
+        <img src="/images/ai.jpg" alt="Motivation" className="w-32 h-32 object-cover rounded-full shadow-lg border-4 border-blue-200 dark:border-blue-600" />
       </div>
       {/* End Welcoming and Motivational Section */}
       {loading ? (
-        <div>Loading...</div>
+        <div className="flex items-center justify-center py-12">
+          <div className="text-lg text-gray-600 dark:text-gray-400">Loading...</div>
+        </div>
       ) : (
         <>
           <section className="mb-10">
-            <h2 className="text-2xl font-semibold mb-4">Ongoing Courses</h2>
+            <h2 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Ongoing Courses</h2>
             {ongoingCourses.length === 0 ? (
-              <div className="text-gray-500">No ongoing courses.</div>
+              <div className="text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 rounded-lg p-6 text-center border border-gray-200 dark:border-gray-700">No ongoing courses.</div>
             ) : (
               <div className="grid md:grid-cols-2 gap-6">
                 {ongoingCourses.map((course) => (
-                  <div key={course.id} className="bg-white rounded-lg shadow p-4 flex gap-4 items-center">
-                    <img src={course.image} alt={course.title} className="w-24 h-24 object-cover rounded" />
+                  <div key={course.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg dark:shadow-gray-800/30 p-4 flex gap-4 items-center border border-gray-200 dark:border-gray-700 hover:shadow-xl dark:hover:shadow-gray-800/50 transition-all">
+                    <img src={course.image} alt={course.title} className="w-24 h-24 object-cover rounded border border-gray-200 dark:border-gray-600" />
                     <div className="flex-1">
-                      <h3 className="text-lg font-bold mb-2">{course.title}</h3>
-                      <div className="w-full bg-gray-200 rounded-full h-3 mb-2">
+                      <h3 className="text-lg font-bold mb-2 text-gray-900 dark:text-gray-100">{course.title}</h3>
+                      <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 mb-2">
                         <div
-                          className="bg-blue-600 h-3 rounded-full"
+                          className="bg-blue-600 dark:bg-blue-500 h-3 rounded-full transition-all"
                           style={{ width: `${course.progress}%` }}
                         ></div>
                       </div>
-                      <span className="text-sm text-gray-600">Progress: {course.progress}%</span>
+                      <span className="text-sm text-gray-600 dark:text-gray-400">Progress: {course.progress}%</span>
                       <div className="mt-3">
                         <a
                           href={`/course/${course.id}`}
-                          className="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition font-semibold text-sm shadow"
+                          className="inline-block bg-blue-600 dark:bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 dark:hover:bg-blue-600 transition-all font-semibold text-sm shadow-md hover:shadow-lg"
                         >
                           Resume Course
                         </a>
@@ -120,15 +122,15 @@ export default function Dashboard() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold mb-4">Completed Courses</h2>
+            <h2 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Completed Courses</h2>
             {completedCourses.length === 0 ? (
-              <div className="text-gray-500">No completed courses yet.</div>
+              <div className="text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 rounded-lg p-6 text-center border border-gray-200 dark:border-gray-700">No completed courses yet.</div>
             ) : (
               <div className="grid md:grid-cols-3 gap-6">
                 {completedCourses.map((course) => (
-                  <div key={course.id} className="bg-white rounded-lg shadow p-4 flex flex-col items-center">
-                    <img src={course.image} alt={course.title} className="w-24 h-24 object-cover rounded mb-2" />
-                    <h3 className="text-lg font-bold text-center">{course.title}</h3>
+                  <div key={course.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg dark:shadow-gray-800/30 p-4 flex flex-col items-center border border-gray-200 dark:border-gray-700 hover:shadow-xl dark:hover:shadow-gray-800/50 transition-all">
+                    <img src={course.image} alt={course.title} className="w-24 h-24 object-cover rounded mb-2 border border-gray-200 dark:border-gray-600" />
+                    <h3 className="text-lg font-bold text-center text-gray-900 dark:text-gray-100">{course.title}</h3>
                   </div>
                 ))}
               </div>
@@ -138,4 +140,4 @@ export default function Dashboard() {
       )}
     </div>
   );
-} 
+}
