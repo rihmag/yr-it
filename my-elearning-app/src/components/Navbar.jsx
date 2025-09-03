@@ -67,7 +67,7 @@ export default function Navbar() {
           course.instructor.toLowerCase().includes(searchTerm.toLowerCase()) ||
           course.category.toLowerCase().includes(searchTerm.toLowerCase())
       );
-      setSearchResults(filtered.slice(0, 5)); 
+      setSearchResults(filtered.slice(0, 5)); // Show only first 5 results
       setIsSearching(false);
     } else {
       setSearchResults([]);
@@ -123,7 +123,7 @@ export default function Navbar() {
         borderImage: "linear-gradient(to right, #6366f1, #a21caf) 1",
       }}
     >
-      <div className="container mx-auto px-4 py-3">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
         <div className="flex items-center justify-between">
           {/* Logo with hover animation */}
           <motion.div >

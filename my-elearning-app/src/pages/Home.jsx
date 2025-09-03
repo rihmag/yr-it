@@ -108,23 +108,23 @@ export default function Home() {
         transition={{ duration: 0.8 }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             
             {/* Left Content */}
             <motion.div
-              className="space-y-6"
+              className="space-y-4 sm:space-y-6 text-center lg:text-left"
               initial={{ x: -50, opacity: 0 }}
               animate={heroInView ? { x: 0, opacity: 1 } : {}}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
               {/* Main Heading */}
               <motion.div
-                className="space-y-4"
+                className="space-y-3 sm:space-y-4"
                 initial={{ y: 30, opacity: 0 }}
                 animate={heroInView ? { y: 0, opacity: 1 } : {}}
                 transition={{ duration: 0.8, delay: 0.4 }}
               >
-                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight">
                   <span className="text-gray-900 dark:text-white">Master Skills That</span>
                   <br />
                   <span className="text-gray-900 dark:text-white">Define Your </span>
@@ -133,20 +133,20 @@ export default function Home() {
                   </span>
                 </h1>
                 
-                <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed max-w-lg">
+                <p className="text-base sm:text-lg lg:text-xl text-gray-600 dark:text-gray-300 leading-relaxed max-w-lg mx-auto lg:mx-0">
                   Transform your career with expert-led courses, hands-on projects, and industry-recognized certifications from top professionals.
                 </p>
               </motion.div>
 
               {/* CTA Buttons */}
               <motion.div
-                className="flex flex-col sm:flex-row gap-3"
+                className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start"
                 initial={{ y: 30, opacity: 0 }}
                 animate={heroInView ? { y: 0, opacity: 1 } : {}}
                 transition={{ duration: 0.8, delay: 0.6 }}
               >
                 <motion.button
-                  className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-semibold text-base shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2"
+                  className="bg-purple-600 hover:bg-purple-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold text-sm sm:text-base shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 w-full sm:w-auto"
                   whileHover={{ scale: 1.02, y: -2 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => {
@@ -161,7 +161,7 @@ export default function Home() {
 
               {/* Student Avatars */}
               <motion.div
-                className="flex items-center gap-3"
+                className="flex items-center gap-3 justify-center lg:justify-start"
                 initial={{ y: 30, opacity: 0 }}
                 animate={heroInView ? { y: 0, opacity: 1 } : {}}
                 transition={{ duration: 0.8, delay: 0.8 }}
@@ -170,7 +170,7 @@ export default function Home() {
                   {[1, 2, 3, 4, 5, 6].map((i) => (
                     <motion.div
                       key={i}
-                      className="w-10 h-10 rounded-full border-2 border-gray-200 dark:border-gray-700 overflow-hidden"
+                      className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-gray-200 dark:border-gray-700 overflow-hidden"
                       initial={{ scale: 0, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
                       transition={{ delay: 0.9 + i * 0.1 }}
@@ -188,16 +188,16 @@ export default function Home() {
                     </motion.div>
                   ))}
                 </div>
-                <div className="text-gray-600 dark:text-gray-300">
-                  <span className="text-xl font-bold text-gray-900 dark:text-white">50,000+</span>
-                  <span className="ml-2 text-sm">Students Enrolled</span>
+                <div className="text-gray-600 dark:text-gray-300 text-center lg:text-left">
+                  <span className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white">50,000+</span>
+                  <span className="ml-2 text-xs sm:text-sm">Students Enrolled</span>
                 </div>
               </motion.div>
             </motion.div>
 
             {/* Right Feature Grid */}
             <motion.div
-              className="grid grid-cols-2 gap-3"
+              className="grid grid-cols-2 sm:grid-cols-2 gap-2 sm:gap-3 lg:gap-4 mt-8 lg:mt-0"
               initial={{ x: 50, opacity: 0 }}
               animate={heroInView ? { x: 0, opacity: 1 } : {}}
               transition={{ duration: 0.8, delay: 0.4 }}
@@ -231,7 +231,7 @@ export default function Home() {
                     transformStyle: "preserve-3d"
                   }}
                 >
-                  <div className="relative bg-white/80 dark:bg-gray-800/50 backdrop-blur-sm border border-gray-200 dark:border-gray-700 hover:border-purple-500/50 rounded-lg p-4 h-24 flex flex-col items-center justify-center text-center transition-all duration-300 group-hover:bg-gray-50 dark:group-hover:bg-gray-700/50 group-hover:shadow-2xl overflow-hidden">
+                  <div className="relative bg-white/80 dark:bg-gray-800/50 backdrop-blur-sm border border-gray-200 dark:border-gray-700 hover:border-purple-500/50 rounded-lg p-2 sm:p-3 lg:p-4 h-20 sm:h-24 lg:h-28 flex flex-col items-center justify-center text-center transition-all duration-300 group-hover:bg-gray-50 dark:group-hover:bg-gray-700/50 group-hover:shadow-2xl overflow-hidden">
                     
                     {/* Background Glow Effect */}
                     <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
@@ -252,17 +252,14 @@ export default function Home() {
                     </div>
                     
                     <motion.div
-                      className={`relative z-10 w-8 h-8 rounded-lg bg-gradient-to-r ${feature.color} flex items-center justify-center mb-2 transition-transform duration-300`}
-                      whileHover={{ 
-                        scale: 1.2,
-                        rotate: 360,
-                        transition: { duration: 0.6, ease: "easeInOut" }
-                      }}
+                      className={`w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 bg-gradient-to-r ${feature.color} rounded-lg flex items-center justify-center text-white mb-1 sm:mb-2 group-hover:scale-110 transition-transform duration-300`}
+                      whileHover={{ rotate: 360 }}
+                      transition={{ duration: 0.6 }}
                     >
-                      <feature.icon className="w-4 h-4 text-white" />
+                      <feature.icon className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5" />
                     </motion.div>
                     
-                    <h3 className="relative z-10 text-gray-900 dark:text-white font-semibold text-xs leading-tight group-hover:text-purple-600 dark:group-hover:text-purple-300 transition-colors duration-300">
+                    <h3 className="text-xs sm:text-sm lg:text-base font-semibold text-gray-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors duration-300 leading-tight">
                       {feature.title}
                     </h3>
                     

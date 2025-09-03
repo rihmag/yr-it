@@ -63,7 +63,7 @@ export default function WhyChooseUs() {
 
   return (
     <section className="py-20 relative overflow-hidden">
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header Section */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -93,7 +93,7 @@ export default function WhyChooseUs() {
         </motion.div>
 
         {/* Features Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-16">
           {features.map((feature, index) => (
             <motion.div
               key={index}
@@ -103,20 +103,20 @@ export default function WhyChooseUs() {
               whileHover={{ y: -10 }}
               className="group relative"
             >
-              <div className={`bg-gradient-to-br ${feature.bgGradient} border ${feature.borderColor} rounded-2xl p-6 h-full transition-all duration-300 group-hover:shadow-xl dark:group-hover:shadow-gray-800/30 group-hover:border-opacity-50`}>
-                <div className={`w-12 sm:w-14 lg:w-16 h-12 sm:h-14 lg:h-16 bg-gradient-to-r ${feature.gradient} rounded-xl flex items-center justify-center text-white mb-4 group-hover:scale-110 transition-transform duration-300 mx-auto`}
+              <div className={`bg-gradient-to-br ${feature.bgGradient} border ${feature.borderColor} rounded-2xl p-4 sm:p-6 h-full transition-all duration-300 group-hover:shadow-xl dark:group-hover:shadow-gray-800/30 group-hover:border-opacity-50`}>
+                <div className={`w-12 sm:w-14 lg:w-16 h-12 sm:h-14 lg:h-16 bg-gradient-to-r ${feature.gradient} rounded-xl flex items-center justify-center text-white mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300 mx-auto`}
                   style={{
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center'
                   }}
                 >
-                  <div className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 flex items-center justify-center">
+                  <div className="w-5 h-5 sm:w-6 sm:h-6 lg:w-8 lg:h-8 flex items-center justify-center">
                     {feature.icon}
                   </div>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-3">{feature.title}</h3>
-                <p className="text-gray-600 dark:text-gray-400 leading-relaxed">{feature.description}</p>
+                <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-gray-100 mb-2 sm:mb-3 text-center">{feature.title}</h3>
+                <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 leading-relaxed text-center">{feature.description}</p>
               </div>
             </motion.div>
           ))}

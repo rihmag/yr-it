@@ -161,7 +161,7 @@ export default function About() {
         />
       </div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12 relative z-10 max-w-7xl">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12 relative z-10">
         {/* Hero Section */}
         <motion.div 
           ref={heroRef}
@@ -187,7 +187,7 @@ export default function About() {
           </motion.h1>
           
           <motion.p 
-            className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-700 dark:text-gray-300 mb-6 sm:mb-8 max-w-3xl mx-auto leading-relaxed px-2 sm:px-4"
+            className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-700 dark:text-gray-300 mb-6 sm:mb-8 max-w-2xl mx-auto leading-relaxed px-2 sm:px-4"
             initial={{ y: 30, opacity: 0 }}
             animate={heroInView ? { y: 0, opacity: 1 } : {}}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -394,7 +394,7 @@ export default function About() {
               Technology Stack
             </motion.h2>
             <motion.p 
-              className="text-base sm:text-lg lg:text-xl text-gray-700 dark:text-gray-400 max-w-2xl mx-auto px-4"
+              className="text-base sm:text-lg lg:text-xl text-gray-700 dark:text-gray-400 max-w-2xl mx-auto"
               initial={{ y: 30, opacity: 0 }}
               animate={techInView ? { y: 0, opacity: 1 } : {}}
               transition={{ duration: 0.6, delay: 0.2 }}
@@ -522,7 +522,7 @@ export default function About() {
               Ready to Start Learning?
             </motion.h2>
             <motion.p 
-              className="text-sm sm:text-base lg:text-xl mb-6 sm:mb-8 opacity-90 max-w-2xl mx-auto px-4"
+              className="text-sm sm:text-base lg:text-xl mb-6 sm:mb-8 opacity-90 max-w-2xl mx-auto"
               initial={{ y: 30, opacity: 0 }}
               animate={ctaInView ? { y: 0, opacity: 1 } : {}}
               transition={{ duration: 0.6, delay: 0.8 }}
