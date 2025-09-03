@@ -68,7 +68,7 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div className="container mx-auto px-4 py-8 min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
       {/* Welcoming and Motivational Section */}
       <div className="bg-gradient-to-r from-blue-100 to-blue-300 dark:from-blue-900/80 dark:to-blue-700/80 rounded-xl p-6 mb-8 flex flex-col md:flex-row items-center gap-6 shadow-lg dark:shadow-gray-800/30">
         <div className="flex-1">

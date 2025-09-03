@@ -107,7 +107,7 @@ export default function Home() {
         animate={{ opacity: heroInView ? 1 : 0 }}
         transition={{ duration: 0.8 }}
       >
-        <div className="container mx-auto px-4 py-12 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             
             {/* Left Content */}
@@ -281,7 +281,7 @@ export default function Home() {
       {/* Why Choose Us Section */}
       <WhyChooseUs />
 
-      <div className="container mx-auto px-4 py-8 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
         <AdvertisementBanner />
 
         {/* Featured Courses Section */}

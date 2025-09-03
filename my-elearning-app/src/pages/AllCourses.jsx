@@ -70,6 +70,7 @@ export default function AllCourses() {
         break;
       case "popular":
       default:
+        // Keep original order for popular (assuming it's already sorted by popularity)
         break;
     }
 
@@ -362,25 +363,130 @@ export default function AllCourses() {
         <InstructorShowcase/>
 
         {/* Bottom Stats */}
-        <div className="mt-12 sm:mt-16 bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-3xl p-6 sm:p-8 border border-white/50 dark:border-gray-700/50 shadow-lg">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 text-center">
-            <div className="group">
-              <div className="text-2xl sm:text-3xl font-bold text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform">10,000+</div>
-              <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1">Students Enrolled</div>
+        <div className="mt-6 sm:mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          <motion.div 
+            className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/30 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-blue-200/50 dark:border-blue-700/50 shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            whileHover={{ 
+              scale: 1.05, 
+              y: -8,
+              boxShadow: "0 20px 40px rgba(59, 130, 246, 0.15)"
+            }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <div className="text-center relative overflow-hidden">
+              <motion.div 
+                className="text-3xl sm:text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2"
+                animate={{ 
+                  textShadow: ["0 0 0px rgba(59, 130, 246, 0)", "0 0 20px rgba(59, 130, 246, 0.3)", "0 0 0px rgba(59, 130, 246, 0)"]
+                }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                10,000+
+              </motion.div>
+              <div className="text-sm sm:text-base text-blue-700 dark:text-blue-300 font-medium">Students Enrolled</div>
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 opacity-0 group-hover:opacity-100"
+                animate={{ x: ["-100%", "100%"] }}
+                transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 3 }}
+              />
             </div>
-            <div className="group">
-              <div className="text-2xl sm:text-3xl font-bold text-green-600 dark:text-green-400 group-hover:scale-110 transition-transform">95%</div>
-              <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1">Placement Rate</div>
+          </motion.div>
+
+          <motion.div 
+            className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/30 dark:to-green-800/30 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-green-200/50 dark:border-green-700/50 shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            whileHover={{ 
+              scale: 1.05, 
+              y: -8,
+              boxShadow: "0 20px 40px rgba(34, 197, 94, 0.15)"
+            }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <div className="text-center relative overflow-hidden">
+              <motion.div 
+                className="text-3xl sm:text-4xl font-bold text-green-600 dark:text-green-400 mb-2"
+                animate={{ 
+                  textShadow: ["0 0 0px rgba(34, 197, 94, 0)", "0 0 20px rgba(34, 197, 94, 0.3)", "0 0 0px rgba(34, 197, 94, 0)"]
+                }}
+                transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
+              >
+                95%
+              </motion.div>
+              <div className="text-sm sm:text-base text-green-700 dark:text-green-300 font-medium">Placement Rate</div>
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 opacity-0 group-hover:opacity-100"
+                animate={{ x: ["-100%", "100%"] }}
+                transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 3, delay: 0.5 }}
+              />
             </div>
-            <div className="group">
-              <div className="text-2xl sm:text-3xl font-bold text-purple-600 dark:text-purple-400 group-hover:scale-110 transition-transform">4.9/5</div>
-              <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1">Student Rating</div>
+          </motion.div>
+
+          <motion.div 
+            className="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/30 dark:to-purple-800/30 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-purple-200/50 dark:border-purple-700/50 shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            whileHover={{ 
+              scale: 1.05, 
+              y: -8,
+              boxShadow: "0 20px 40px rgba(147, 51, 234, 0.15)"
+            }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <div className="text-center relative overflow-hidden">
+              <motion.div 
+                className="text-3xl sm:text-4xl font-bold text-purple-600 dark:text-purple-400 mb-2"
+                animate={{ 
+                  textShadow: ["0 0 0px rgba(147, 51, 234, 0)", "0 0 20px rgba(147, 51, 234, 0.3)", "0 0 0px rgba(147, 51, 234, 0)"]
+                }}
+                transition={{ duration: 2, repeat: Infinity, delay: 1 }}
+              >
+                4.9/5
+              </motion.div>
+              <div className="text-sm sm:text-base text-purple-700 dark:text-purple-300 font-medium">Student Rating</div>
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 opacity-0 group-hover:opacity-100"
+                animate={{ x: ["-100%", "100%"] }}
+                transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 3, delay: 1 }}
+              />
             </div>
-            <div className="group">
-              <div className="text-2xl sm:text-3xl font-bold text-orange-600 dark:text-orange-400 group-hover:scale-110 transition-transform">500+</div>
-              <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1">Companies Hiring</div>
+          </motion.div>
+
+          <motion.div 
+            className="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/30 dark:to-orange-800/30 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-orange-200/50 dark:border-orange-700/50 shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            whileHover={{ 
+              scale: 1.05, 
+              y: -8,
+              boxShadow: "0 20px 40px rgba(249, 115, 22, 0.15)"
+            }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <div className="text-center relative overflow-hidden">
+              <motion.div 
+                className="text-3xl sm:text-4xl font-bold text-orange-600 dark:text-orange-400 mb-2"
+                animate={{ 
+                  textShadow: ["0 0 0px rgba(249, 115, 22, 0)", "0 0 20px rgba(249, 115, 22, 0.3)", "0 0 0px rgba(249, 115, 22, 0)"]
+                }}
+                transition={{ duration: 2, repeat: Infinity, delay: 1.5 }}
+              >
+                500+
+              </motion.div>
+              <div className="text-sm sm:text-base text-orange-700 dark:text-orange-300 font-medium">Companies Hiring</div>
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 opacity-0 group-hover:opacity-100"
+                animate={{ x: ["-100%", "100%"] }}
+                transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 3, delay: 1.5 }}
+              />
             </div>
-          </div>
+          </motion.div>
         </div>
 
       </div>
