@@ -226,7 +226,7 @@ export default function Home() {
                     transition: { duration: 0.3, ease: "easeOut" }
                   }}
                   whileTap={{ scale: 0.95 }}
-                  onClick={() => toast.success(`Accessing ${feature.title}...`)}
+                  onClick={() => {}}
                   style={{
                     transformStyle: "preserve-3d"
                   }}

@@ -250,37 +250,193 @@ export default function About() {
           transition={{ duration: 0.8, delay: 0.8 }}
         >
           <motion.div 
-            className="bg-white/80 dark:bg-gray-800 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-xl border border-white/20 dark:border-gray-700"
-            whileHover={{ y: -5 }}
+            className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-xl border border-white/20 dark:border-gray-700 group relative overflow-hidden cursor-pointer"
+            whileHover={{ 
+              y: -12, 
+              scale: 1.02,
+              rotateX: 5,
+              rotateY: 5,
+              transition: { duration: 0.4, ease: "easeOut" }
+            }}
+            whileTap={{ scale: 0.98 }}
+            style={{
+              transformStyle: "preserve-3d",
+              perspective: "1000px"
+            }}
           >
-            <div className="flex flex-col items-center text-center mb-4 sm:mb-6">
-              <div className="w-10 sm:w-12 h-10 sm:h-12 bg-gradient-to-r from-blue-500 to-purple-500 dark:from-blue-400 dark:to-purple-400 rounded-xl flex items-center justify-center mb-3 sm:mb-4">
-                <Target className="text-white" size={20} />
-              </div>
-              <h3 className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-gray-300">Our Mission</h3>
+            {/* Glow Effect */}
+            <motion.div
+              className="absolute -inset-1 bg-gray-200 dark:bg-gray-600 rounded-2xl sm:rounded-3xl opacity-0 group-hover:opacity-30 blur-lg transition-opacity duration-500"
+              initial={{ scale: 0.8 }}
+              whileHover={{ scale: 1.1 }}
+              transition={{ duration: 0.4 }}
+            />
+            
+            {/* Floating Particles */}
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+              <motion.div 
+                className="absolute top-4 left-4 w-2 h-2 bg-blue-400 rounded-full"
+                animate={{ 
+                  y: [0, -20, 0],
+                  x: [0, 10, 0],
+                  opacity: [0.3, 1, 0.3]
+                }}
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              />
+              <motion.div 
+                className="absolute top-8 right-6 w-1.5 h-1.5 bg-purple-400 rounded-full"
+                animate={{ 
+                  y: [0, -15, 0],
+                  x: [0, -8, 0],
+                  opacity: [0.4, 1, 0.4]
+                }}
+                transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+              />
+              <motion.div 
+                className="absolute bottom-6 left-8 w-1 h-1 bg-cyan-400 rounded-full"
+                animate={{ 
+                  y: [0, -10, 0],
+                  x: [0, 5, 0],
+                  opacity: [0.5, 1, 0.5]
+                }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+              />
             </div>
-            <p className="text-gray-700 dark:text-gray-400 leading-relaxed text-sm sm:text-base text-center">
-              To democratize quality programming education by providing an integrated learning environment 
-              that combines theoretical knowledge with practical coding experience, making technology 
-              education accessible to everyone, everywhere.
-            </p>
+
+            {/* Shimmer Effect */}
+            <motion.div
+              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-1000"
+              initial={{ x: "-100%" }}
+              whileHover={{ x: "100%" }}
+              transition={{ duration: 1.5, ease: "easeInOut" }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12"></div>
+            </motion.div>
+
+            <div className="relative z-10">
+              <div className="flex flex-col items-center text-center mb-4 sm:mb-6">
+                <motion.div 
+                  className="w-12 sm:w-16 h-12 sm:h-16 bg-gradient-to-r from-blue-500 to-purple-500 dark:from-blue-400 dark:to-purple-400 rounded-xl flex items-center justify-center mb-3 sm:mb-4 group-hover:shadow-2xl transition-all duration-300"
+                  whileHover={{ 
+                    scale: 1.2, 
+                    rotate: 360,
+                    boxShadow: "0 20px 40px rgba(59, 130, 246, 0.4)"
+                  }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
+                >
+                  <Target className="text-white" size={24} />
+                </motion.div>
+                <motion.h3 
+                  className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300"
+                  whileHover={{ scale: 1.05 }}
+                >
+                  Our Mission
+                </motion.h3>
+              </div>
+              <motion.p 
+                className="text-gray-700 dark:text-gray-300 leading-relaxed text-sm sm:text-base lg:text-lg text-center group-hover:text-gray-800 dark:group-hover:text-gray-100 transition-colors duration-300"
+                whileHover={{ scale: 1.02 }}
+              >
+                To democratize quality programming education by providing an integrated learning environment 
+                that combines theoretical knowledge with practical coding experience, making technology 
+                education accessible to everyone, everywhere.
+              </motion.p>
+            </div>
           </motion.div>
 
           <motion.div 
-            className="bg-white/80 dark:bg-gray-800 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-xl border border-white/20 dark:border-gray-700"
-            whileHover={{ y: -5 }}
+            className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-xl border border-white/20 dark:border-gray-700 group relative overflow-hidden cursor-pointer"
+            whileHover={{ 
+              y: -12, 
+              scale: 1.02,
+              rotateX: 5,
+              rotateY: -5,
+              transition: { duration: 0.4, ease: "easeOut" }
+            }}
+            whileTap={{ scale: 0.98 }}
+            style={{
+              transformStyle: "preserve-3d",
+              perspective: "1000px"
+            }}
           >
-            <div className="flex flex-col items-center text-center mb-4 sm:mb-6">
-              <div className="w-10 sm:w-12 h-10 sm:h-12 bg-gradient-to-r from-purple-500 to-pink-500 dark:from-purple-400 dark:to-pink-400 rounded-xl flex items-center justify-center mb-3 sm:mb-4">
-                <Lightbulb className="text-white" size={20} />
-              </div>
-              <h3 className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-gray-300">Our Vision</h3>
+            {/* Glow Effect */}
+            <motion.div
+              className="absolute -inset-1 bg-gray-200 dark:bg-gray-600 rounded-2xl sm:rounded-3xl opacity-0 group-hover:opacity-30 blur-lg transition-opacity duration-500"
+              initial={{ scale: 0.8 }}
+              whileHover={{ scale: 1.1 }}
+              transition={{ duration: 0.4 }}
+            />
+
+            {/* Floating Particles */}
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+              <motion.div 
+                className="absolute top-6 right-4 w-2 h-2 bg-purple-400 rounded-full"
+                animate={{ 
+                  y: [0, -18, 0],
+                  x: [0, -12, 0],
+                  opacity: [0.3, 1, 0.3]
+                }}
+                transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
+              />
+              <motion.div 
+                className="absolute top-12 left-6 w-1.5 h-1.5 bg-pink-400 rounded-full"
+                animate={{ 
+                  y: [0, -12, 0],
+                  x: [0, 8, 0],
+                  opacity: [0.4, 1, 0.4]
+                }}
+                transition={{ duration: 2.3, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
+              />
+              <motion.div 
+                className="absolute bottom-8 right-8 w-1 h-1 bg-yellow-400 rounded-full"
+                animate={{ 
+                  y: [0, -8, 0],
+                  x: [0, -6, 0],
+                  opacity: [0.5, 1, 0.5]
+                }}
+                transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut", delay: 1.3 }}
+              />
             </div>
-            <p className="text-gray-700 dark:text-gray-400 leading-relaxed text-sm sm:text-base text-center">
-              To become the world's leading platform for interactive programming education, 
-              fostering a global community of skilled developers who can build the future 
-              through innovative technology solutions.
-            </p>
+
+            {/* Shimmer Effect */}
+            <motion.div
+              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-1000"
+              initial={{ x: "-100%" }}
+              whileHover={{ x: "100%" }}
+              transition={{ duration: 1.5, ease: "easeInOut", delay: 0.2 }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12"></div>
+            </motion.div>
+
+            <div className="relative z-10">
+              <div className="flex flex-col items-center text-center mb-4 sm:mb-6">
+                <motion.div 
+                  className="w-12 sm:w-16 h-12 sm:h-16 bg-gradient-to-r from-purple-500 to-pink-500 dark:from-purple-400 dark:to-pink-400 rounded-xl flex items-center justify-center mb-3 sm:mb-4 group-hover:shadow-2xl transition-all duration-300"
+                  whileHover={{ 
+                    scale: 1.2, 
+                    rotate: -360,
+                    boxShadow: "0 20px 40px rgba(139, 92, 246, 0.4)"
+                  }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
+                >
+                  <Lightbulb className="text-white" size={24} />
+                </motion.div>
+                <motion.h3 
+                  className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800 dark:text-gray-100 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors duration-300"
+                  whileHover={{ scale: 1.05 }}
+                >
+                  Our Vision
+                </motion.h3>
+              </div>
+              <motion.p 
+                className="text-gray-700 dark:text-gray-300 leading-relaxed text-sm sm:text-base lg:text-lg text-center group-hover:text-gray-800 dark:group-hover:text-gray-100 transition-colors duration-300"
+                whileHover={{ scale: 1.02 }}
+              >
+                To become the world's leading platform for interactive programming education, 
+                fostering a global community of skilled developers who can build the future 
+                through innovative technology solutions.
+              </motion.p>
+            </div>
           </motion.div>
         </motion.div>
 
@@ -343,7 +499,7 @@ export default function About() {
                   />
                   
                   {/* Card content */}
-                  <div className="relative z-10">
+                  <div className="relative z-10 text-center">
                     <motion.div 
                       className={`w-12 sm:w-14 lg:w-16 h-12 sm:h-14 lg:h-16 bg-gradient-to-r ${feature.color} dark:from-blue-400 dark:via-purple-400 dark:to-indigo-400 rounded-xl sm:rounded-2xl flex items-center justify-center mb-3 sm:mb-4 transition-all duration-300 mx-auto`}
                       whileHover={{ 
@@ -360,12 +516,12 @@ export default function About() {
                       <Icon className="text-white flex-shrink-0" size={window.innerWidth < 640 ? 20 : window.innerWidth < 1024 ? 22 : 24} />
                     </motion.div>
                     <motion.h3 
-                      className="text-lg sm:text-xl font-bold text-gray-800 dark:text-gray-300 mb-2 sm:mb-3 group-hover:text-blue-700 dark:group-hover:text-white transition-colors duration-300"
+                      className="text-lg sm:text-xl font-bold text-gray-800 dark:text-gray-300 mb-2 sm:mb-3 group-hover:text-blue-700 dark:group-hover:text-white transition-colors duration-300 text-center"
                     >
                       {feature.title}
                     </motion.h3>
                     <motion.p 
-                      className="text-gray-600 dark:text-gray-400 leading-relaxed group-hover:text-gray-700 dark:group-hover:text-gray-100 transition-colors duration-300 text-sm sm:text-base"
+                      className="text-gray-600 dark:text-gray-400 leading-relaxed group-hover:text-gray-700 dark:group-hover:text-gray-100 transition-colors duration-300 text-sm sm:text-base text-center"
                     >
                       {feature.description}
                     </motion.p>
