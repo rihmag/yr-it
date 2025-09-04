@@ -62,6 +62,24 @@ export default function InstructorShowcase() {
 			tags: ["Machine Learning", "AI", "Data Analysis", "Deep Learning"],
 			accent: "from-violet-500 via-purple-500 to-fuchsia-500",
 		},
+		{
+			name: "Aryan Kumar",
+			role: "Web Development Trainer",
+			avatar: "/images/Trainer7.jpeg",
+			bio:
+				"Official member of Superteam India and Ex-TA at Coding Ninjas. Learn from industry expert and gain hands-on experience in Web Development.",
+			tags: ["Web Development", "React", "Node.js", "Mentorship"],
+			accent: "from-green-500 via-emerald-500 to-teal-500",
+		},
+		{
+			name: "Gauri Sharma",
+			role: "Machine Learning Trainer",
+			avatar: "/images/Trainer8.jpeg",
+			bio:
+				"AI-ML Trainer at YR IT SOLUTIONS and AI-ML Developer and Researcher at AlonOS Noida. Learn from industry expert and gain hands-on experience in Machine Learning and AI.",
+			tags: ["Machine Learning", "AI", "Research", "Deep Learning"],
+			accent: "from-rose-500 via-pink-500 to-purple-500",
+		},
 	];
 
 	// Detect screen size

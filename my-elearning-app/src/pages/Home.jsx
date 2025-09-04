@@ -279,8 +279,7 @@ export default function Home() {
       <WhyChooseUs />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
-        <AdvertisementBanner />
-
+        
         {/* Featured Courses Section */}
         <motion.div 
           className="mb-16 mt-20 relative"
