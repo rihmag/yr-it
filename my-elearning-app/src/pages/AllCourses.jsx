@@ -273,6 +273,7 @@ export default function AllCourses() {
               >
                 <CourseCard 
                   course={course.title}
+                  id={course._id}
                   courseImage={course.thumbnail}
                   price={course.price}
                   description={course.description}
