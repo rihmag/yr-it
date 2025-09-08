@@ -10,6 +10,9 @@ const EditCourse = () => {
   const [isAddingLesson, setIsAddingLesson] = useState(false);
   const [editingLesson, setEditingLesson] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [isUpdatingCourse, setIsUpdatingCourse] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
 
   // Course form state
   const [courseForm, setCourseForm] = useState({
@@ -86,6 +89,7 @@ const EditCourse = () => {
 
   // Update course
   const updateCourse = async () => {
+    setIsUpdatingCourse(true);
     try { 
       const response = await fetch(`https://backend-9zkx.onrender.com/api/course/updatecourse/${selectedCourse._id}`, {
         method: 'PUT',
@@ -100,11 +104,14 @@ const EditCourse = () => {
       setIsEditingCourse(false);
     } catch (error) {
       console.error('Error updating course:', error);
+    } finally {
+        setIsUpdatingCourse(false);
     }
   };
 
   // Add lesson
    const addLesson = async () => {
+    setIsSubmitting(true);
   try {
     if (!lessonForm.title.trim()) return alert('Lesson title is required');
    
@@ -116,7 +123,7 @@ const EditCourse = () => {
     formData.append('contentType', lessonForm.contentType);
     formData.append('video', lessonForm.video);
     console.log(formData)
-    const response = await fetch(`https://backend-9zkx.onrender.com/api/course/addlessons/${selectedCourse._id}`, {
+    const response = await fetch(`http://localhost:3000/api/course/addlessons/${selectedCourse._id}`, {
       method: 'POST',
       body: formData
     });
@@ -133,12 +140,15 @@ const EditCourse = () => {
   {
     console.log(error)
   
+  } finally {
+    setIsSubmitting(false);
   }
 };
 
 
   // Update lesson
   const updateLesson = async () => {
+    setIsUpdating(true);
     try {
       const response = await fetch(`https://backend-9zkx.onrender.com/api/course/updatelessons/${selectedCourse._id}`, {
         method: 'PUT',
@@ -151,6 +161,8 @@ const EditCourse = () => {
       resetLessonForm();
     } catch (error) {
       console.error('Error updating lesson:', error);
+    } finally {
+        setIsUpdating(false);
     }
   };
 
@@ -318,10 +330,13 @@ const resetLessonForm = () => {
                         />
                         <button
                           onClick={updateCourse}
-                          className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
-                        >
-                          <Save className="w-4 h-4" />
-                          Save Changes
+                          className="flex items-center justify-center gap-2 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+                          disabled={isUpdatingCourse}>
+                          {isUpdatingCourse ? (
+                              <><div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div><span>Saving...</span></>
+                          ) : (
+                              <><Save className="w-4 h-4" /><span>Save Changes</span></>
+                          )}
                         </button>
                       </div>
                     ) : (
@@ -368,7 +383,8 @@ const resetLessonForm = () => {
                           <input
                             type="file"
                             accept = "video/*"                            
-                            
+                            name='video'
+                            id='video'
                             onChange={handleFileChange}
                             className="p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                           />
@@ -400,10 +416,14 @@ const resetLessonForm = () => {
                         <div className="flex gap-2 mt-4">
                           <button
                             onClick={addLesson}
-                            className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+                            className="flex items-center justify-center gap-2 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+                            disabled={isSubmitting}
                           >
-                            <Save className="w-4 h-4" />
-                            Add Lesson
+                            {isSubmitting ? (
+                                <><div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div><span>Adding...</span></>
+                            ) : (
+                                <><Save className="w-4 h-4" /><span>Add Lesson</span></>
+                            )}
                           </button>
                           <button
                             onClick={cancelAddLesson}
@@ -462,10 +482,14 @@ const resetLessonForm = () => {
                               <div className="flex gap-2">
                                 <button
                                   onClick={updateLesson}
-                                  className="flex items-center gap-2 px-3 py-1 text-sm bg-green-600 text-white rounded hover:bg-green-700"
+                                  className="flex items-center justify-center gap-2 px-3 py-1 text-sm bg-green-600 text-white rounded hover:bg-green-700"
+                                  disabled={isUpdating}
                                 >
-                                  <Save className="w-4 h-4" />
-                                  Save
+                                  {isUpdating ? (
+                                    <><div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div><span>Saving...</span></>
+                                  ) : (
+                                    <><Save className="w-4 h-4" /><span>Save</span></>
+                                  )}
                                 </button>
                                 <button
                                   onClick={() => {

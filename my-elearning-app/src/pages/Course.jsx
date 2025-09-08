@@ -9,6 +9,7 @@ export default function Course() {
   const [course, setCourse] = useState(null);
   const [loading, setLoading] = useState(true);
   const [lesson_data,setlesson_data]=useState([])
+  const [expandedLesson, setExpandedLesson] = useState(null);
 
   useEffect(() => {
     const fetchCourse = async () => {
@@ -20,6 +21,9 @@ export default function Course() {
     };
     fetchCourse();
   }, [courseId]);
+  const toggleLesson = (lessonId) => {
+    setExpandedLesson(expandedLesson === lessonId ? null : lessonId);
+  };
 
   if (loading) return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center transition-colors duration-300">
@@ -38,7 +42,9 @@ export default function Course() {
       </div>
     </div>
   );
+       
 
+       
   const scrollToInstructor = () => {
     document
       .getElementById("instructor-section")
@@ -180,7 +186,7 @@ export default function Course() {
           </motion.div>
         </motion.div>
 
-        {/* Lessons Section */}
+         {/* Lessons Section */}
         <motion.div 
           className="mt-12"
           initial={{ opacity: 0, y: 30 }}
@@ -201,27 +207,34 @@ export default function Course() {
                 <div className="p-6">
                   <div className="flex justify-between items-center mb-4">
                     <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{`${index + 1}. ${lesson.title}`}</h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full">
-                      {lesson.duration} mins
-                    </p>
+                    <div className="flex items-center gap-3">
+                      <p className="text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full">
+                        {lesson.duration} mins
+                      </p>
+                      <button
+                        onClick={() => toggleLesson(lesson._id)}
+                        className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors duration-200 flex items-center gap-2"
+                      >
+                        {expandedLesson === lesson._id ? '▼' : '▶'} 
+                        {expandedLesson === lesson._id ? 'Hide' : 'Watch'}
+                      </button>
+                    </div>
                   </div>
                   <p className="text-gray-700 dark:text-gray-300 mb-4">{lesson.content}</p>
                   
-                  {lesson.contentType === 'video' && (() => {
-                    const url = lesson.video;
-                    
+               { expandedLesson === lesson._id && (
+  <motion.div className="mt-6">
+     (
+      <div className="relative rounded-lg overflow-hidden bg-black shadow-2xl">
+        <video controls preload="metadata" className="w-full h-auto">
+          <source src={lesson.video} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    ) 
+  </motion.div>
+)}
 
-                    
-
-                    return (
-                      <div className="aspect-w-16 aspect-h-9 rounded-lg">
-                        <video src={"https://cdn.filestackcontent.com/gVcBvUW2RLenAc8HGNge"}>
-
-                        </video>
-
-                      </div>
-                    );
-                  })()}
                 </div>
               </motion.div>
             ))}
@@ -246,6 +259,8 @@ export default function Course() {
           />
         </motion.div>
       </div>
+    
     </div>
+     
   );
 }
