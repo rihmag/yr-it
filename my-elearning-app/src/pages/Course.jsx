@@ -209,21 +209,16 @@ export default function Course() {
                   
                   {lesson.contentType === 'video' && (() => {
                     const url = lesson.video;
-                    const match = url.match(/[?&]v=([^&#]+)/);
-                    const videoId = match ? match[1] : null;
+                    
 
-                    if (!videoId) return null;
+                    
 
                     return (
-                      <div className="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden">
-                        <iframe 
-                          className="w-full h-full"
-                          src={`https://www.youtube.com/embed/${videoId}`}
-                          title="YouTube video player" 
-                          frameBorder="0" 
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                          allowFullScreen
-                        />
+                      <div className="aspect-w-16 aspect-h-9 rounded-lg">
+                        <video src={"https://cdn.filestackcontent.com/gVcBvUW2RLenAc8HGNge"}>
+
+                        </video>
+
                       </div>
                     );
                   })()}
