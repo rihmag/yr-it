@@ -224,14 +224,14 @@ export default function Course() {
                   
                { expandedLesson === lesson._id && (
   <motion.div className="mt-6">
-     (
+     
       <div className="relative rounded-lg overflow-hidden bg-black shadow-2xl">
         <video controls preload="metadata" className="w-full h-auto">
           <source src={lesson.video} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
       </div>
-    ) 
+    
   </motion.div>
 )}
 
