@@ -2,12 +2,30 @@ import React, { useState } from "react";
 import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 import { python } from "@codemirror/lang-python";
+import { java } from "@codemirror/lang-java";
+import { cpp } from "@codemirror/lang-cpp";
+import { php } from "@codemirror/lang-php";
+import { rust } from "@codemirror/lang-rust";
+import { go } from "@codemirror/lang-go";
+import { sql } from "@codemirror/lang-sql";
 import { autocompletion } from "@codemirror/autocomplete";
 import { Play, Code, Coffee, Terminal, Zap, Sparkles, FileCode, Settings } from "lucide-react";
 
 const languageOptions = [
   { id: 63, name: "JavaScript (Node.js)", extension: javascript, color: "from-yellow-400 to-orange-500", icon: "" },
   { id: 71, name: "Python 3", extension: python, color: "from-blue-400 to-green-500", icon: "" },
+  { id: 62, name: "Java", extension: java, color: "from-red-400 to-orange-500", icon: "" },
+  { id: 54, name: "C++ (GCC 9.2.0)", extension: cpp, color: "from-blue-400 to-purple-500", icon: "" },
+  { id: 50, name: "C (GCC 9.2.0)", extension: cpp, color: "from-gray-400 to-blue-500", icon: "" },
+  { id: 51, name: "C# (Mono 6.6.0)", extension: java, color: "from-purple-400 to-blue-500", icon: "#️⃣" },
+  { id: 68, name: "PHP (7.4.1)", extension: php, color: "from-purple-400 to-pink-500", icon: "" },
+  { id: 73, name: "Rust (1.40.0)", extension: rust, color: "from-orange-400 to-red-500", icon: "" },
+  { id: 60, name: "Go (1.13.5)", extension: go, color: "from-cyan-400 to-blue-500", icon: "" },
+  { id: 72, name: "Ruby (2.7.0)", extension: python, color: "from-red-400 to-pink-500", icon: "" },
+  { id: 82, name: "SQL (SQLite 3.27.2)", extension: sql, color: "from-green-400 to-blue-500", icon: "" },
+  { id: 74, name: "TypeScript (3.7.4)", extension: javascript, color: "from-blue-400 to-indigo-500", icon: "" },
+  { id: 78, name: "Kotlin (1.3.70)", extension: java, color: "from-purple-400 to-orange-500", icon: "" },
+  { id: 83, name: "Swift (5.2.3)", extension: java, color: "from-orange-400 to-red-500", icon: "" },
 ];
 
 export default function CodeEditor() {
@@ -153,7 +171,7 @@ export default function CodeEditor() {
                     <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                   </div>
                   <div className="text-sm text-gray-400 font-mono">
-                    {currentLang.name.toLowerCase().replace(/\s+/g, '.')}.{languageId === 71 ? 'py' : 'js'}
+                    {currentLang.name.toLowerCase().replace(/\s+/g, '.')}.{languageId === 71 ? 'py' : languageId === 62 ? 'java' : languageId === 54 ? 'cpp' : languageId === 50 ? 'c' : languageId === 51 ? 'cs' : languageId === 68 ? 'php' : languageId === 73 ? 'rs' : languageId === 60 ? 'go' : languageId === 72 ? 'rb' : languageId === 82 ? 'sql' : languageId === 74 ? 'ts' : languageId === 78 ? 'kt' : languageId === 83 ? 'swift' : 'js'}
                   </div>
                 </div>
                 <CodeMirror
