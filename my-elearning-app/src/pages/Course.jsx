@@ -221,6 +221,8 @@ export default function Course() {
                     </div>
                   </div>
                   <p className="text-gray-700 dark:text-gray-300 mb-4">{lesson.content}</p>
+                  <p className="text-lg dark:text-gray-400 mb-2">Resource: <a href={lesson.resource} target="_blank" rel="noopener noreferrer" className="text-lg text-violet-700 dark:text-lg underline">Download</a></p>
+
                   
                { expandedLesson === lesson._id && (
   <motion.div className="mt-6">
