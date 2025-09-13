@@ -241,6 +241,21 @@ export default function Footer() {
             </Link>
           </div>
         </motion.div>
+
+        {/* Development Credit */}
+        <motion.div 
+          className="mt-4 pt-4 border-t border-white/10 dark:border-gray-800/50 text-center"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
+        >
+          <div className="text-gray-400 dark:text-gray-500 text-xs font-medium tracking-wider">
+            DESIGN & DEVELOPED BY{" "}
+            <span className="bg-gradient-to-r from-blue-400 to-purple-400 dark:from-blue-300 dark:to-purple-300 bg-clip-text text-transparent font-bold">
+              YR IT SOLUTIONS
+            </span>
+          </div>
+        </motion.div>
       </div>
     </footer>
   );
