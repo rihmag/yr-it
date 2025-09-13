@@ -28,6 +28,7 @@ const EditCourse = () => {
     duration: 0,
     content: '',
     contentType: 'video',
+    resource:''
     
   });
  
@@ -94,6 +95,20 @@ const EditCourse = () => {
     };
     client.picker(options).open();
   }
+
+  const resource_upload = (e) => {
+    e.preventDefault();
+    const apikey = import.meta.env.VITE_FILESTACK_API_KEY;
+    const client = filestack.init(apikey);
+    const options = {
+      onUploadDone: (res) => {
+        console.log(res);
+        const resourceUrl = res.filesUploaded[0].url;
+        setLessonForm({ ...lessonForm, resource: resourceUrl });
+      }
+    };
+    client.picker(options).open();
+  }
    
 
   // Update course
@@ -125,25 +140,11 @@ const EditCourse = () => {
     if (!lessonForm.title.trim()) return alert('Lesson title is required');
    
     if (!lessonForm.content.trim()) return alert('Lesson content is required');
-    const formData = new FormData();
-    formData.append('title', lessonForm.title);
-    formData.append('duration', lessonForm.duration);
-    formData.append('content', lessonForm.content);
-    formData.append('contentType', lessonForm.contentType);
-    formData.append('video', lessonForm.video);
-    const  dict = {
-      lessonData : {
-      title: lessonForm.title,
-      duration: lessonForm.duration,
-      content: lessonForm.content,
-      contentType: lessonForm.contentType,
-      video: lessonForm.video}
-    } 
-   
-    console.log(formData)
+    
     const response = await fetch(`https://backend-9zkx.onrender.com/api/course/addlessons/${selectedCourse._id}`, {
       method: 'POST',
-      body: dict
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ lessonData: lessonForm })
     });
     
     const data = await response.json();
@@ -205,7 +206,8 @@ const resetLessonForm = () => {
     video: null,
     duration: 0,
     content: '',
-    contentType: 'video'
+    contentType: 'video',
+    resource:''
   });
 };
 
@@ -405,6 +407,12 @@ const resetLessonForm = () => {
                             onChange={(e) => setLessonForm({...lessonForm, video: e.target.value})}
                             className="p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                           />
+                          <textarea
+                            placeholder="Resource URL"
+                            value={lessonForm.resource || ''}
+                            onChange={(e) => setLessonForm({...lessonForm, resource: e.target.value})}
+                            className="p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
                           <input
                             type="number"
                             placeholder="Duration (seconds)"
@@ -419,7 +427,7 @@ const resetLessonForm = () => {
                           >
                             <option value="video">Video</option>
                             <option value="text">Text</option>
-                            <option value="pdf">PDF</option>
+                            <option value="pdf">PDF</option>en-
                             <option value="quiz">Quiz</option>
                             <option value="assignment">Assignment</option>
                           </select>
@@ -433,7 +441,7 @@ const resetLessonForm = () => {
                         <div className="flex gap-2 mt-4">
                           <button
                             onClick={addLesson}
-                            className="flex items-center justify-center gap-2 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+                            className="flex items-center justify-center gap-2 px-4 py-2 bg-green-600 text-white rounded hover:bg-gre700"
                             disabled={isSubmitting}
                           >
                             {isSubmitting ? (
@@ -442,12 +450,15 @@ const resetLessonForm = () => {
                                 <><Save className="w-4 h-4" /><span>Add Lesson</span></>
                             )}
                           </button>
-                          <button id='upload' onClick={video_upload} className='solid rounded-md border-gray-800'>
+                          <button id='upload' onClick={video_upload} className='solid rounded-md  border-[3px] border-solid border-green-700 text-md bg-slate-200'>
                             Upload Video
+                          </button>
+                          <button id='upload_resource' onClick={resource_upload} className='solid border-width-3 border-[3px] rounded-md border-solid border-green-700 text-md bg-slate-200'>
+                            Upload Resource
                           </button>
                           <button
                             onClick={cancelAddLesson}
-                            className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
+                            className="px-4 py-2 bg-gray-300 text-gray-700 rounded border-orange-300 hover:bg-gray-400"
                           >
                             Cancel
                           </button>
@@ -470,6 +481,9 @@ const resetLessonForm = () => {
                                 />
                                  <button onClick={video_upload} className='solid rounded-md border-gray-800'>
                                     Upload New Video
+                                  </button>
+                                  <button onClick={resource_upload} className='solid rounded-md border-gray-800'>
+                                    Upload New Resource
                                   </button>
                                    <input
                                   type="number"
@@ -527,6 +541,7 @@ const resetLessonForm = () => {
                                   <span className="text-sm text-gray-500">({formatDuration(lesson.duration)})</span>
                                 </div>
                                 <p className="text-sm text-gray-600 mb-2">{lesson.content}</p>
+                                <div className="flex gap-4">
                                 {lesson.video && (
                                   <a
                                     href={lesson.video}
@@ -538,6 +553,18 @@ const resetLessonForm = () => {
                                     View Video
                                   </a>
                                 )}
+                                {lesson.resource && (
+                                  <a
+                                    href={lesson.resource}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-blue-600 hover:text-blue-800 text-sm flex items-center gap-1"
+                                  >
+                                    <Eye className="w-4 h-4" />
+                                    View Resource
+                                  </a>
+                                )}
+                                </div>
                               </div>
                               <div className="flex gap-2">
                                 <button
