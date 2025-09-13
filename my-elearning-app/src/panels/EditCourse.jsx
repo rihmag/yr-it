@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Edit, Trash2, Plus, Save, X, Eye, Video, FileText, Book } from 'lucide-react';
 
-
 const EditCourse = () => {
   const [courses, setCourses] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState(null);
@@ -31,12 +30,7 @@ const EditCourse = () => {
     contentType: 'video',
     
   });
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) { 
-     setLessonForm({ ...lessonForm, video: file });
-    }
-    }
+ 
   
 
 
@@ -86,6 +80,21 @@ const EditCourse = () => {
       console.error('Error deleting course:', error);
     }
   };
+  const video_upload = (e) => {
+    e.preventDefault();
+    const apikey = import.meta.env.VITE_FILESTACK_API_KEY;
+    const client = filestack.init(apikey);
+    const options = {
+      onUploadDone: (res) => {
+        console.log(res);
+        const videoUrl = res.filesUploaded[0].url;
+
+        setLessonForm({ ...lessonForm, video: videoUrl });
+      }
+    };
+    client.picker(options).open();
+  }
+   
 
   // Update course
   const updateCourse = async () => {
@@ -122,11 +131,21 @@ const EditCourse = () => {
     formData.append('content', lessonForm.content);
     formData.append('contentType', lessonForm.contentType);
     formData.append('video', lessonForm.video);
+    const  dict = {
+      lessonData : {
+      title: lessonForm.title,
+      duration: lessonForm.duration,
+      content: lessonForm.content,
+      contentType: lessonForm.contentType,
+      video: lessonForm.video}
+    } 
+   
     console.log(formData)
-    const response = await fetch(`http://localhost:3000/api/course/addlessons/${selectedCourse._id}`, {
+    const response = await fetch(`https://backend-9zkx.onrender.com/api/course/addlessons/${selectedCourse._id}`, {
       method: 'POST',
-      body: formData
+      body: dict
     });
+    
     const data = await response.json();
     console.log(data)
     if (data.success) { 
@@ -356,7 +375,7 @@ const resetLessonForm = () => {
                 <div className="bg-white rounded-lg shadow-sm border">
                   <div className="p-4 border-b flex justify-between items-center">
                     <h2 className="text-lg font-semibold text-gray-900">Lessons ({lessons.length})</h2>
-                    <button
+                    <button id = "addlesson"
                       onClick={() => {
                         setIsAddingLesson(true);
                         resetLessonForm();
@@ -380,12 +399,10 @@ const resetLessonForm = () => {
                             onChange={(e) => setLessonForm({...lessonForm, title: e.target.value})}
                             className="p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                           />
-                          <input
-                            type="file"
-                            accept = "video/*"                            
-                            name='video'
-                            id='video'
-                            onChange={handleFileChange}
+                          <textarea
+                            placeholder="Video URL"
+                            value={lessonForm.video || ''}
+                            onChange={(e) => setLessonForm({...lessonForm, video: e.target.value})}
                             className="p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                           />
                           <input
@@ -425,6 +442,9 @@ const resetLessonForm = () => {
                                 <><Save className="w-4 h-4" /><span>Add Lesson</span></>
                             )}
                           </button>
+                          <button id='upload' onClick={video_upload} className='solid rounded-md border-gray-800'>
+                            Upload Video
+                          </button>
                           <button
                             onClick={cancelAddLesson}
                             className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
@@ -448,14 +468,9 @@ const resetLessonForm = () => {
                                   onChange={(e) => setLessonForm({...lessonForm, title: e.target.value})}
                                   className="p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                 />
-                                 <input
-                                    type="file"
-                                    id="video"
-                                    name="video"
-                                    onChange={handleFileChange}
-                                    accept="video/*"                                    
-                                    required
-                                      />
+                                 <button onClick={video_upload} className='solid rounded-md border-gray-800'>
+                                    Upload New Video
+                                  </button>
                                    <input
                                   type="number"
                                   value={lessonForm.duration}
