@@ -2,12 +2,6 @@ import React, { useState, useRef, useEffect, useContext } from "react";
 import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 import { python } from "@codemirror/lang-python";
-import { java } from "@codemirror/lang-java";
-import { cpp } from "@codemirror/lang-cpp";
-import { php } from "@codemirror/lang-php";
-import { rust } from "@codemirror/lang-rust";
-import { go } from "@codemirror/lang-go";
-import { sql } from "@codemirror/lang-sql";
 import { autocompletion } from "@codemirror/autocomplete";
 import { useTheme } from "../../src/contexts/ThemeContext";
 import { 
@@ -47,20 +41,8 @@ import {
 } from "lucide-react";
 
 const languageOptions = [
-  { id: 63, name: "JavaScript", fullName: "JavaScript (Node.js)", extension: javascript, color: "bg-gradient-to-r from-yellow-400 to-orange-500", icon: "", ext: "js" },
-  { id: 71, name: "Python", fullName: "Python 3", extension: python, color: "bg-gradient-to-r from-blue-400 to-green-500", icon: "", ext: "py" },
-  { id: 62, name: "Java", fullName: "Java", extension: java, color: "bg-gradient-to-r from-red-400 to-orange-500", icon: "", ext: "java" },
-  { id: 54, name: "C++", fullName: "C++ (GCC 9.2.0)", extension: cpp, color: "bg-gradient-to-r from-blue-400 to-purple-500", icon: "", ext: "cpp" },
-  { id: 50, name: "C", fullName: "C (GCC 9.2.0)", extension: cpp, color: "bg-gradient-to-r from-gray-400 to-blue-500", icon: "", ext: "c" },
-  { id: 51, name: "C#", fullName: "C# (Mono 6.6.0)", extension: java, color: "bg-gradient-to-r from-purple-400 to-blue-500", icon: "#️⃣", ext: "cs" },
-  { id: 68, name: "PHP", fullName: "PHP (7.4.1)", extension: php, color: "bg-gradient-to-r from-purple-400 to-pink-500", icon: "", ext: "php" },
-  { id: 73, name: "Rust", fullName: "Rust (1.40.0)", extension: rust, color: "bg-gradient-to-r from-orange-400 to-red-500", icon: "", ext: "rs" },
-  { id: 60, name: "Go", fullName: "Go (1.13.5)", extension: go, color: "bg-gradient-to-r from-cyan-400 to-blue-500", icon: "", ext: "go" },
-  { id: 72, name: "Ruby", fullName: "Ruby (2.7.0)", extension: python, color: "bg-gradient-to-r from-red-400 to-pink-500", icon: "", ext: "rb" },
-  { id: 82, name: "SQL", fullName: "SQL (SQLite 3.27.2)", extension: sql, color: "bg-gradient-to-r from-green-400 to-blue-500", icon: "", ext: "sql" },
-  { id: 74, name: "TypeScript", fullName: "TypeScript (3.7.4)", extension: javascript, color: "bg-gradient-to-r from-blue-400 to-indigo-500", icon: "", ext: "ts" },
-  { id: 78, name: "Kotlin", fullName: "Kotlin (1.3.70)", extension: java, color: "bg-gradient-to-r from-purple-400 to-orange-500", icon: "", ext: "kt" },
-  { id: 83, name: "Swift", fullName: "Swift (5.2.3)", extension: java, color: "bg-gradient-to-r from-orange-400 to-red-500", icon: "", ext: "swift" },
+  { id: 63, name: "JavaScript (Node.js)", extension: javascript, color: "from-yellow-400 to-orange-500", icon: "" },
+  { id: 71, name: "Python 3", extension: python, color: "from-blue-400 to-green-500", icon: "" },
 ];
 
 const getDefaultCode = (languageId) => {
@@ -447,20 +429,8 @@ export default function CodeEditor() {
                       main.{currentLang.ext}
                     </div>
                   </div>
-                  
-                  <div className="flex items-center space-x-2">
-                    <div className={`flex items-center space-x-2 px-3 py-1 rounded-full text-xs font-medium ${
-                      executionStatus === 'idle' ? 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400' :
-                      executionStatus === 'running' ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400' :
-                      executionStatus === 'success' ? 'bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400' :
-                      'bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400'
-                    }`}>
-                      {executionStatus === 'idle' && <Activity className="w-3 h-3" />}
-                      {executionStatus === 'running' && <div className="w-3 h-3 border border-blue-500 border-t-transparent rounded-full animate-spin" />}
-                      {executionStatus === 'success' && <CheckCircle className="w-3 h-3" />}
-                      {executionStatus === 'error' && <AlertCircle className="w-3 h-3" />}
-                      <span className="capitalize">{executionStatus}</span>
-                    </div>
+                  <div className="text-sm text-gray-400 font-mono">
+                    {currentLang.name.toLowerCase().replace(/\s+/g, '.')}.{languageId === 71 ? 'py' : 'js'}
                   </div>
                 </div>
 
