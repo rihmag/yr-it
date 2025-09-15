@@ -3,15 +3,15 @@ import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 import { python } from "@codemirror/lang-python";
 import { autocompletion } from "@codemirror/autocomplete";
-import { Play, Code, Coffee, Terminal, Zap, Sparkles, FileCode, Settings } from "lucide-react";
+import { Play, Code, Coffee } from "lucide-react";
 
 const languageOptions = [
-  { id: 63, name: "JavaScript (Node.js)", extension: javascript, color: "from-yellow-400 to-orange-500", icon: "" },
-  { id: 71, name: "Python 3", extension: python, color: "from-blue-400 to-green-500", icon: "" },
+  { id: 63, name: "JavaScript (Node.js)", extension: javascript },
+  { id: 71, name: "Python 3", extension: python },
 ];
 
 export default function CodeEditor() {
-  const [code, setCode] = useState("# Welcome to the Advanced Code Editor\n# Write your Python or JavaScript code here\n\nprint('Hello, World!')");
+  const [code, setCode] = useState("# Write your Python or JS code here");
   const [languageId, setLanguageId] = useState(71);
   const [output, setOutput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -51,295 +51,227 @@ export default function CodeEditor() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
-      {/* Background Image */}
-      <div
-        className="absolute inset-0 bg-cover bg-top opacity-1"
-        style={{ backgroundImage: "url('/images/coding, coffee, and creativity abstract.jpeg')" 
-          ,height: '20%', width: '100%'
-        }}
-      ></div>
+    <div
+      className="min-h-screen transition-all duration-500 ease-in-out px-0 sm:px-0 lg:px-0 "
+      style={{
+        backgroundColor: "#dad9e8",
+        backgroundImage: `
+         
+          linear-gradient(to right, #3b82f6 0%, #60a5fa 100%),
+          radial-gradient(circle at 30% 50%, rgba(255,255,255,0.05), transparent 60%)
+        `,
+        backgroundBlendMode:"overlay",
+        
+        backgroundPosition: "top",
+        backgroundRepeat: "no-repeat",
+       
+      }}
+    >
+      <div className="gap-10 relative "
 
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
-        <div className="absolute top-40 left-40 w-80 h-80 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
-      </div>
-
-      {/* Grid Pattern Overlay */}
-      <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
-
-      <div className="relative z-10 container mx-auto max-w-7xl px-4 py-8">
-        {/* Header Section */}
-        <div className="text-center mb-12">
-          <div className="flex items-center justify-center gap-4 mb-6">
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full blur-lg opacity-75 animate-pulse"></div>
-              <div className="relative bg-gradient-to-r from-purple-600 to-blue-600 p-4 rounded-full">
-                <Code className="w-8 h-8 text-white" />
-              </div>
-            </div>
-            <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent animate-gradient-x leading-tight py-4">
-              Code Playground
-            </h1>
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full blur-lg opacity-75 animate-pulse animation-delay-1000"></div>
-              <div className="relative bg-gradient-to-r from-blue-600 to-purple-600 p-4 rounded-full">
-                <Sparkles className="w-8 h-8 text-white" />
-              </div>
+      >
+       <img src="/images/ai.jpg"
+                      style={{position:"absolute", height:"100%",width:"100%",margin:0,backgroundBlendMode:"initial",opacity:"40%"}} alt="" />     
+         <div className="container mx-auto max-w-7xl py-4 sm:py-6 lg:py-8"
+>
+        {/* Animated Header */}
+        <div className="text-center mb-8 sm:mb-12 animate-fade-in  abs"
+        >
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 mb-4 sm:mb-6   ">
+            <div className="flex items-center gap-2 sm:gap-4 absolute">
+              <Coffee className="w-12 h-6 sm:w-8 md:w-12 lg:w-12 lg:h-12  animate-bounce text-blue-700 " />
+              <h1
+                className="font-extrabold text-transparent bg-clip-text animate-gradient-text leading-tight tracking-tight text-10xl sm:text-3xl md:text-12xl lg:text-12xl"
+                style={{
+                  backgroundImage:
+                    
+                    "linear-gradient(270deg, #3b82f6, #60a5fa, #2563eb, #1d4ed8, #3b82f6)",
+                    
+                  backgroundSize: "200% 200%",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  fontSize:"36px",
+                  
+                }}
+              >
+                Coffee and Code
+              </h1>
+              <Code className="w-6 h-6 sm:w-12 md:w-12 lg:w-10 lg:h-12 text-blue-700 animate-pulse " />
             </div>
           </div>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
-            Experience the future of coding with our advanced, interactive development environment
-          </p>
         </div>
-
+        
         {/* Main Editor Container */}
-        <div className="bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 shadow-2xl p-8 hover:bg-white/10 transition-all duration-500">
-          
+         
+        <div className= " relative bg-white/10 backdrop-blur-lg rounded-2xl sm:rounded-3xl shadow-2xl p-4 sm:p-6 lg:p-8 transition-all duration-300 hover:shadow-3xl hover:bg-white/20">
+                
           {/* Language Selector */}
-          <div className="mb-8">
-            <div className="flex items-center gap-3 mb-4">
-              <Settings className="w-5 h-5 text-purple-400" />
-              <label className="text-lg font-semibold text-purple-700">
-                Choose Your Language
-              </label>
+          <div className="mb-6 sm:mb-8 ">
+            
+                    
+                        
+            <label 
+              className="inline-block text-sm font-bold mb-3 px-3 py-2 text-blue-950 rounded-lg"
+              style={{
+                backgroundColor: "#aeaeae",
+              }}
+            >
+              Choose Language
+            </label>
+            <div className="mt-3">
+              <select
+                value={languageId}
+                onChange={(e) => setLanguageId(Number(e.target.value))}
+                style={{ backgroundColor: "#a2adb6", color: "#ffffff" }}
+                className="w-1/2 sm:w-auto min-w-0 sm:min-w-64 px-4 sm:px-6 py-2 sm:py-3 rounded-xl border-2 border-white/20 backdrop-blur-sm text-gray-900 font-bold transition-all duration-300 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/50"
+              >
+                {languageOptions.map((lang) => (
+                  <option key={lang.id} value={lang.id} className="text-gray-900 bg-slate-600 font-bold">
+                    {lang.name}
+                  </option>
+                ))}
+              </select>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {languageOptions.map((lang) => (
-                <button
-                  key={lang.id}
-                  onClick={() => setLanguageId(lang.id)}
-                  className={`relative p-4 rounded-xl border-2 transition-all duration-300 transform hover:scale-105 ${ 
-                    languageId === lang.id
-                      ? 'border-purple-400 bg-gradient-to-r ' + lang.color + ' shadow-lg'
-                      : 'border-gray-600 bg-gray-800/50 hover:border-gray-500'
-                  }`}
-                >
-                  <div className="flex items-center gap-3">
-                    <span className="text-2xl">{lang.icon}</span>
-                    <div className="text-left">
-                      <div className={`font-semibold ${languageId === lang.id ? 'text-white' : 'text-gray-300'}`}>
-                        {lang.name}
-                      </div>
-                      <div className={`text-sm ${languageId === lang.id ? 'text-white/80' : 'text-gray-500'}`}>
-                        Ready to execute
-                      </div>
-                    </div>
-                  </div>
-                  {languageId === lang.id && (
-                    <div className="absolute top-2 right-2">
-                      <Zap className="w-5 h-5 text-white animate-pulse" />
-                    </div>
-                  )}
-                </button>
-              ))}
-            </div>
+            
           </div>
 
+      </div>
+     
           {/* Code Editor */}
-          <div className="mb-8">
-            <div className="flex items-center gap-3 mb-4">
-              <FileCode className="w-5 h-5 text-blue-400" />
-              <label className="text-lg font-semibold text-white">
-                Code Editor
-              </label>
-              <div className="flex-1"></div>
-              <div className="flex items-center gap-2 text-sm text-gray-400">
-                <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                <span>Ready</span>
-              </div>
-            </div>
-            <div className="relative group">
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-blue-600/20 rounded-xl blur-xl group-hover:blur-2xl transition-all duration-300"></div>
-              <div className="relative bg-gray-900/90 backdrop-blur-sm rounded-xl border border-gray-700/50 overflow-hidden shadow-2xl">
-                <div className="flex items-center justify-between p-4 bg-gray-800/50 border-b border-gray-700/50">
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                    <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                  </div>
-                  <div className="text-sm text-gray-400 font-mono">
-                    {currentLang.name.toLowerCase().replace(/\s+/g, '.')}.{languageId === 71 ? 'py' : 'js'}
-                  </div>
-                </div>
-                <CodeMirror
-                  value={code}
-                  height="400px"
-                  className="text-lg"
-                  extensions={[currentLang.extension(), autocompletion()]} 
-                  onChange={(value) => setCode(value)}
-                  theme="dark"
-                />
-              </div>
+          <div className="mb-6 sm:mb-8">
+            <label className="inline-block text-lg font-bold mb-4 py-2 px-3 bg-slate-600 text-white rounded-lg">
+              Code Editor
+            </label>
+            <div
+              className="rounded-xl overflow-hidden border-2 border-white/20 transition-all duration-300 hover:border-white/40 focus-within:border-blue-400 focus-within:ring-2 focus-within:ring-blue-400/50 shadow-lg"
+              style={{ backgroundColor: "#60a5fa" }}
+            >
+              <CodeMirror
+                value={code}
+                height="400px"
+                className="text-lg sm:text-xl"
+                extensions={[currentLang.extension(), autocompletion()]}
+                onChange={(value) => setCode(value)}
+                theme="dark"
+                style={{
+                  fontSize: '18px'
+                }}
+              />
             </div>
           </div>
 
           {/* Run Button */}
-          <div className="flex justify-center mb-8">
+          <div className="flex justify-center mb-6 sm:mb-8">
             <button
               onClick={runCode}
               disabled={loading}
               className={`
-                group relative px-8 py-4 rounded-xl font-semibold text-white transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-purple-500/50 flex items-center gap-3 text-lg min-w-[200px] justify-center
-                ${ 
+                group px-6 sm:px-8 lg:px-10 py-3 sm:py-4 w-full sm:w-auto max-w-sm rounded-xl font-semibold text-white transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-green-400/50 flex items-center justify-center text-sm sm:text-base lg:text-lg
+                ${
                   loading
-                    ? "bg-gray-600 cursor-not-allowed"
-                    : "bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 shadow-lg hover:shadow-xl"
+                    ? "bg-gray-500 cursor-not-allowed"
+                    : "bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 shadow-lg hover:shadow-xl"
                 }
               `}
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl blur-lg opacity-75 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <div className="relative flex items-center gap-3">
-                {loading ? (
-                  <>
-                    <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    <span>Executing...</span>
-                  </>
-                ) : (
-                  <>
-                    <Play className="w-6 h-6 group-hover:scale-110 transition-transform" />
-                    <span>Run Code</span>
-                  </>
-                )}
-              </div>
+              {loading ? (
+                <div className="flex items-center gap-2 sm:gap-4">
+                  <div className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  <span>Running...</span>
+                </div>
+              ) : (
+                <div className="flex items-center gap-2 sm:gap-4">
+                  <Play className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 group-hover:scale-110 transition-transform" />
+                  <span>Run Code</span>
+                </div>
+              )}
             </button>
           </div>
 
           {/* Output Area */}
           <div>
-            <div className="flex items-center gap-3 mb-4">
-              <Terminal className="w-5 h-5 text-green-400" />
-              <label className="text-lg font-semibold text-white">
-                Output Console
-              </label>
-              <div className="flex-1"></div>
-              {output && (
-                <div className="flex items-center gap-2 text-sm text-green-400">
-                  <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                  <span>Execution Complete</span>
-                </div>
-              )}
-            </div>
-            <div className="relative group">
-              <div className="absolute inset-0 bg-gradient-to-r from-green-600/20 to-blue-600/20 rounded-xl blur-xl group-hover:blur-2xl transition-all duration-300"></div>
-              <div className="relative bg-gray-900/90 backdrop-blur-sm rounded-xl border border-gray-700/50 overflow-hidden shadow-2xl">
-                <div className="flex items-center justify-between p-4 bg-gray-800/50 border-b border-gray-700/50">
-                  <div className="flex items-center gap-2">
-                    <Terminal className="w-4 h-4 text-green-400" />
-                    <span className="text-sm text-gray-400 font-mono">console</span>
-                  </div>
-                  <div className="text-xs text-gray-500">
-                    {output ? `${output.split('\n').length} lines` : 'Waiting for execution...'}
-                  </div>
-                </div>
-                <div className="p-6 min-h-[200px] max-h-[400px] overflow-auto">
-                  <pre className="text-green-400 font-mono text-sm leading-relaxed whitespace-pre-wrap break-words">
-                    {output || (
-                      <span className="text-gray-500 italic">
-                        Output will appear here after running your code...
-                        <span className="animate-pulse">|</span>
-                      </span>
-                    )}
-                  </pre>
-                </div>
-              </div>
+            <label className="inline-block text-sm font-bold text-white mb-3 px-3 py-2 bg-gray-700 rounded-lg">
+              Output
+            </label>
+            <div
+              className="rounded-xl p-4 sm:p-6 min-h-[150px] sm:min-h-[200px] border-2 border-white/20 transition-all duration-300 hover:border-white/40 shadow-inner overflow-auto"
+              style={{ backgroundColor: "#e7e8d9" }}
+            >
+              <pre className="text-gray-800 font-bold text-sm sm:text-base whitespace-pre-wrap break-words leading-relaxed">
+                {output || "Output will appear here..."}
+              </pre>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Custom Styles */}
+      {/* Custom CSS */}
       <style jsx>{`
-        @keyframes gradient-x {
-          0%, 100% {
-            background-size: 200% 200%;
-            background-position: left center;
+        @keyframes gradient-shift {
+          0%,
+          100% {
+            background-position: 0% 50%;
           }
           50% {
-            background-size: 200% 200%;
-            background-position: right center;
+            background-position: 100% 50%;
           }
         }
 
-        @keyframes blob {
-          0% {
-            transform: translate(0px, 0px) scale(1);
-          }
-          33% {
-            transform: translate(30px, -50px) scale(1.1);
-          }
-          66% {
-            transform: translate(-20px, 20px) scale(0.9);
-          }
-          100% {
-            transform: translate(0px, 0px) scale(1);
-          }
-        }
-
-        .animate-gradient-x {
-          animation: gradient-x 15s ease infinite;
+        .animate-gradient-text {
+          animation: gradient-shift 8s ease infinite;
           background-size: 200% 200%;
         }
 
-        .animate-blob {
-          animation: blob 7s infinite;
+        @keyframes fade-in {
+          from {
+            opacity: 0;
+            transform: translateY(-20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
         }
 
-        .animation-delay-2000 {
-          animation-delay: 2s;
-        }
-
-        .animation-delay-4000 {
-          animation-delay: 4s;
-        }
-
-        .animation-delay-1000 {
-          animation-delay: 1s;
-        }
-
-        .bg-grid-pattern {
-          background-image: 
-            linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
-          background-size: 50px 50px;
+        .animate-fade-in {
+          animation: fade-in 1s ease-out;
         }
 
         .cm-editor {
-          background: transparent !important;
+          border-radius: 12px;
         }
 
         .cm-focused {
           outline: none !important;
         }
 
-        .cm-content {
-          padding: 20px !important;
+        /* Mobile-specific adjustments */
+        @media (max-width: 640px) {
+          .cm-editor {
+            font-size: 16px !important;
+          }
+          
+          .cm-content {
+            padding: 12px !important;
+          }
+          
+          .cm-line {
+            padding: 0 4px !important;
+          }
         }
 
-        .cm-line {
-          padding: 0 8px !important;
+        /* Tablet adjustments */
+        @media (min-width: 641px) and (max-width: 1024px) {
+          .cm-editor {
+            font-size: 18px !important;
+          }
         }
 
-        /* Scrollbar Styling */
-        ::-webkit-scrollbar {
-          width: 8px;
-          height: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-          background: rgba(0, 0, 0, 0.1);
-          border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-          background: rgba(139, 92, 246, 0.5);
-          border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-          background: rgba(139, 92, 246, 0.7);
+        /* Desktop adjustments */
+        @media (min-width: 1025px) {
+          .cm-editor {
+            font-size: 20px !important;
+          }
         }
       `}</style>
     </div>
