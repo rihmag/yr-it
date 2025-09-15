@@ -144,7 +144,7 @@ const EditCourse = () => {
     const response = await fetch(`https://backend-9zkx.onrender.com/api/course/addlessons/${selectedCourse._id}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ data: lessonForm })
+      body: JSON.stringify({ lessondata: lessonForm })
     });
     
     const data = await response.json();
