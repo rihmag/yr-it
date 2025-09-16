@@ -3,266 +3,570 @@ import { useParams } from "react-router-dom";
 import { getCourses } from "../data/courses";
 import InstructorComponent from "../components/InstructorComponent";
 import { motion } from "framer-motion";
+import { 
+  Play, 
+  Clock, 
+  Users, 
+  Star, 
+  Award, 
+  BookOpen, 
+  Download, 
+  Share2, 
+  Heart,
+  CheckCircle,
+  Globe,
+  Smartphone,
+  Trophy,
+  Target,
+  Zap,
+  MessageCircle,
+  ArrowRight,
+  PlayCircle,
+  Lock,
+  ChevronDown,
+  ChevronUp,
+  List,
+  User
+} from "lucide-react";
+import toast from "react-hot-toast";
 
 export default function Course() {
   const { courseId } = useParams();
   const [course, setCourse] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [lesson_data,setlesson_data]=useState([])
+  const [lesson_data, setlesson_data] = useState([]);
   const [expandedLesson, setExpandedLesson] = useState(null);
+  const [isLiked, setIsLiked] = useState(false);
 
   useEffect(() => {
     const fetchCourse = async () => {
       const courses = await getCourses();
       const foundCourse = courses.find((c) => c._id === courseId);
-      setlesson_data(foundCourse.lessons)
+      setlesson_data(foundCourse.lessons);
       setCourse(foundCourse);
       setLoading(false);
     };
     fetchCourse();
   }, [courseId]);
+
   const toggleLesson = (lessonId) => {
     setExpandedLesson(expandedLesson === lessonId ? null : lessonId);
   };
 
+  const handleLike = () => {
+    setIsLiked(!isLiked);
+    toast.success(isLiked ? "Removed from wishlist" : "Added to wishlist!");
+  };
+
+  const handleShare = () => {
+    if (navigator.share) {
+      navigator.share({
+        title: course.title,
+        text: course.description,
+        url: window.location.href,
+      });
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+      toast.success("Course link copied to clipboard!");
+    }
+  };
+
   if (loading) return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center transition-colors duration-300">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center">
       <div className="text-center">
-        <div className="w-12 h-12 border-4 border-purple-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-        <p className="text-gray-600 dark:text-gray-300">Loading course...</p>
+        <motion.div 
+          className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full mx-auto mb-4"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+        />
+        <p className="text-gray-600 dark:text-gray-300 text-lg">Loading course...</p>
       </div>
     </div>
   );
   
   if (!course) return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center transition-colors duration-300">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center">
       <div className="text-center">
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Course not found</h2>
+        <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Course not found</h2>
         <p className="text-gray-600 dark:text-gray-300">The course you're looking for doesn't exist.</p>
       </div>
     </div>
   );
-       
 
-       
-  const scrollToInstructor = () => {
-    document
-      .getElementById("instructor-section")
-      .scrollIntoView({ behavior: "smooth" });
-  };
+  const courseFeatures = [
+    { icon: Play, title: "Video Lessons", value: `${lesson_data.length} lessons`, color: "text-red-500" },
+    { icon: Clock, title: "Duration", value: "12+ hours", color: "text-blue-500" },
+    { icon: Users, title: "Students", value: "2,500+", color: "text-green-500" },
+    { icon: Award, title: "Certificate", value: "Included", color: "text-purple-500" },
+    { icon: Globe, title: "Language", value: "English", color: "text-orange-500" },
+    { icon: Smartphone, title: "Mobile Access", value: "Available", color: "text-pink-500" }
+  ];
+
+  const whatYouLearn = [
+    "Master the fundamentals and advanced concepts",
+    "Build real-world projects from scratch",
+    "Learn industry best practices and standards",
+    "Get hands-on experience with modern tools",
+    "Understand professional development workflows",
+    "Prepare for technical interviews and assessments"
+  ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 relative overflow-hidden transition-colors duration-300">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-30 dark:opacity-20">
-        <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-blue-400 to-purple-400 dark:from-blue-600 dark:to-purple-600 rounded-full mix-blend-multiply filter blur-xl animate-pulse"></div>
-        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-purple-400 to-pink-400 dark:from-purple-600 dark:to-pink-600 rounded-full mix-blend-multiply filter blur-xl animate-pulse" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute bottom-0 left-1/2 w-96 h-96 bg-gradient-to-br from-indigo-400 to-blue-400 dark:from-indigo-600 dark:to-blue-600 rounded-full mix-blend-multiply filter blur-xl animate-pulse" style={{ animationDelay: '4s' }}></div>
-      </div>
-
-      {/* Geometric Pattern */}
-      <div className="absolute inset-0 opacity-10 dark:opacity-5">
-        <div className="absolute top-20 left-10 w-32 h-32 border-2 border-blue-300 dark:border-blue-600 rounded-full"></div>
-        <div className="absolute top-40 right-20 w-24 h-24 border-2 border-purple-300 dark:border-purple-600 rounded-full"></div>
-        <div className="absolute bottom-40 left-20 w-20 h-20 border-2 border-indigo-300 dark:border-indigo-600 rounded-full"></div>
-        <div className="absolute bottom-20 right-10 w-16 h-16 border-2 border-pink-300 dark:border-pink-600 rounded-full"></div>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
-        <motion.div 
-          className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <div className="md:col-span-2">
-            <motion.h1 
-              className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-gray-900 dark:text-white"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+      {/* Hero Section */}
+      <div className="relative overflow-hidden bg-gradient-to-r from-blue-900 via-purple-900 to-indigo-900 dark:from-gray-900 dark:via-blue-900 dark:to-purple-900">
+        <div className="absolute inset-0 bg-black/20"></div>
+        <div className="absolute inset-0">
+          <div className="absolute top-0 left-0 w-72 h-72 bg-blue-500/30 rounded-full mix-blend-multiply filter blur-xl animate-pulse"></div>
+          <div className="absolute top-0 right-0 w-72 h-72 bg-purple-500/30 rounded-full mix-blend-multiply filter blur-xl animate-pulse" style={{ animationDelay: '2s' }}></div>
+          <div className="absolute bottom-0 left-1/2 w-72 h-72 bg-indigo-500/30 rounded-full mix-blend-multiply filter blur-xl animate-pulse" style={{ animationDelay: '4s' }}></div>
+        </div>
+        
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
             >
-              {course.title}
-            </motion.h1>
-            <motion.p 
-              className="text-lg mb-6 text-gray-600 dark:text-gray-300 leading-relaxed"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              {course.description}
-            </motion.p>
-
-            {/* Course Includes Section */}
-            <motion.div 
-              className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl p-6 mb-6 border border-white/20 dark:border-gray-700/20 shadow-lg"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-            >
-              <h2 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">This Course Includes:</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="flex items-start">
-                  <span className="text-blue-600 dark:text-blue-400 mr-3">📹</span>
-                  <div>
-                    <h3 className="font-semibold text-gray-900 dark:text-white">Video Content</h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
-                      {course.lessons?.length || 0} video lessons
-                    </p>
-                  </div>
+              <div className="flex items-center gap-2 mb-4">
+                <span className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                  ⭐ Bestseller
+                </span>
+                <span className="bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm">
+                  {course.category}
+                </span>
+              </div>
+              
+              <h1 className="text-4xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+                {course.title}
+              </h1>
+              
+              <p className="text-xl text-gray-200 mb-8 leading-relaxed">
+                {course.description}
+              </p>
+              
+              <div className="flex items-center gap-6 mb-8">
+                <div className="flex items-center gap-2">
+                  <Star className="w-5 h-5 text-yellow-400 fill-current" />
+                  <span className="text-white font-semibold">4.8</span>
+                  <span className="text-gray-300">(2,847 ratings)</span>
                 </div>
-                <div className="flex items-start">
-                  <span className="text-blue-600 dark:text-blue-400 mr-3">📝</span>
-                  <div>
-                    <h3 className="font-semibold text-gray-900 dark:text-white">Course Chapters</h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
-                      {course.lessons?.length || 0} comprehensive chapters
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <span className="text-blue-600 dark:text-blue-400 mr-3">🎓</span>
-                  <div>
-                    <h3 className="font-semibold text-gray-900 dark:text-white">Certificate</h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
-                      Completion certificate included
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <span className="text-blue-600 dark:text-blue-400 mr-3">💬</span>
-                  <div>
-                    <h3 className="font-semibold text-gray-900 dark:text-white">Support</h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
-                      Direct access to instructor
-                    </p>
-                  </div>
+                <div className="flex items-center gap-2">
+                  <Users className="w-5 h-5 text-blue-400" />
+                  <span className="text-white">12,543 students</span>
                 </div>
               </div>
-            </motion.div>
-
-            <motion.button
-              onClick={scrollToInstructor}
-              className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 underline mb-4 font-medium flex items-center gap-2 transition-colors"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              whileHover={{ x: 5 }}
-            >
-              Created by {course.instructor}
-            </motion.button>
-          </div>
-          
-
-          {/* Course Image and Subscribe Card */}
-          <motion.div 
-            className="md:col-span-1"
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-xl shadow-xl overflow-hidden border border-white/20 dark:border-gray-700/20">
-              <img
-                src={`data:image/jpeg;base64,${course.thumbnail}`}
-                alt={course.title}
-                className="w-full h-48 object-cover"
-              />
-              <div className="p-6">
-                <div className="mb-4">
-                  <span className="text-3xl font-bold text-gray-900 dark:text-white">₹{course.price}</span>
-                </div>
+              
+              <div className="flex items-center gap-4 mb-8">
+                <span className="text-3xl font-bold text-white">₹{course.price}</span>
+                <span className="text-lg text-gray-300 line-through">₹{Math.round(course.price * 1.5)}</span>
+                <span className="bg-red-500 text-white px-2 py-1 rounded text-sm font-semibold">
+                  33% OFF
+                </span>
+              </div>
+              
+              <div className="flex flex-wrap gap-4">
                 <motion.a
                   href="https://docs.google.com/forms/d/e/1FAIpQLSe-dr0_7my4ic_lMQplEDivsmOMTcAoQgTRJkA5TMtMzBLBYg/viewform"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full block text-center bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-500 dark:to-purple-500 text-white py-3 px-4 rounded-lg hover:from-blue-700 hover:to-purple-700 dark:hover:from-blue-600 dark:hover:to-purple-600 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl"
-                  whileHover={{ scale: 1.02, y: -2 }}
-                  whileTap={{ scale: 0.98 }}
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2"
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
                 >
-                  Subscribe to Course
+                  <PlayCircle className="w-5 h-5" />
+                  Enroll Now
                 </motion.a>
+                
+                <motion.button
+                  onClick={handleLike}
+                  className={`px-6 py-4 rounded-xl font-semibold transition-all duration-300 flex items-center gap-2 ${
+                    isLiked 
+                      ? "bg-red-500 text-white" 
+                      : "bg-white/20 backdrop-blur-sm text-white hover:bg-white/30"
+                  }`}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Heart className={`w-5 h-5 ${isLiked ? 'fill-current' : ''}`} />
+                  {isLiked ? 'Saved' : 'Save'}
+                </motion.button>
+                
+                <motion.button
+                  onClick={handleShare}
+                  className="bg-white/20 backdrop-blur-sm text-white hover:bg-white/30 px-6 py-4 rounded-xl font-semibold transition-all duration-300 flex items-center gap-2"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Share2 className="w-5 h-5" />
+                  Share
+                </motion.button>
               </div>
-            </div>
-          </motion.div>
-        </motion.div>
-
-         {/* Lessons Section */}
-        <motion.div 
-          className="mt-12"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-        >
-          <h2 className="text-2xl md:text-3xl font-bold mb-6 text-gray-900 dark:text-white">Lessons</h2>
-          <div className="space-y-6">
-            {lesson_data.map((lesson, index) => (
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="relative"
+            >
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+                <img
+                  src={`data:image/jpeg;base64,${course.thumbnail}`}
+                  alt={course.title}
+                  className="w-full h-80 object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+              </div>
+              
+              {/* Floating Stats */}
               <motion.div 
-                key={lesson._id} 
-                className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden border border-white/20 dark:border-gray-700/20"
+                className="absolute -bottom-6 -left-6 bg-white dark:bg-gray-800 rounded-xl p-4 shadow-lg"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
-                whileHover={{ y: -2 }}
+                transition={{ delay: 0.5 }}
               >
-                <div className="p-6">
-                  <div className="flex justify-between items-center mb-4">
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{`${index + 1}. ${lesson.title}`}</h3>
-                    <div className="flex items-center gap-3">
-                      <p className="text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full">
-                        {lesson.duration} mins
-                      </p>
-                      <button
-                        onClick={() => toggleLesson(lesson._id)}
-                        className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors duration-200 flex items-center gap-2"
-                      >
-                        {expandedLesson === lesson._id ? '▼' : '▶'} 
-                        {expandedLesson === lesson._id ? 'Hide' : 'Watch'}
-                      </button>
-                    </div>
-                  </div>
-                  <p className="text-gray-700 dark:text-gray-300 mb-4">{lesson.content}</p>
-                  <p className="text-lg dark:text-gray-400 mb-2">Resource: <a href={lesson.resource} target="_blank" rel="noopener noreferrer" className="text-lg text-violet-700 dark:text-lg underline">Download</a></p>
-
-                  
-               { expandedLesson === lesson._id && (
-  <motion.div className="mt-6">
-     
-      <div className="relative rounded-lg overflow-hidden bg-black shadow-2xl">
-        <video controls preload="metadata" className="w-full h-auto">
-          <source src={lesson.video} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-      </div>
-    
-  </motion.div>
-)}
-
+                <div className="flex items-center gap-2">
+                  <Trophy className="w-5 h-5 text-yellow-500" />
+                  <span className="font-semibold text-gray-900 dark:text-white">Top Rated</span>
                 </div>
               </motion.div>
-            ))}
+              
+              <motion.div 
+                className="absolute -top-6 -right-6 bg-white dark:bg-gray-800 rounded-xl p-4 shadow-lg"
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.7 }}
+              >
+                <div className="flex items-center gap-2">
+                  <Zap className="w-5 h-5 text-blue-500" />
+                  <span className="font-semibold text-gray-900 dark:text-white">Updated 2024</span>
+                </div>
+              </motion.div>
+            </motion.div>
           </div>
-        </motion.div>
+        </div>
+      </div>
 
-        {/* Instructor Section */}
-        <motion.div
-          id="instructor-section"
-          className="mt-12"
-          initial={{ opacity: 0, y: 30 }}
+      {/* Course Features Grid */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-20">
+        <motion.div 
+          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4"
+          initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
         >
-          <InstructorComponent 
-            instructor={{
-              name: course.instructor,
-              role: 'Course Instructor',
-              avatar: '/images/default-avatar.jpg',
-              tags: ['Teaching', course.category || 'Education']
-            }} 
-          />
+          {courseFeatures.map((feature, index) => (
+            <motion.div
+              key={index}
+              className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-xl p-4 text-center shadow-lg hover:shadow-xl transition-all duration-300"
+              whileHover={{ y: -5, scale: 1.02 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 + index * 0.1 }}
+            >
+              <feature.icon className={`w-8 h-8 mx-auto mb-2 ${feature.color}`} />
+              <h3 className="font-semibold text-gray-900 dark:text-white text-sm mb-1">{feature.title}</h3>
+              <p className="text-gray-600 dark:text-gray-400 text-xs">{feature.value}</p>
+            </motion.div>
+          ))}
         </motion.div>
       </div>
-    
+
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+          {/* Left Content */}
+          <div className="lg:col-span-2 space-y-16">
+
+            {/* What You'll Learn Section */}
+            <section id="what-youll-learn" className="scroll-mt-20">
+              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-2xl p-8 shadow-xl">
+                <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
+                  What You'll Learn
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {whatYouLearn.map((item, index) => (
+                    <motion.div
+                      key={index}
+                      className="flex items-start gap-4 p-4 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl"
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.1 }}
+                    >
+                      <div className="bg-blue-100 dark:bg-blue-900/30 p-2 rounded-lg">
+                        <CheckCircle className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+                      </div>
+                      <p className="text-gray-800 dark:text-gray-200">{item}</p>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            {/* Curriculum Section */}
+            <section id="curriculum" className="scroll-mt-20">
+              <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-xl">
+                <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-3">
+                  <List className="w-8 h-8 text-blue-600" />
+                  Course Curriculum
+                </h2>
+                <div className="space-y-6">
+                  {lesson_data.map((lesson, index) => (
+                    <motion.div
+                      key={lesson._id}
+                      className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-100 dark:border-gray-700"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.05 }}
+                    >
+                      <div className="p-5">
+                        <div className="flex items-start justify-between gap-4">
+                          <div className="flex items-start gap-4">
+                            <div className="w-10 h-10 bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-900/30 dark:to-blue-800/30 rounded-lg flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold text-sm flex-shrink-0">
+                              {index + 1}
+                            </div>
+                            <div>
+                              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{lesson.title}</h3>
+                              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1 flex items-center gap-2">
+                                <Clock className="w-4 h-4" />
+                                {lesson.duration} min • {lesson.type || 'Video'}
+                              </p>
+                            </div>
+                          </div>
+                          <motion.button
+                            onClick={() => toggleLesson(lesson._id)}
+                            className="text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors flex items-center gap-1"
+                            whileHover={{ x: 2 }}
+                          >
+                            {expandedLesson === lesson._id ? (
+                              <>
+                                <ChevronUp className="w-4 h-4" />
+                                Hide
+                              </>
+                            ) : (
+                              <>
+                                <PlayCircle className="w-4 h-4" />
+                                Preview
+                              </>
+                            )}
+                          </motion.button>
+                        </div>
+                        
+                        <motion.div
+                          initial={{ opacity: 0, height: 0, marginTop: 0 }}
+                          animate={{
+                            opacity: expandedLesson === lesson._id ? 1 : 0,
+                            height: expandedLesson === lesson._id ? 'auto' : 0,
+                            marginTop: expandedLesson === lesson._id ? 16 : 0
+                          }}
+                          className="overflow-hidden"
+                        >
+                          <div className="pt-4 border-t border-gray-100 dark:border-gray-700 mt-4">
+                            <p className="text-gray-700 dark:text-gray-300 mb-4">{lesson.content || 'No description available for this lesson.'}</p>
+                            <div className="relative rounded-xl overflow-hidden bg-black/5 dark:bg-white/5 aspect-video">
+                              <video 
+                                controls 
+                                preload="none" 
+                                poster={lesson.thumbnail ? `data:image/jpeg;base64,${lesson.thumbnail}` : undefined}
+                                className="w-full h-full object-cover"
+                              >
+                                <source src={lesson.video} type="video/mp4" />
+                                Your browser does not support the video tag.
+                              </video>
+                            </div>
+                          </div>
+                        </motion.div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            {/* Instructor Section */}
+            <section id="instructor" className="scroll-mt-20">
+            {/* Header */}
+				    <div className="text-center mb-12 sm:mb-16">
+
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 dark:from-white dark:via-blue-200 dark:to-purple-200 bg-clip-text text-transparent mb-4 sm:mb-6 leading-tight transition-all duration-300">
+                Instructor
+              </h2>
+				    </div>
+              <InstructorComponent 
+                instructor={{
+                  name: course.instructor,
+                  role: 'Senior Instructor & Developer',
+                  bio: 'With over 10 years of experience in software development and education, I\'ve helped thousands of students master new skills and advance their careers. My teaching approach focuses on practical, real-world applications of technology.',
+                  avatar: '/images/default-avatar.jpg',
+                  rating: 4.9,
+                  reviews: 1247,
+                  students: 12543,
+                  courses: 8,
+                  social: {
+                    twitter: '#',
+                    linkedin: '#',
+                    github: '#'
+                  },
+                  tags: ['Teaching', course.category || 'Education', 'Mentorship']
+                }} 
+              />
+            </section>
+
+            {/* Reviews Section */}
+            <section id="reviews" className="scroll-mt-20">
+              <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-xl">
+                <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-3">
+                  <Star className="w-8 h-8 text-yellow-500" />
+                  Student Reviews
+                </h2>
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8">
+                  <div>
+                    <div className="flex items-center gap-2">
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <Star key={star} className="w-5 h-5 text-yellow-500 fill-current" />
+                      ))}
+                    </div>
+                    <span className="text-gray-600 dark:text-gray-400 text-sm">4.8 out of 5 (1,247 reviews)</span>
+                  </div>
+                  <button className="px-6 py-2.5 border border-gray-300 dark:border-gray-600 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-sm font-medium">
+                    Write a Review
+                  </button>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                  {[1, 2, 3, 4].map((_, index) => (
+                    <div key={index} className="bg-gray-50 dark:bg-gray-700/30 rounded-xl p-6">
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className="w-12 h-12 rounded-full bg-gray-200 dark:bg-gray-600 flex items-center justify-center text-gray-500 dark:text-gray-400 font-bold">
+                          {['A', 'B', 'C', 'D'][index]}
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-gray-900 dark:text-white">Student {index + 1}</h4>
+                          <div className="flex items-center gap-1">
+                            {[1, 2, 3, 4, 5].map((star) => (
+                              <Star 
+                                key={star} 
+                                className={`w-4 h-4 ${star <= 4 ? 'text-yellow-500 fill-current' : 'text-gray-300 dark:text-gray-600'}`} 
+                              />
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                      <p className="text-gray-700 dark:text-gray-300 text-sm">
+                        This course was amazing! The instructor explained complex topics in a way that was easy to understand. The hands-on projects were particularly helpful.
+                      </p>
+                      <div className="flex items-center gap-2 mt-3 text-xs text-gray-500 dark:text-gray-400">
+                        <span>2 weeks ago</span>
+                        <span>•</span>
+                        <span>Course: {course.title.split(':')[0]}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="text-center">
+                  <button className="px-6 py-2.5 border border-gray-300 dark:border-gray-600 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-sm font-medium">
+                    Load More Reviews
+                  </button>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          {/* Right Sidebar */}
+          <div className="lg:col-span-1">
+            <div className="sticky top-8 space-y-6">
+              {/* Course Card */}
+              <motion.div
+                className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-xl shadow-xl overflow-hidden"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                <div className="p-6">
+                  <div className="text-center mb-6">
+                    <span className="text-4xl font-bold text-gray-900 dark:text-white">₹{course.price}</span>
+                    <p className="text-gray-600 dark:text-gray-400 mt-2">One-time payment</p>
+                  </div>
+                  
+                  <motion.a
+                    href="https://docs.google.com/forms/d/e/1FAIpQLSe-dr0_7my4ic_lMQplEDivsmOMTcAoQgTRJkA5TMtMzBLBYg/viewform"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full block text-center bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 px-6 rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-300 font-semibold text-lg shadow-lg hover:shadow-xl mb-4"
+                    whileHover={{ scale: 1.02, y: -2 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    Enroll Now
+                  </motion.a>
+                  
+                  <p className="text-center text-sm text-gray-600 dark:text-gray-400 mb-6">
+                    30-day money-back guarantee
+                  </p>
+                  
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-gray-700 dark:text-gray-300">Full lifetime access</span>
+                      <CheckCircle className="w-5 h-5 text-green-500" />
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-gray-700 dark:text-gray-300">Access on mobile and TV</span>
+                      <CheckCircle className="w-5 h-5 text-green-500" />
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-gray-700 dark:text-gray-300">Certificate of completion</span>
+                      <CheckCircle className="w-5 h-5 text-green-500" />
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Course Stats */}
+              <motion.div
+                className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-xl p-6 shadow-lg"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+              >
+                <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Course Stats</h3>
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <Star className="w-4 h-4 text-yellow-500" />
+                      <span className="text-gray-700 dark:text-gray-300">Rating</span>
+                    </div>
+                    <span className="font-semibold text-gray-900 dark:text-white">4.8/5</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <Users className="w-4 h-4 text-blue-500" />
+                      <span className="text-gray-700 dark:text-gray-300">Students</span>
+                    </div>
+                    <span className="font-semibold text-gray-900 dark:text-white">12,543</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <Clock className="w-4 h-4 text-green-500" />
+                      <span className="text-gray-700 dark:text-gray-300">Duration</span>
+                    </div>
+                    <span className="font-semibold text-gray-900 dark:text-white">12+ hours</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <BookOpen className="w-4 h-4 text-purple-500" />
+                      <span className="text-gray-700 dark:text-gray-300">Lessons</span>
+                    </div>
+                    <span className="font-semibold text-gray-900 dark:text-white">{lesson_data.length}</span>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-     
   );
 }
