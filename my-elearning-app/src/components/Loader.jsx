@@ -49,7 +49,7 @@ export default function Loader({ show = true, onComplete }) {
           </div>
           {/* Animated Gradient Text */}
           <span className="relative text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent tracking-widest animate-glow-text drop-shadow-xl select-none text-center px-4 pb-2">
-            Yr-It E-Learning
+            YR-IT E-Learning
           </span>
         </div>
         <style>
