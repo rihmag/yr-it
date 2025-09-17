@@ -69,7 +69,14 @@ function App() {
                   </PrivateRoute>
                 } 
               />
-              <Route path="/chatbot" element={<Chatbot />} />
+              <Route
+                path="/chatbot"
+                element={
+                  <PrivateRoute isAuthenticated={isAuthenticated}>
+                    <Chatbot />
+                  </PrivateRoute>
+                }
+              />
               <Route path="/login" element={<Login SetIsAuthenticated={setIsAuthenticated} />} />
               <Route path="/signup" element={<SignUp />} />
               <Route 
