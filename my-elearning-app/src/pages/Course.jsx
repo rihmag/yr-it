@@ -349,7 +349,7 @@ export default function Course() {
                             ) : (
                               <>
                                 <PlayCircle className="w-4 h-4" />
-                                Preview
+                                Watch
                               </>
                             )}
                           </motion.button>
@@ -416,64 +416,7 @@ export default function Course() {
             </section>
 
             {/* Reviews Section */}
-            <section id="reviews" className="scroll-mt-20">
-              <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-xl">
-                <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-3">
-                  <Star className="w-8 h-8 text-yellow-500" />
-                  Student Reviews
-                </h2>
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8">
-                  <div>
-                    <div className="flex items-center gap-2">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <Star key={star} className="w-5 h-5 text-yellow-500 fill-current" />
-                      ))}
-                    </div>
-                    <span className="text-gray-600 dark:text-gray-400 text-sm">4.8 out of 5 (1,247 reviews)</span>
-                  </div>
-                  <button className="px-6 py-2.5 border border-gray-300 dark:border-gray-600 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-sm font-medium">
-                    Write a Review
-                  </button>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                  {[1, 2, 3, 4].map((_, index) => (
-                    <div key={index} className="bg-gray-50 dark:bg-gray-700/30 rounded-xl p-6">
-                      <div className="flex items-center gap-3 mb-4">
-                        <div className="w-12 h-12 rounded-full bg-gray-200 dark:bg-gray-600 flex items-center justify-center text-gray-500 dark:text-gray-400 font-bold">
-                          {['A', 'B', 'C', 'D'][index]}
-                        </div>
-                        <div>
-                          <h4 className="font-semibold text-gray-900 dark:text-white">Student {index + 1}</h4>
-                          <div className="flex items-center gap-1">
-                            {[1, 2, 3, 4, 5].map((star) => (
-                              <Star 
-                                key={star} 
-                                className={`w-4 h-4 ${star <= 4 ? 'text-yellow-500 fill-current' : 'text-gray-300 dark:text-gray-600'}`} 
-                              />
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                      <p className="text-gray-700 dark:text-gray-300 text-sm">
-                        This course was amazing! The instructor explained complex topics in a way that was easy to understand. The hands-on projects were particularly helpful.
-                      </p>
-                      <div className="flex items-center gap-2 mt-3 text-xs text-gray-500 dark:text-gray-400">
-                        <span>2 weeks ago</span>
-                        <span>•</span>
-                        <span>Course: {course.title.split(':')[0]}</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="text-center">
-                  <button className="px-6 py-2.5 border border-gray-300 dark:border-gray-600 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-sm font-medium">
-                    Load More Reviews
-                  </button>
-                </div>
-              </div>
-            </section>
+       
           </div>
 
           {/* Right Sidebar */}
@@ -512,7 +455,7 @@ export default function Course() {
                       <span className="text-gray-700 dark:text-gray-300">Full lifetime access</span>
                       <CheckCircle className="w-5 h-5 text-green-500" />
                     </div>
-                    <div className="flex items-center justify-between">
+                 w   <div className="flex items-center justify-between">
                       <span className="text-gray-700 dark:text-gray-300">Access on mobile and TV</span>
                       <CheckCircle className="w-5 h-5 text-green-500" />
                     </div>
