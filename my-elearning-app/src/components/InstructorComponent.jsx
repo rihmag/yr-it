@@ -94,7 +94,7 @@ const INSTRUCTORS = {
     expertise: ["UI/UX Design", "User Experience", "User Interface", "Design Systems", "Figma"],
     social: {
       twitter: "#",
-      linkedin: "#",
+      linkedin: "https://LinkedIn.com/in/isha-uiux",
       github: "#"
     },
     email: "isha@example.com"
