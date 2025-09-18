@@ -3,7 +3,7 @@ import { Star, Users, BookOpen, MessageCircle, Twitter, Linkedin, Github, Mail, 
 
 // Instructor data mapped to course categories/names
 const INSTRUCTORS = {
-  'digital marketing': {
+  'data science': {
     name: "Vinay Sheoran",
     role: "Senior Data Science Trainer",
     avatar: "/images/trainer1.jpg",
@@ -20,37 +20,37 @@ const INSTRUCTORS = {
     email: "vinay@example.com"
   },
   'web development': {
-    name: "Aryan Kumar",
-    role: "Web Development Trainer",
-    avatar: "/images/Trainer7.jpeg",
-    bio: "Official member of Superteam India and Ex-TA at Coding Ninjas. Expert in modern web technologies and frameworks.",
-    rating: 4.8,
-    students: "8,500+",
-    courses: 12,
-    expertise: ["Web Development", "Frontend", "Backend", "Full Stack", "JavaScript"],
-    social: {
-      twitter: "#",
-      linkedin: "#",
-      github: "#"
-    },
-    email: "aryan@example.com"
-  },
-  'data science': {
-    name: "Ridham",
-    role: "Data Science Trainer",
-    avatar: "/images/Trainer5.jpeg",
-    bio: "Ex-Data Science Trainee at Creator's Bite US. Specializes in Data Science, Machine Learning, and Analytics.",
+    name: "Sumit Kumar",
+    role: "Web Development Instructor",
+    avatar: "/images/trainer3.jpg",
+    bio: "Former Full Stack Developer at DRDO & PwC. Expert in React.js, Node.js, and scalable web architecture.",
     rating: 4.7,
-    students: "7,200+",
-    courses: 10,
-    expertise: ["Data Science", "Machine Learning", "Analytics", "Python"],
+    students: "12,000+",
+    courses: 18,
+    expertise: ["Web Development", "Full Stack", "React.js", "Node.js", "JavaScript"],
     social: {
       twitter: "#",
-      linkedin: "#",
+      linkedin: "https://www.linkedin.com/in/er-sumit-kr?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
       github: "#"
     },
-    email: "ridham@example.com"
+    email: "sumit@example.com"
   },
+  // 'data science': {
+  //   name: "Ridham",
+  //   role: "Data Science Trainer",
+  //   avatar: "/images/Trainer5.jpeg",
+  //   bio: "Ex-Data Science Trainee at Creator's Bite US. Specializes in Data Science, Machine Learning, and Analytics.",
+  //   rating: 4.7,
+  //   students: "7,200+",
+  //   courses: 10,
+  //   expertise: ["Data Science", "Machine Learning", "Analytics", "Python"],
+  //   social: {
+  //     twitter: "#",
+  //     linkedin: "#",
+  //     github: "#"
+  //   },
+  //   email: "ridham@example.com"
+  // },
   'cyber security': {
     name: "Gautam",
     role: "Cyber Security Trainer",
@@ -100,20 +100,20 @@ const INSTRUCTORS = {
     email: "isha@example.com"
   },
   'default': {
-    name: "Sumit Kumar",
-    role: "Web Development Instructor",
-    avatar: "/images/trainer3.jpg",
-    bio: "Former Full Stack Developer at DRDO & PwC. Expert in React.js, Node.js, and scalable web architecture.",
-    rating: 4.7,
-    students: "12,000+",
-    courses: 18,
-    expertise: ["Web Development", "Full Stack", "React.js", "Node.js", "JavaScript"],
+    name: "Aryan Kumar",
+    role: "Web Development Trainer",
+    avatar: "/images/Trainer7.jpeg",
+    bio: "Official member of Superteam India and Ex-TA at Coding Ninjas. Expert in modern web technologies and frameworks.",
+    rating: 4.8,
+    students: "8,500+",
+    courses: 12,
+    expertise: ["Web Development", "Frontend", "Backend", "Full Stack", "JavaScript"],
     social: {
       twitter: "#",
       linkedin: "#",
       github: "#"
     },
-    email: "sumit@example.com"
+    email: "aryan@example.com"
   }
 };
 
