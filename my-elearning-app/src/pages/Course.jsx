@@ -388,31 +388,12 @@ export default function Course() {
 
             {/* Instructor Section */}
             <section id="instructor" className="scroll-mt-20">
-            {/* Header */}
-				    <div className="text-center mb-12 sm:mb-16">
-
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 dark:from-white dark:via-blue-200 dark:to-purple-200 bg-clip-text text-transparent mb-4 sm:mb-6 leading-tight transition-all duration-300">
-                Instructor
-              </h2>
-				    </div>
-              <InstructorComponent 
-                instructor={{
-                  name: course.instructor,
-                  role: 'Senior Instructor & Developer',
-                  bio: 'With over 10 years of experience in software development and education, I\'ve helped thousands of students master new skills and advance their careers. My teaching approach focuses on practical, real-world applications of technology.',
-                  avatar: '/images/default-avatar.jpg',
-                  rating: 4.9,
-                  reviews: 1247,
-                  students: 12543,
-                  courses: 8,
-                  social: {
-                    twitter: '#',
-                    linkedin: '#',
-                    github: '#'
-                  },
-                  tags: ['Teaching', course.category || 'Education', 'Mentorship']
-                }} 
-              />
+              <div className="text-center mb-12 sm:mb-16">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 dark:from-white dark:via-blue-200 dark:to-purple-200 bg-clip-text text-transparent mb-4 sm:mb-6 leading-tight transition-all duration-300">
+                  Meet Your Instructor
+                </h2>
+              </div>
+              <InstructorComponent courseTitle={course.title} />
             </section>
 
             {/* Reviews Section */}
