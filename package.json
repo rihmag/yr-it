@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "codemirror": "^6.0.2",
     "express-rate-limit": "^8.0.1",
     "filestack-react": "^6.0.0",
     "nodemon": "^3.1.10"
