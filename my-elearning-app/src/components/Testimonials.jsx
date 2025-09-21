@@ -273,18 +273,8 @@ export default function Testimonials() {
 								
 								{/* Content */}
 								<div className="relative z-10">
-									{/* Header with avatar and info */}
-									<div className="flex items-start gap-3 sm:gap-4 mb-4 sm:mb-6">
-										<div className="relative flex-shrink-0">
-											<img
-												src={testimonial.avatar}
-												alt={testimonial.name}
-												className="w-12 sm:w-16 h-12 sm:h-16 rounded-full object-cover border-2 sm:border-3 border-white dark:border-gray-600 shadow-lg"
-											/>
-											{/* Online status */}
-											<div className="absolute -bottom-0.5 sm:-bottom-1 -right-0.5 sm:-right-1 w-3 sm:w-5 h-3 sm:h-5 bg-green-500 border-2 border-white dark:border-gray-600 rounded-full"></div>
-										</div>
-										
+									{/* Header without avatar */}
+									<div className="flex items-start mb-4 sm:mb-6">
 										<div className="flex-1 min-w-0">
 											<h4 className="font-bold text-gray-900 dark:text-gray-100 text-sm sm:text-base lg:text-lg mb-1 truncate">
 												{testimonial.name}
