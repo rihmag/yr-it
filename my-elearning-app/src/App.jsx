@@ -24,6 +24,7 @@ import Chatbot from "./components/Chatbot";
 import ScrollToTop from "./components/ScrollToTop";
 import Loader from "./components/Loader";
 import InstructorManager from "./panels/EditInstructorBanner";
+import Artical from "./pages/Artical";
 
 const PrivateRoute = ({ children, isAuthenticated }) => {
   return isAuthenticated ? children : <Navigate to="/login" />;
@@ -60,6 +61,7 @@ function App() {
               <Route path="/course/:courseId" element={<Course />} />
               <Route path="/about" element={<About />} />
               <Route path="/courses" element={<AllCourses/>}/>
+              <Route path="/artical" element={<Artical />} />
                             
               <Route 
                 path="/dashboard" 
