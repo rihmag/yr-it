@@ -261,7 +261,7 @@ export default function CodeEditor() {
         
         {/* Modern Header */}
         <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 shadow-sm">
-          <div className="max-w-full px-6 py-4">
+          <div className="max-w-full px-4 sm:px-6 py-4">
             <div className="flex items-center justify-between">
               
               {/* Left Section - Logo & Title */}
@@ -272,7 +272,7 @@ export default function CodeEditor() {
                   </div>
                   <div>
                     <h1 className="text-xl font-bold text-gray-900 dark:text-white">
-                      Yr-IT Studio
+                      YR-IT Playground
                     </h1>
                     <p className="text-sm text-gray-500 dark:text-gray-400">
                       Professional Code Editor
@@ -282,7 +282,7 @@ export default function CodeEditor() {
               </div>
 
               {/* Center Section - Language Selector */}
-              <div className="flex-1 max-w-md mx-8">
+              <div className="flex-1 max-w-md mx-4 sm:mx-8 hidden sm:block">
                 <div className="relative" ref={dropdownRef}>
                   <button
                     onClick={() => setIsLanguageDropdownOpen(!isLanguageDropdownOpen)}
@@ -382,10 +382,10 @@ export default function CodeEditor() {
         </header>
 
         {/* Main Content */}
-        <div className="flex h-[calc(100vh-5rem)]">
+        <div className="flex flex-col md:flex-row min-h-[calc(100vh-5rem)] md:h-[calc(100vh-5rem)]">
           
           {/* Sidebar */}
-          <div className={`${sidebarCollapsed ? 'w-16' : 'w-72'} bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 transition-all duration-300 flex flex-col`}>
+          <div className={`hidden md:flex ${sidebarCollapsed ? 'w-16' : 'w-72'} bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 transition-all duration-300 flex-col`}>
             
             {/* Sidebar Header */}
             <div className="p-4 border-b border-gray-200 dark:border-gray-700">
@@ -487,7 +487,7 @@ export default function CodeEditor() {
                   </div>
                   
                   <div className="flex items-center space-x-2">
-                    <div className={`flex items-center space-x-2 px-3 py-1 rounded-full text-xs font-medium ${
+                    <div className={`flex items-center space-x-2 px-3 py-1.5 rounded-full text-xs font-medium ${
                       executionStatus === 'idle' ? 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400' :
                       executionStatus === 'running' ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400' :
                       executionStatus === 'success' ? 'bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400' :
@@ -516,7 +516,7 @@ export default function CodeEditor() {
               </div>
 
               {/* Output Panel */}
-              <div className="w-1/2 flex flex-col bg-white dark:bg-gray-800 border-l border-gray-200 dark:border-gray-700">
+              <div className="w-full md:w-1/2 flex flex-col bg-white dark:bg-gray-800 border-l border-gray-200 dark:border-gray-700">
                 
                 {/* Output Header */}
                 <div className="flex items-center justify-between px-6 py-3 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
@@ -566,6 +566,130 @@ export default function CodeEditor() {
                 </div>
               </div>
             </div>
+          </div>
+
+          {/* Mobile/Tablet (md-) Tabbed Editor/Output */}
+          <div className="md:hidden flex flex-col h-full">
+            {/* Tabs */}
+            <div className="flex items-center gap-2 px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+              <button
+                onClick={() => setActiveTab('editor')}
+                className={`px-3 py-1.5 text-sm rounded-lg transition-colors ${activeTab === 'editor' ? 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-300' : 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300'}`}
+              >
+                Editor
+              </button>
+              <button
+                onClick={() => setActiveTab('output')}
+                className={`px-3 py-1.5 text-sm rounded-lg transition-colors ${activeTab === 'output' ? 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-300' : 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300'}`}
+              >
+                Output
+              </button>
+              <div className="ml-auto">
+                <button
+                  onClick={runCode}
+                  disabled={loading}
+                  className={`flex items-center gap-2 px-3 py-1.5 text-sm rounded-lg ${
+                    loading ? 'bg-gray-400 cursor-not-allowed text-white' : 'bg-green-600 hover:bg-green-700 text-white'
+                  }`}
+                >
+                  {loading ? (
+                    <>
+                      <div className="w-3 h-3 border border-blue-500 border-t-transparent rounded-full animate-spin" />
+                      <span>Running</span>
+                    </>
+                  ) : (
+                    <>
+                      <Play className="w-4 h-4" />
+                      <span>Run</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+
+            {/* Tab Content */}
+            {activeTab === 'editor' && (
+              <div className="flex-1 min-h-[50vh] bg-white dark:bg-gray-800">
+                <div className="flex items-center justify-between px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-2.5 h-2.5 bg-red-500 rounded-full" />
+                    <div className="w-2.5 h-2.5 bg-yellow-500 rounded-full" />
+                    <div className="w-2.5 h-2.5 bg-green-500 rounded-full" />
+                    <div className="ml-2 text-xs font-medium text-gray-700 dark:text-gray-300">main.{currentLang.ext}</div>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <div className={`flex items-center space-x-1 px-2 py-0.5 rounded-full text-[10px] font-medium ${
+                      executionStatus === 'idle' ? 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400' :
+                      executionStatus === 'running' ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400' :
+                      executionStatus === 'success' ? 'bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400' :
+                      'bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400'
+                    }`}>
+                      {executionStatus === 'idle' && <Activity className="w-3 h-3" />}
+                      {executionStatus === 'running' && <div className="w-3 h-3 border border-blue-500 border-t-transparent rounded-full animate-spin" />}
+                      {executionStatus === 'success' && <CheckCircle className="w-3 h-3" />}
+                      {executionStatus === 'error' && <AlertCircle className="w-3 h-3" />}
+                      <span className="capitalize">{executionStatus}</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="h-[55vh]">
+                  <CodeMirror
+                    value={code}
+                    height="100%"
+                    className="h-full text-base"
+                    extensions={[currentLang.extension(), autocompletion()]}
+                    onChange={(value) => setCode(value)}
+                    theme={theme === 'dark' ? "dark" : "light"}
+                  />
+                </div>
+              </div>
+            )}
+            {activeTab === 'output' && (
+              <div className="flex-1 min-h-[40vh] bg-white dark:bg-gray-800">
+                <div className="flex items-center justify-between px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
+                  <div className="flex items-center space-x-2">
+                    <Terminal className="w-4 h-4 text-green-500" />
+                    <span className="text-sm font-semibold text-gray-900 dark:text-white">Console</span>
+                    {executionTime && (
+                      <div className="flex items-center space-x-1 text-[10px] text-gray-500 dark:text-gray-400">
+                        <Clock className="w-3 h-3" />
+                        <span>{executionTime}ms</span>
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    {output && (
+                      <button
+                        onClick={clearOutput}
+                        className="p-1.5 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                        title="Clear Output"
+                      >
+                        <RotateCcw className="w-4 h-4 text-gray-500" />
+                      </button>
+                    )}
+                  </div>
+                </div>
+                <div className="h-[45vh] p-4 overflow-auto bg-gray-900 dark:bg-black font-mono text-sm">
+                  {loading ? (
+                    <div className="flex items-center space-x-2 text-blue-400">
+                      <div className="w-4 h-4 border border-blue-400 border-t-transparent rounded-full animate-spin" />
+                      <span>Executing code...</span>
+                    </div>
+                  ) : output ? (
+                    <pre className={`whitespace-pre-wrap break-words ${
+                      executionStatus === 'error' ? 'text-red-400' : 'text-green-400'
+                    }`}>
+                      {output}
+                    </pre>
+                  ) : (
+                    <div className="text-gray-500 italic flex items-center space-x-2">
+                      <Terminal className="w-4 h-4" />
+                      <span>Output will appear here after running your code...</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
         </div>
 

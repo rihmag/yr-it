@@ -78,7 +78,7 @@ export default function Navbar() {
   const navItems = [
     { path: "/", label: "Home", icon: Home },
     { path: "/courses", label: "Courses", icon: BookOpen },
-    { path: "/artical", label: "Artical", icon: FileText },
+    { path: "/articles", label: "Articles", icon: FileText },
     { path: "/dashboard", label: "Dashboard", icon: BarChart3 },
     { path: "/ide", label: "IDE", icon: Code },
     { path: "/about", label: "About", icon: Info },
