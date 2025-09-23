@@ -401,8 +401,10 @@ export default function Navbar() {
               </div>
             </div>
 
-            {/* Top mobile menu button removed (menu available from bottom only) */}
-            <span className="hidden" />
+            {/* Mobile Theme Toggle - Top Right Corner */}
+            <div className="md:hidden">
+              <ThemeToggle />
+            </div>
           </div>
         </div>
       </motion.nav>
@@ -505,11 +507,6 @@ export default function Navbar() {
                         </motion.div>
                       )}
                     </AnimatePresence>
-                  </div>
-
-                  {/* Mobile Theme Toggle */}
-                  <div className="flex justify-center mb-4">
-                    <ThemeToggle />
                   </div>
 
                   {navItems.map((item) => {
