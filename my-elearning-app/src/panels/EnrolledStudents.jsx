@@ -1,94 +1,70 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import './EnrolledStudents.css';
 
-// Mock data - replace with API calls in a real application
-const mockCourses = [
-    { id: 'c1', title: 'Introduction to React' },
-    { id: 'c2', title: 'Advanced Node.js' },
-    { id: 'c3', title: 'UI/UX Design Fundamentals' },
-];
-
-const mockStudents = [
-    { id: 's1', name: 'Alice Johnson', courseId: 'c1', enrolledDate: '2023-10-01' },
-    { id: 's2', name: 'Bob Williams', courseId: 'c1', enrolledDate: '2023-10-05' },
-    { id: 's3', name: 'Charlie Brown', courseId: 'c2', enrolledDate: '2023-09-15' },
-    { id: 's4', name: 'Diana Miller', courseId: 'c3', enrolledDate: '2023-10-20' },
-    { id: 's5', name: 'Ethan Davis', courseId: 'c1', enrolledDate: '2023-10-22' },
-    { id: 's6', name: 'Fiona Garcia', courseId: 'c3', enrolledDate: '2023-09-30' },
-];
-
 const EnrolledStudents = () => {
-    const { id: educatorId } = useParams();
-    const [students, setStudents] = useState([]);
-    const [courses, setCourses] = useState([]);
-    const [selectedCourse, setSelectedCourse] = useState('all');
+    const [enrolledUsers, setEnrolledUsers] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        // Simulate API call to fetch courses and students for the educator
-        setTimeout(() => {
-            setCourses(mockCourses);
-            setStudents(mockStudents);
-            setLoading(false);
-        }, 1000);
-    }, [educatorId]);
+        const fetchEnrolledStudents = async () => {
+            try {
+                setLoading(true);
+                const token = localStorage.getItem('token');
+                const response = await fetch('https://backend-1-bn9o.onrender.com/api/course/getstudents', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    },
+                });
+                if (!response.ok) {
+                    throw new Error('Failed to fetch enrolled students');
+                }
+                const data = await response.json();
+                setEnrolledUsers(data.enrolled_users || []);
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-    const handleCourseChange = (e) => {
-        setSelectedCourse(e.target.value);
-    };
-
-    const filteredStudents = students.filter(student =>
-        selectedCourse === 'all' || student.courseId === selectedCourse
-    );
-
-    const getCourseTitle = (courseId) => {
-        const course = courses.find(c => c.id === courseId);
-        return course ? course.title : 'Unknown Course';
-    };
+        fetchEnrolledStudents();
+    }, []);
 
     if (loading) {
         return <div>Loading student data...</div>;
     }
 
+    if (error) {
+        return <div>Error: {error}</div>;
+    }
+
     return (
         <div className="enrolled-students-container">
             <h2>Enrolled Students</h2>
-
-            <div className="filter-container">
-                <label htmlFor="course-filter">Filter by Course:</label>
-                <select id="course-filter" value={selectedCourse} onChange={handleCourseChange} className="course-filter-select">
-                    <option value="all">All Courses</option>
-                    {courses.map(course => (
-                        <option key={course.id} value={course.id}>
-                            {course.title}
-                        </option>
-                    ))}
-                </select>
-            </div>
-
-            {filteredStudents.length === 0 ? (
-                <p>No students are enrolled in the selected course(s).</p>
-            ) : (
-                <table className="students-table">
-                    <thead>
-                        <tr>
-                            <th>Student Name</th>
-                            <th>Course</th>
-                            <th>Enrolled Date</th>
+            <table className="students-table">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Enrolled Courses</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {enrolledUsers.map(user => (
+                        <tr key={user._id}>
+                            <td>{user.username}</td>
+                            <td>{user.email}</td>
+                            <td>
+                                {user.enrolledCourses && user.enrolledCourses.length > 0
+                                    ? user.enrolledCourses.map(course => course.title).join(', ')
+                                    : 'No courses enrolled'}
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        {filteredStudents.map(student => (
-                            <tr key={student.id}>
-                                <td>{student.name}</td>
-                                <td>{getCourseTitle(student.courseId)}</td>
-                                <td>{new Date(student.enrolledDate).toLocaleDateString()}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            )}
+                    ))}
+                </tbody>
+            </table>
         </div>
     );
 };

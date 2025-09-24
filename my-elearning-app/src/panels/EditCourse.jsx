@@ -115,9 +115,13 @@ const EditCourse = () => {
   const updateCourse = async () => {
     setIsUpdatingCourse(true);
     try { 
+      const token = localStorage.getItem('token');
       const response = await fetch(`https://backend-9zkx.onrender.com/api/course/updatecourse/${selectedCourse._id}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
         body: JSON.stringify(courseForm)
       });
       const updatedCourse = await response.json();
