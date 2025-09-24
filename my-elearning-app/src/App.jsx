@@ -11,6 +11,7 @@ import Course from "./pages/Course";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
+import AddStudent from "./pages/AddStudent";
 import Refreshhandler from "./handlers/refreshhandler";
 import CodeEditor from "../IDE/codefiles/compiler";
 import CreatorPanel from "./panels/creatorpanel";
@@ -81,6 +82,7 @@ function App() {
               />
               <Route path="/login" element={<Login SetIsAuthenticated={setIsAuthenticated} />} />
               <Route path="/signup" element={<SignUp />} />
+             
               <Route 
                 path="/ide" 
                 element={
@@ -106,6 +108,7 @@ function App() {
                 <Route path="enrolled-students" element={<EnrolledStudents />} />
                 <Route path="earnings" element={<Earnings />} />
                 <Route path="mobilebanners" element={<InstructorManager/> } />
+                 <Route path="add-student" element={<AddStudent />} />
               </Route>
             </Routes>
             
