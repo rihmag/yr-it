@@ -9,7 +9,7 @@ import { useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import CountUp from "react-countup";
-import { Search, Filter, TrendingUp, Users, Award, Clock, Code, BookOpen, FileText, Zap, Globe, Target, Play, Video } from "lucide-react";
+import { Search, Filter, TrendingUp, Users, Award, Clock, Code, BookOpen, FileText, Zap, Globe, Target, Play, Video, Trophy, Briefcase, Wrench, FolderOpen, Monitor, Book } from "lucide-react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
@@ -203,14 +203,14 @@ export default function Home() {
               transition={{ duration: 0.8, delay: 0.4 }}
             >
               {[
-                { title: "Programming Courses", icon: Code, color: "from-purple-500 to-purple-600" },
-                { title: "Video Tutorials", icon: Video, color: "from-blue-500 to-blue-600" },
-                { title: "Study Materials", icon: FileText, color: "from-green-500 to-green-600" },
-                { title: "Live Workshops", icon: Users, color: "from-orange-500 to-orange-600" },
-                { title: "Web Development", icon: Globe, color: "from-cyan-500 to-cyan-600" },
-                { title: "Career Guidance", icon: Target, color: "from-pink-500 to-pink-600" },
-                { title: "Practice Tests", icon: Award, color: "from-red-500 to-red-600" },
-                { title: "Code Playground", icon: Zap, color: "from-yellow-500 to-yellow-600" }
+                { title: "Live Classes", icon: Video, color: "from-purple-500 to-purple-600" },
+                { title: "National Hackathons", icon: Trophy, color: "from-blue-500 to-blue-600" },
+                { title: "Internship Opportunities", icon: Briefcase, color: "from-green-500 to-green-600" },
+                { title: "Hand on Practice", icon: Wrench, color: "from-orange-500 to-orange-600" },
+                { title: "Project Based Learning", icon: FolderOpen, color: "from-cyan-500 to-cyan-600" },
+                { title: "Flexible Learning", icon: Monitor, color: "from-pink-500 to-pink-600" },
+                { title: "Coding Challenges", icon: Code, color: "from-red-500 to-red-600" },
+                { title: "Study Material", icon: Book, color: "from-yellow-500 to-yellow-600" }
               ].map((feature, index) => (
                 <motion.div
                   key={feature.title}

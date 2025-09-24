@@ -256,11 +256,11 @@ export default function CodeEditor() {
   };
 
   return (
-    <div className={`min-h-screen ${theme === 'dark' ? 'dark' : ''}`}>
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+    <div className={`h-screen ${theme === 'dark' ? 'dark' : ''}`}>
+      <div className="h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300 flex flex-col">
         
         {/* Modern Header */}
-        <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 shadow-sm">
+        <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 shadow-sm flex-shrink-0">
           <div className="max-w-full px-4 sm:px-6 py-4">
             <div className="flex items-center justify-between">
               
@@ -331,25 +331,8 @@ export default function CodeEditor() {
                 </div>
               </div>
 
-
-
-
-
-
-
               {/* Right Section - Actions */}
               <div className="flex items-center space-x-3">
-
-
-
-
-
-
-
-
-
-
-
                 <button
                   onClick={runCode}
                   disabled={loading}
@@ -369,11 +352,6 @@ export default function CodeEditor() {
                       <Play className="w-4 h-4" />
                       <span>Run Code</span>
                     </>
-
-
-
-
-
                   )}
                 </button>
               </div>
@@ -382,7 +360,7 @@ export default function CodeEditor() {
         </header>
 
         {/* Main Content */}
-        <div className="flex flex-col md:flex-row min-h-[calc(100vh-5rem)] md:h-[calc(100vh-5rem)]">
+        <div className="flex flex-col md:flex-row flex-1 min-h-0">
           
           {/* Sidebar */}
           <div className={`hidden md:flex ${sidebarCollapsed ? 'w-16' : 'w-72'} bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 transition-all duration-300 flex-col`}>
@@ -462,8 +440,8 @@ export default function CodeEditor() {
             )}
           </div>
 
-          {/* Editor and Output Container */}
-          <div className="flex-1 flex flex-col">
+          {/* Editor and Output Container - Desktop/Tablet Only */}
+          <div className="hidden md:flex flex-1 flex-col">
             
             {/* Editor Section */}
             <div className="flex-1 flex">
@@ -482,8 +460,6 @@ export default function CodeEditor() {
                     <div className="text-sm font-medium text-gray-700 dark:text-gray-300">
                       main.{currentLang.ext}
                     </div>
-
-
                   </div>
                   
                   <div className="flex items-center space-x-2">
@@ -568,8 +544,8 @@ export default function CodeEditor() {
             </div>
           </div>
 
-          {/* Mobile/Tablet (md-) Tabbed Editor/Output */}
-          <div className="md:hidden flex flex-col h-full">
+          {/* Mobile/Tablet Tabbed Editor/Output - Mobile Only */}
+          <div className="flex md:hidden flex-col h-full">
             {/* Tabs */}
             <div className="flex items-center gap-2 px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
               <button
@@ -657,6 +633,7 @@ export default function CodeEditor() {
                       </div>
                     )}
                   </div>
+                  
                   <div className="flex items-center space-x-2">
                     {output && (
                       <button
