@@ -36,14 +36,32 @@ export default function Course() {
   const [loading, setLoading] = useState(true);
   const [lesson_data, setlesson_data] = useState([]);
   const [expandedLesson, setExpandedLesson] = useState(null);
+  const [isEnrolled,setIsEnrolled]=useState(null)
   const [isLiked, setIsLiked] = useState(false);
 
   useEffect(() => {
     const fetchCourse = async () => {
+      setLoading(true);
       const courses = await getCourses();
       const foundCourse = courses.find((c) => c._id === courseId);
       setlesson_data(foundCourse.lessons);
       setCourse(foundCourse);
+
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (user) {
+        const response = await fetch(`https://backend-1-bn9o.onrender.com/api/user/getuserdata/${user}`, {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          }
+        });
+        if (response.ok) {
+          const userData = await response.json();
+          if (userData.enrolledCourses.includes(courseId)) {
+            setIsEnrolled(true);
+          }
+        }
+      }
+
       setLoading(false);
     };
     fetchCourse();
@@ -313,76 +331,95 @@ export default function Course() {
                   <List className="w-8 h-8 text-blue-600" />
                   Course Curriculum
                 </h2>
-                <div className="space-y-6">
-                  {lesson_data.map((lesson, index) => (
-                    <motion.div
-                      key={lesson._id}
-                      className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-100 dark:border-gray-700"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.05 }}
-                    >
-                      <div className="p-5">
-                        <div className="flex items-start justify-between gap-4">
-                          <div className="flex items-start gap-4">
-                            <div className="w-10 h-10 bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-900/30 dark:to-blue-800/30 rounded-lg flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold text-sm flex-shrink-0">
-                              {index + 1}
+                {isEnrolled ? (
+                  <div className="space-y-6">
+                    {lesson_data.map((lesson, index) => (
+                      <motion.div
+                        key={lesson._id}
+                        className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-100 dark:border-gray-700"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.05 }}
+                      >
+                        <div className="p-5">
+                          <div className="flex items-start justify-between gap-4">
+                            <div className="flex items-start gap-4">
+                              <div className="w-10 h-10 bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-900/30 dark:to-blue-800/30 rounded-lg flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold text-sm flex-shrink-0">
+                                {index + 1}
+                              </div>
+                              <div>
+                                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{lesson.title}</h3>
+                                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1 flex items-center gap-2">
+                                  <Clock className="w-4 h-4" />
+                                  {lesson.duration} min • {lesson.type || 'Video'}
+                                </p>
+                              </div>
                             </div>
-                            <div>
-                              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{lesson.title}</h3>
-                              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1 flex items-center gap-2">
-                                <Clock className="w-4 h-4" />
-                                {lesson.duration} min • {lesson.type || 'Video'}
-                              </p>
-                            </div>
+                            <motion.button
+                              onClick={() => toggleLesson(lesson._id)}
+                              className="text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors flex items-center gap-1"
+                              whileHover={{ x: 2 }}
+                            >
+                              {expandedLesson === lesson._id ? (
+                                <>
+                                  <ChevronUp className="w-4 h-4" />
+                                  Hide
+                                </> 
+                              ) : (
+                                <>
+                                  <PlayCircle className="w-4 h-4" />
+                                  Watch
+                                </>
+                              )}
+                            </motion.button>
                           </div>
-                          <motion.button
-                            onClick={() => toggleLesson(lesson._id)}
-                            className="text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors flex items-center gap-1"
-                            whileHover={{ x: 2 }}
+                          
+                          <motion.div
+                            initial={{ opacity: 0, height: 0, marginTop: 0 }}
+                            animate={{
+                              opacity: expandedLesson === lesson._id ? 1 : 0,
+                              height: expandedLesson === lesson._id ? 'auto' : 0,
+                              marginTop: expandedLesson === lesson._id ? 16 : 0
+                            }}
+                            className="overflow-hidden"
                           >
-                            {expandedLesson === lesson._id ? (
-                              <>
-                                <ChevronUp className="w-4 h-4" />
-                                Hide
-                              </>
-                            ) : (
-                              <>
-                                <PlayCircle className="w-4 h-4" />
-                                Watch
-                              </>
-                            )}
-                          </motion.button>
-                        </div>
-                        
-                        <motion.div
-                          initial={{ opacity: 0, height: 0, marginTop: 0 }}
-                          animate={{
-                            opacity: expandedLesson === lesson._id ? 1 : 0,
-                            height: expandedLesson === lesson._id ? 'auto' : 0,
-                            marginTop: expandedLesson === lesson._id ? 16 : 0
-                          }}
-                          className="overflow-hidden"
-                        >
-                          <div className="pt-4 border-t border-gray-100 dark:border-gray-700 mt-4">
-                            <p className="text-gray-700 dark:text-gray-300 mb-4">{lesson.content || 'No description available for this lesson.'}</p>
-                            <div className="relative rounded-xl overflow-hidden bg-black/5 dark:bg-white/5 aspect-video">
-                              <video 
-                                controls 
-                                preload="none" 
-                                poster={lesson.thumbnail ? `data:image/jpeg;base64,${lesson.thumbnail}` : undefined}
-                                className="w-full h-full object-cover"
-                              >
-                                <source src={lesson.video} type="video/mp4" />
-                                Your browser does not support the video tag.
-                              </video>
+                            <div className="pt-4 border-t border-gray-100 dark:border-gray-700 mt-4">
+                              <p className="text-gray-700 dark:text-gray-300 mb-4">{lesson.content || 'No description available for this lesson.'}</p>
+                              <div className="relative rounded-xl overflow-hidden bg-black/5 dark:bg-white/5 aspect-video">
+                                <video 
+                                  controls 
+                                  preload="none" 
+                                  poster={lesson.thumbnail ? `data:image/jpeg;base64,${lesson.thumbnail}` : undefined}
+                                  className="w-full h-full object-cover"
+                                >
+                                  <source src={lesson.video} type="video/mp4" />
+                                  Your browser does not support the video tag.
+                                </video>
+                              </div>
                             </div>
-                          </div>
-                        </motion.div>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
+                          </motion.div>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-center py-12">
+                    <Lock className="w-16 h-16 mx-auto text-gray-400 dark:text-gray-500 mb-4" />
+                    <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Lessons are Locked</h3>
+                    <p className="text-gray-600 dark:text-gray-400 mb-6">You need to enroll in this course to access the lessons.</p>
+                    <motion.a
+                      href="https://docs.google.com/forms/d/e/1FAIpQLSe-dr0_7my4ic_lMQplEDivsmOMTcAoQgTRJkA5TMtMzBLBYg/viewform"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2 mx-auto w-fit"
+                      whileHover={{ scale: 1.05, y: -2 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <PlayCircle className="w-5 h-5" />
+                      Enroll Now
+                    </motion.a>
+                  </div>
+                )}
               </div>
             </section>
 

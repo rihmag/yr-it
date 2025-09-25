@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
+import { getCourses } from "../data/courses.js";
 
 export default function Dashboard() {
   const [userName, setUserName] = useState("");
   const [ongoingCourses, setOngoingCourses] = useState([]);
-  const [completedCourses, setCompletedCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [quote, setQuote] = useState("");
 
@@ -25,44 +25,32 @@ export default function Dashboard() {
   }, []);
 
   useEffect(() => {
-    // TODO: Replace with real API call
     async function fetchDashboardData() {
       setLoading(true);
-      // Simulate API call
-      const dashboardData = await new Promise((resolve) =>
-        setTimeout(
-          () =>
-            resolve({
-              userName: "Priya Sharma",
-              ongoing: [
-                {
-                  id: 1,
-                  title: "React for Beginners",
-                  progress: 60,
-                  image: "/images/reactimage.jpg",
-                },
-                {
-                  id: 2,
-                  title: "Python Basics",
-                  progress: 30,
-                  image: "/images/pythonimage.png",
-                },
-              ],
-              completed: [
-                {
-                  id: 3,
-                  title: "AI for Materials Discovery",
-                  image: "/images/Artificial-Intelligence-for-Materials-Discovery-and-Design.png",
-                },
-              ],
-            }),
-          1000
-        )
-      );
-      setUserName(dashboardData.userName);
-      setOngoingCourses(dashboardData.ongoing);
-      setCompletedCourses(dashboardData.completed);
-      setLoading(false);
+      try {
+        const user = JSON.parse(localStorage.getItem("user"));
+        if (user) {
+          const response = await fetch(`https://backend-1-bn9o.onrender.com/api/user/getuserdata/${user}`, {
+            headers: {
+              'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+          });
+          if (!response.ok) {
+            throw new Error("Failed to fetch user courses");
+          }
+          const userData = await response.json();
+          const allCourses = await getCourses();
+          const enrolledCourseIds = userData.enrolledCourses;
+          const userCourses = allCourses.filter(course => enrolledCourseIds.includes(course._id));
+          setOngoingCourses(userCourses);
+          setUserName(userData.username);
+        }
+      } catch (error) {
+        console.error("Error fetching dashboard data:", error);
+        // Optionally, set some error state to show in the UI
+      } finally {
+        setLoading(false);
+      }
     }
     fetchDashboardData();
   }, []);
@@ -89,48 +77,25 @@ export default function Dashboard() {
       ) : (
         <>
           <section className="mb-10">
-            <h2 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Ongoing Courses</h2>
+            <h2 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-gray-100">My Courses</h2>
             {ongoingCourses.length === 0 ? (
-              <div className="text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 rounded-lg p-6 text-center border border-gray-200 dark:border-gray-700">No ongoing courses.</div>
+              <div className="text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 rounded-lg p-6 text-center border border-gray-200 dark:border-gray-700">No enrolled courses.</div>
             ) : (
               <div className="grid md:grid-cols-2 gap-6">
                 {ongoingCourses.map((course) => (
-                  <div key={course.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg dark:shadow-gray-800/30 p-4 flex gap-4 items-center border border-gray-200 dark:border-gray-700 hover:shadow-xl dark:hover:shadow-gray-800/50 transition-all">
-                    <img src={course.image} alt={course.title} className="w-24 h-24 object-cover rounded border border-gray-200 dark:border-gray-600" />
+                  <div key={course._id} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg dark:shadow-gray-800/30 p-4 flex gap-4 items-center border border-gray-200 dark:border-gray-700 hover:shadow-xl dark:hover:shadow-gray-800/50 transition-all">
+                    <img src={`data:image/jpeg;base64,${course.thumbnail}`} alt={course.title} className="w-24 h-24 object-cover rounded border border-gray-200 dark:border-gray-600" />
                     <div className="flex-1">
                       <h3 className="text-lg font-bold mb-2 text-gray-900 dark:text-gray-100">{course.title}</h3>
-                      <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 mb-2">
-                        <div
-                          className="bg-blue-600 dark:bg-blue-500 h-3 rounded-full transition-all"
-                          style={{ width: `${course.progress}%` }}
-                        ></div>
-                      </div>
-                      <span className="text-sm text-gray-600 dark:text-gray-400">Progress: {course.progress}%</span>
                       <div className="mt-3">
                         <a
-                          href={`/course/${course.id}`}
+                          href={`/course/${course._id}`}
                           className="inline-block bg-blue-600 dark:bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 dark:hover:bg-blue-600 transition-all font-semibold text-sm shadow-md hover:shadow-lg"
                         >
-                          Resume Course
+                          Go to Course
                         </a>
                       </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </section>
-
-          <section>
-            <h2 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Completed Courses</h2>
-            {completedCourses.length === 0 ? (
-              <div className="text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 rounded-lg p-6 text-center border border-gray-200 dark:border-gray-700">No completed courses yet.</div>
-            ) : (
-              <div className="grid md:grid-cols-3 gap-6">
-                {completedCourses.map((course) => (
-                  <div key={course.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg dark:shadow-gray-800/30 p-4 flex flex-col items-center border border-gray-200 dark:border-gray-700 hover:shadow-xl dark:hover:shadow-gray-800/50 transition-all">
-                    <img src={course.image} alt={course.title} className="w-24 h-24 object-cover rounded mb-2 border border-gray-200 dark:border-gray-600" />
-                    <h3 className="text-lg font-bold text-center text-gray-900 dark:text-gray-100">{course.title}</h3>
                   </div>
                 ))}
               </div>

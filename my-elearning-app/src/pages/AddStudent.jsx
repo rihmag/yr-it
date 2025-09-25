@@ -1,28 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { getCourses } from '../data/courses.js';
 
 const AddStudent = () => {
   const [userId, setUserId] = useState('');
   const [userName, setUserName] = useState('');
+  const [courseId, setCourseId] = useState('');
+  const [courses, setCourses] = useState([]);
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      const fetchedCourses = await getCourses();
+      setCourses(fetchedCourses);
+    };
+    fetchCourses();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage('');
     setError('');
 
-    if (!userId || !userName) {
-      setError('User ID and User Name are required.');
+    if (!userId || !userName || !courseId) {
+      setError('User ID, User Name and Course are required.');
       return;
     }
 
     try {
-      const response = await fetch('https://backend-1-bn9o.onrender.com/api/course/getstudents', {
+      const response = await fetch(`https://backend-1-bn9o.onrender.com/api/course/enroll/${courseId}`, {
         method: 'POST',
         headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ userId, name: userName }),
+        body: JSON.stringify({ email:userId, name: userName }),
       });
 
       const responseData = await response.json();
@@ -31,6 +43,7 @@ const AddStudent = () => {
         setMessage('Student added successfully!');
         setUserId('');
         setUserName('');
+        setCourseId('');
       } else {
         setError(responseData.message || 'Failed to add student.');
       }
@@ -47,7 +60,7 @@ const AddStudent = () => {
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label htmlFor="userId" className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
-              User ID
+              E-mail
             </label>
             <input
               type="text"
@@ -61,7 +74,7 @@ const AddStudent = () => {
           </div>
           <div>
             <label htmlFor="userName" className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
-              User Name
+              Name
             </label>
             <input
               type="text"
@@ -72,6 +85,25 @@ const AddStudent = () => {
               placeholder="Enter user name"
               required
             />
+          </div>
+          <div>
+            <label htmlFor="courseId" className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+              Course
+            </label>
+            <select
+              id="courseId"
+              value={courseId}
+              onChange={(e) => setCourseId(e.target.value)}
+              className="w-full px-3 py-2 text-gray-900 bg-gray-50 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+              required
+            >
+              <option value="" disabled>Select a course</option>
+              {courses.map(course => (
+                <option key={course._id} value={course._id}>
+                  {course.title}
+                </option>
+              ))}
+            </select>
           </div>
           <button
             type="submit"
