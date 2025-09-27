@@ -6,6 +6,7 @@ const AddCourse = () => {
     const [courseData, setCourseData] = useState({
         title: '',
         description: '',
+        roadmap: '',
         price: '',
         category: '',
         instructor:'',
@@ -86,6 +87,7 @@ const AddCourse = () => {
             setCourseData({
                 title: '',
                 description: '',
+                roadmap: '',
                 price: '',
                 category: '',
                 instructor,
@@ -120,6 +122,17 @@ const AddCourse = () => {
                         id="description"
                         name="description"
                         value={courseData.description}
+                        onChange={handleChange}
+                        rows="5"
+                        required
+                    ></textarea>
+                </div>
+                <div className="form-group">
+                    <label htmlFor="roadmap">Roadmap</label>
+                    <textarea
+                        id="roadmap"
+                        name="roadmap"
+                        value={courseData.roadmap}
                         onChange={handleChange}
                         rows="5"
                         required

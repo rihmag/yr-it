@@ -1,43 +1,27 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { getCourses } from "../data/courses";
 import CourseCard from "../components/CourseCard";
 import { Search, Filter, Grid, List, BookOpen, Users, Clock, Star, TrendingUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSearchParams } from "react-router-dom";
 import InstructorShowcase from "../components/InstructorShowcase"
+import { useQuery } from "@tanstack/react-query";
 
 export default function AllCourses() {
   const [activeCard, setActiveCard] = useState(null);
-  const [courses, setCourses] = useState([]);
-  const [filteredCourses, setFilteredCourses] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [viewMode, setViewMode] = useState("grid");
   const [sortBy, setSortBy] = useState("popular");
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // Get unique categories from courses
-  const categories = ["All", ...new Set(courses.map(course => course.category))];
+  const { data: courses = [], isLoading, isError: error } = useQuery({
+    queryKey: ['courses'],
+    queryFn: getCourses
+  });
 
-  useEffect(() => {
-    const fetchCourses = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        const data = await getCourses();
-        setCourses(data);
-        setFilteredCourses(data);
-      } catch (err) {
-        setError("Failed to load courses. Please try again later.");
-        console.error('Error fetching courses:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchCourses();
-  }, []);
+  // Get unique categories from courses
+  const categories = useMemo(() => ["All", ...new Set(courses.map(course => course.category))], [courses]);
 
   // Handle URL search parameter
   useEffect(() => {
@@ -48,7 +32,7 @@ export default function AllCourses() {
   }, [searchParams]);
 
   // Filter and sort courses
-  useEffect(() => {
+  const filteredCourses = useMemo(() => {
     let filtered = courses.filter(course => {
       const matchesSearch = course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                            course.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -74,7 +58,7 @@ export default function AllCourses() {
         break;
     }
 
-    setFilteredCourses(filtered);
+    return filtered;
   }, [courses, searchTerm, selectedCategory, sortBy]);
 
   const stats = {
@@ -102,7 +86,7 @@ export default function AllCourses() {
     setSearchParams({});
   };
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 relative overflow-hidden transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
@@ -127,7 +111,7 @@ export default function AllCourses() {
             >
               <div className="text-red-500 text-6xl mb-4">⚠️</div>
               <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-2">Oops! Something went wrong</h2>
-              <p className="text-gray-600 dark:text-gray-400 mb-6">{error}</p>
+              <p className="text-gray-600 dark:text-gray-400 mb-6">{error.message}</p>
               <button
                 onClick={() => window.location.reload()}
                 className="bg-blue-600 dark:bg-blue-400 text-white px-6 py-3 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-500 transition-colors"

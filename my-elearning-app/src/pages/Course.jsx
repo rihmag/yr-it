@@ -57,7 +57,7 @@ export default function Course() {
         if (response.ok) {
           const userData = await response.json();
           if (userData.enrolledCourses.includes(courseId)) {
-            setIsEnrolled(true);
+            setIsEnrolled(true);Z
           }
         }
       }
