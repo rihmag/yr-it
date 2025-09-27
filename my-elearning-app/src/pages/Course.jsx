@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getCourses } from "../data/courses";
 import InstructorComponent from "../components/InstructorComponent";
+
 import { motion } from "framer-motion";
 import { 
   Play, 
@@ -29,7 +30,7 @@ import {
   User
 } from "lucide-react";
 import toast from "react-hot-toast";
-
+import Roadmap from "../components/Roadmap"
 export default function Course() {
   const { courseId } = useParams();
   const [course, setCourse] = useState(null);
@@ -120,14 +121,7 @@ export default function Course() {
     { icon: Smartphone, title: "Mobile Access", value: "Available", color: "text-pink-500" }
   ];
 
-  const whatYouLearn = [
-    "Master the fundamentals and advanced concepts",
-    "Build real-world projects from scratch",
-    "Learn industry best practices and standards",
-    "Get hands-on experience with modern tools",
-    "Understand professional development workflows",
-    "Prepare for technical interviews and assessments"
-  ];
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
@@ -297,32 +291,8 @@ export default function Course() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           {/* Left Content */}
           <div className="lg:col-span-2 space-y-16">
+            <Roadmap roadmap={course.roadmap}/>
 
-            {/* What You'll Learn Section */}
-            <section id="what-youll-learn" className="scroll-mt-20">
-              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-2xl p-8 shadow-xl">
-                <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
-                  What You'll Learn
-                </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {whatYouLearn.map((item, index) => (
-                    <motion.div
-                      key={index}
-                      className="flex items-start gap-4 p-4 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl"
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: index * 0.1 }}
-                    >
-                      <div className="bg-blue-100 dark:bg-blue-900/30 p-2 rounded-lg">
-                        <CheckCircle className="w-6 h-6 text-blue-600 dark:text-blue-400" />
-                      </div>
-                      <p className="text-gray-800 dark:text-gray-200">{item}</p>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-            </section>
 
             {/* Curriculum Section */}
             <section id="curriculum" className="scroll-mt-20">
