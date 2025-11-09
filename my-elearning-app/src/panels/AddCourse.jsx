@@ -9,27 +9,35 @@ const AddCourse = () => {
         roadmap: '',
         price: '',
         category: '',
-        instructor:'',
+        instructor: '',
         thumbnail: null,
     });
     const [thumbnailPreview, setThumbnailPreview] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setCourseData({
             ...courseData,
-            [name]: value,      
-            // title:javscript
+            [name]: value,
         });
     };
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         if (file) {
+            if (file.size > 5 * 1024 * 1024) {
+                toast.error('File size must be less than 5MB');
+                return;
+            }
+            const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+            if (!allowedTypes.includes(file.type)) {
+                toast.error('Please select a valid image file (JPEG, PNG, GIF, WebP)');
+                return;
+            }
             setCourseData({
                 ...courseData,
                 thumbnail: file,
-                // image:file type aa gya h
             });
             const reader = new FileReader();
             reader.onloadend = () => {
@@ -39,72 +47,91 @@ const AddCourse = () => {
         }
     };
 
+    const uploadImageToCloudinary = async (file) => {
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('upload_preset', import.meta.env.VITE_CLOUD_PRESET);
+
+        try {
+            const response = await fetch(
+                `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUD_NAME}/image/upload`,
+                {
+                    method: 'POST',
+                    body: formData,
+                }
+            );
+
+            const data = await response.json();
+            return data.secure_url; // This is the image URL
+        } catch (error) {
+            console.error('Cloudinary upload error:', error);
+            throw error;
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // In a real application, you would send this data to your backend.
-        // For this example, we'll just log it and show a success message.
-
-        const formData = new FormData();
-        for (const key in courseData) {
-            formData.append(key, courseData[key]);
+        if (!courseData.title || !courseData.description || !courseData.roadmap || !courseData.price || !courseData.category || !courseData.instructor || !courseData.thumbnail) {
+            toast.error('Please fill in all fields and select an image.');
+            return;
         }
-         for (let pair of formData.entries()) {
-                 console.log(`${pair[0]}:`, pair[1]);
-                             }
 
-        // Example of how you might send it to an API
+        setIsLoading(true);
+
         try {
-            // Replace with your actual API endpoint
+            let imageUrl = '';
+            if (courseData.thumbnail) {
+                imageUrl = await uploadImageToCloudinary(courseData.thumbnail);
+            }
+
+            const coursePayload = {
+                title: courseData.title,
+                description: courseData.description,
+                roadmap: courseData.roadmap,
+                price: courseData.price,
+                category: courseData.category,
+                instructor: courseData.instructor,
+                thumbnail: imageUrl,
+            };
+
             const response = await fetch('https://backend-1-bn9o.onrender.com/api/course/create', {
                 method: 'POST',
-                body: formData,           
-
                 headers: {
-                
+                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                 },
-               
+                },
+                body: JSON.stringify(coursePayload),
             });
 
             if (!response.ok) {
                 throw new Error('Course creation failed');
             }
 
-            const result = await response.json();
+            await response.json();
             toast.success('Course created successfully!');
-            
-            // For demonstration:
-            console.log('Form Data:', Object.fromEntries(formData.entries()));
-            toast.success('Course created successfully! (Demo)');
-        }
-        catch (error) {
-            toast.error(error.message || 'Something went wrong.');
-            console.error('Submission error:', error);
-        }
 
-
-            // Reset form after successful submission
             setCourseData({
                 title: '',
                 description: '',
                 roadmap: '',
                 price: '',
                 category: '',
-                instructor,
-                thumbnail: "",
+                instructor: '',
+                thumbnail: null,
             });
             setThumbnailPreview('');
-            // Resets the file input
-        // } catch (error) {
-        //     toast.error(error.message || 'Something went wrong.');
-        //     console.error('Submission error:', error);
-        // }
+        } catch (error) {
+            toast.error(error.message || 'Something went wrong.');
+            console.error('Submission error:', error);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
         <div className="add-course-container">
             <h2>Create a New Course</h2>
-             <form onSubmit={handleSubmit} className="add-course-form" encType="multipart/form-data" >
+            <form onSubmit={handleSubmit} className="add-course-form">
                 <div className="form-group">
                     <label htmlFor="title">Course Title</label>
                     <input
@@ -162,16 +189,16 @@ const AddCourse = () => {
                         required
                     />
                 </div>
-                 <div className="form-group">
+                <div className="form-group">
                     <label htmlFor="instructor">Instructor Name</label>
-                    <textarea
+                    <input
+                        type="text"
                         id="instructor"
                         name="instructor"
                         value={courseData.instructor}
                         onChange={handleChange}
-                        rows="1"
                         required
-                    ></textarea>
+                    />
                 </div>
                 <div className="form-group">
                     <label htmlFor="thumbnail">Course Thumbnail</label>
@@ -181,11 +208,9 @@ const AddCourse = () => {
                         name="thumbnail"
                         onChange={handleFileChange}
                         accept="image/*"
-                        
                         required
                     />
                 </div>
-                
 
                 {thumbnailPreview && (
                     <div className="thumbnail-preview">
@@ -194,7 +219,9 @@ const AddCourse = () => {
                     </div>
                 )}
 
-                <button type="submit" className="submit-btn">Create Course</button>
+                <button type="submit" className="submit-btn" disabled={isLoading}>
+                    {isLoading ? 'Creating...' : 'Create Course'}
+                </button>
             </form>
         </div>
     );
