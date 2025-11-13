@@ -42,7 +42,7 @@ const EditCourse = () => {
   const fetchCourses = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`https://backend-9zkx.onrender.com/api/course/allcourses`);
+      const response = await fetch(`http://localhost:3000/api/course/allcourses`);
       const data = await response.json();
       setCourses(data);
     } catch (error) {
@@ -145,7 +145,7 @@ const EditCourse = () => {
    
     if (!lessonForm.content.trim()) return alert('Lesson content is required');
     
-    const response = await fetch(`https://backend-9zkx.onrender.com/api/course/addlessons/${selectedCourse._id}`, {
+    const response = await fetch(`http://localhost:3000/api/course/addlessons/${selectedCourse._id}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ lessondata: lessonForm })

@@ -28,13 +28,14 @@ const AddStudent = () => {
     }
 
     try {
+      const role = localStorage.getItem('role');
       const response = await fetch(`https://backend-1-bn9o.onrender.com/api/course/enroll/${courseId}`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email:userId, name: userName }),
+        body: JSON.stringify({ email:userId, name: userName, role }),
       });
 
       const responseData = await response.json();

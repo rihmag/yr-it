@@ -24,7 +24,7 @@ const ManageCourses = () => {
                     return;
                 }
 
-                const response = await fetch('https://backend-9zkx.onrender.com/api/course/allcourses', {
+                const response = await fetch('https://backend-1-bn9o.onrender.com/api/course/allcourses', {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                     },
@@ -84,7 +84,7 @@ const ManageCourses = () => {
                     <tbody>
                         {courses.map((course) => (
                             <tr key={course._id}>
-                                <td><img src={`data:image/jpeg;base64,${course.thumbnail}`} alt={course.title} className="course-thumbnail-small" /></td>
+                                <td><img src={course.thumbnail} alt={course.title} className="course-thumbnail-small" /></td>
                                 <td>{course.title}</td>
                                 <td className="course-actions">
                                     <Link to={`/panel/edit-course/${course._id}`} className="action-btn edit-btn">Edit</Link>

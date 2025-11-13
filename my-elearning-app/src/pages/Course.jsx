@@ -58,7 +58,7 @@ export default function Course() {
         if (response.ok) {
           const userData = await response.json();
           if (userData.enrolledCourses.includes(courseId)) {
-            setIsEnrolled(true);Z
+            setIsEnrolled(true);
           }
         }
       }
@@ -225,7 +225,7 @@ export default function Course() {
             >
               <div className="relative rounded-2xl overflow-hidden shadow-2xl">
                 <img
-                  src={`data:image/jpeg;base64,${course.thumbnail}`}
+                  src={course.thumbnail}
                   alt={course.title}
                   className="w-full h-80 object-cover"
                 />

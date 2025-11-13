@@ -108,7 +108,7 @@ export default function CourseCard({
         <Link to={`/course/${id}`} onClick={handleCourseClick} className={`flex-1 ${viewMode === "list" ? "flex flex-col sm:flex-row" : "flex flex-col"}`}>
           <div className={`relative overflow-hidden ${viewMode === "list" ? "sm:w-64 sm:flex-shrink-0" : ""}`}>
             <motion.img
-              src={`data:image/jpeg;base64,${courseImage}`}
+              src={courseImage}
               alt={course}
               className={`w-full object-cover transition-transform duration-500 ${
                 viewMode === "list" ? "h-40 sm:h-full" : "h-40 sm:h-48"
