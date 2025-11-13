@@ -11,6 +11,29 @@ const BannerManager = () => {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const baseUrl = 'https://backend-1-bn9o.onrender.com'; // Using a consistent local base URL
+
+const uploadImageToCloudinary = async (file) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', import.meta.env.VITE_CLOUD_PRESET);
+
+    try {
+        const response = await fetch(
+            `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUD_NAME}/image/upload`,
+            {
+                method: 'POST',
+                body: formData,
+            }
+        );
+
+        const data = await response.json();
+        return data.secure_url; // This is the image URL
+    } catch (error) {
+        console.error('Cloudinary upload error:', error);
+        throw error;
+    }
+};
+
     // https://backend-1-bn9o.onrender.com/api/banner/getbanner
     // Fetch all banners
     const fetchAllBanners = async () => {
@@ -47,7 +70,7 @@ const BannerManager = () => {
     const handleSelectEdit = (banner) => {
         setEditingBanner(banner);
         setTitle(banner.title);
-        setPreview(`data:image/jpeg;base64,${banner.image}`);
+        setPreview(banner.image);
         setError('');
         window.scrollTo(0, 0);
     };
@@ -63,25 +86,43 @@ const BannerManager = () => {
     // Handle Add or Update
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!title || (!image && !editingBanner)) {
-            setError('Title and a new image are required.');
+        if (!title) {
+            setError('Title is required.');
+            return;
+        }
+        if (!editingBanner && !image) {
+            setError('An image is required for a new banner.');
             return;
         }
 
-        const formData = new FormData();
-        formData.append('title', title);
-        if (image) formData.append('banner', image);
-
-        const isEditMode = Boolean(editingBanner);
-        const url = isEditMode ? `${baseUrl}/api/banner/updatebanner/${editingBanner._id}` : `${baseUrl}/api/banner/addbanner`;
-        const method = isEditMode ? 'PUT' : 'POST';
-      
         setLoading(true);
         setError('');
 
         try {
-            const response = await fetch(url, { method, body: formData });
-            if (!response.ok) throw new Error(`Failed to ${isEditMode ? 'update' : 'add'} banner.`);
+            const bannerData = { title };
+
+            if (image) {
+                const imageUrl = await uploadImageToCloudinary(image);
+                bannerData.image = imageUrl;
+            }
+
+            const isEditMode = Boolean(editingBanner);
+            const url = isEditMode ? `${baseUrl}/api/banner/updatebanner/${editingBanner._id}` : `${baseUrl}/api/banner/addbanner`;
+            const method = isEditMode ? 'PUT' : 'POST';
+
+            const response = await fetch(url, {
+                method: method,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(bannerData),
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(`Failed to ${isEditMode ? 'update' : 'add'} banner. Server response: ${errorText}`);
+            }
+            
             resetForm();
             await fetchAllBanners();
         } catch (err) {
@@ -141,7 +182,7 @@ const BannerManager = () => {
             <div className="banners-list">
                 {banners.map((banner) => (
                     <div key={banner._id} className="banner-card">
-                        <img src={`data:image/jpeg;base64,${banner.image}`} alt={banner.title} />
+                        <img src={banner.image} alt={banner.title} />
                         <div className="banner-info">
                             <p>{banner.title}</p>
                             <div className="banner-actions">

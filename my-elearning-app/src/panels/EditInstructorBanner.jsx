@@ -143,7 +143,7 @@ const InstructorManager = () => {
             <div className="instructors-list">
                 {instructors.map((instructor) => (
                     <div key={instructor._id} className="instructor-card">
-                        <img src={`data:image/jpeg;base64,${instructor.image}`} alt={instructor.name} />
+                        <img src={instructor.image} alt={instructor.name} />
                         <div className="instructor-info">
                             <h4>{instructor.name}</h4>
                             <p>{instructor.about}</p>

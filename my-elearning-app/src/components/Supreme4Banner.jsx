@@ -182,7 +182,7 @@ export default function Supreme4Banner() {
             {/* Image with border */}
             <div className="relative w-full h-full ml-0 mr-0 justify-end flex"> 
               <motion.img 
-                src={`data:image/jpeg;base64,${active.imageSrc}`}
+                src={active.imageSrc}
                 alt={active.titleRest || "Banner Image"} 
     
                 className="w-full h-full  border-4 border-white/30"
