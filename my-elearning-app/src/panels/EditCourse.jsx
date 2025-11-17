@@ -12,7 +12,7 @@ const EditCourse = () => {
   const [isUpdatingCourse, setIsUpdatingCourse] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
-
+  const  BASE_URL = import.meta.env.VITE_BASE_URL;
   // Course form state
   const [courseForm, setCourseForm] = useState({
     title: '',
@@ -42,7 +42,7 @@ const EditCourse = () => {
   const fetchCourses = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`http://localhost:3000/api/course/allcourses`);
+      const response = await fetch(`${BASE_URL}/api/course/allcourses`);
       const data = await response.json();
       setCourses(data);
     } catch (error) {
@@ -56,7 +56,7 @@ const EditCourse = () => {
   // Fetch lessons for a specific course
   const fetchLessons = async (courseId) => {
     try {
-      const response = await fetch(`https://backend-9zkx.onrender.com/api/course/lessons/${courseId}`);
+      const response = await fetch(`${BASE_URL}/api/course/lessons/${courseId}`);
       const data = await response.json();
       setLessons(data.data || []);
     } catch (error) {
@@ -71,7 +71,7 @@ const EditCourse = () => {
     if (!window.confirm('Are you sure you want to delete this course?')) return;
     
     try {
-      await fetch(`https://backend-9zkx.onrender.com/api/course/deletecourse/${courseId}`, { method: 'DELETE' });
+      await fetch(`${BASE_URL}/api/course/deletecourse/${courseId}`, { method: 'DELETE' });
       setCourses(courses.filter(course => course._id !== courseId));
       if (selectedCourse && selectedCourse._id === courseId) {
         setSelectedCourse(null);
@@ -116,7 +116,7 @@ const EditCourse = () => {
     setIsUpdatingCourse(true);
     try { 
       const token = localStorage.getItem('token');
-      const response = await fetch(`https://backend-9zkx.onrender.com/api/course/updatecourse/${selectedCourse._id}`, {
+      const response = await fetch(`${BASE_URL}/api/course/updatecourse/${selectedCourse._id}`, {
         method: 'PUT',
         headers: { 
             'Content-Type': 'application/json',
@@ -145,7 +145,7 @@ const EditCourse = () => {
    
     if (!lessonForm.content.trim()) return alert('Lesson content is required');
     
-    const response = await fetch(`http://localhost:3000/api/course/addlessons/${selectedCourse._id}`, {
+    const response = await fetch(`${BASE_URL}/api/course/addlessons/${selectedCourse._id}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ lessondata: lessonForm })
@@ -174,7 +174,7 @@ const EditCourse = () => {
   const updateLesson = async () => {
     setIsUpdating(true);
     try {
-      const response = await fetch(`https://backend-9zkx.onrender.com/api/course/updatelessons/${selectedCourse._id}`, {
+      const response = await fetch(`${BASE_URL}/api/course/updatelessons/${selectedCourse._id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ data: lessonForm })
@@ -195,7 +195,7 @@ const EditCourse = () => {
     if (!window.confirm('Are you sure you want to delete this lesson?')) return;
     
     try {
-      await fetch(`https://backend-9zkx.onrender.com/api/course/deletelessons/${selectedCourse._id}/${lessonId}`, {
+      await fetch(`${BASE_URL}/api/course/deletelessons/${selectedCourse._id}/${lessonId}`, {
         method: 'DELETE'
       });
       setLessons(lessons.filter(lesson => lesson._id !== lessonId));
